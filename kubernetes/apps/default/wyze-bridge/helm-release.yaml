@@ -1,0 +1,79 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/JJGadgets/flux2-schemas/main/helmrelease-helm-v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: wyze-bridge
+  namespace: default
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.2.1
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 10
+
+  values:
+    strategy:
+      type: Recreate
+
+    service:
+      main:
+        annotations:
+          metallb.universe.tf/loadBalancerIPs: 192.168.1.16
+
+        ports:
+          http:
+            port: 5000
+            targetPort: 5000
+          rtsp:
+            port: 8554
+            targetPort: 8554
+
+        type: LoadBalancer
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          nginx.ingress.kubernetes.io/whitelist-source-range: |
+            10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+          hajimari.io/enable: "true"
+        hosts:
+          - host: &host "wyze.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+
+    image:
+      repository: "mrlt8/wyze-bridge"
+      tag: "latest"
+      imagePullPolicy: Always
+
+    env:
+      - name: ROTATE_DOOR
+        value: "True"
+
+    envFrom:
+      - secretRef:
+          name: wyze-secrets
+    resources:
+      requests:
+        cpu: 750m
+        memory: 500M
+      limits:
+        memory: 2000M
