@@ -5,6 +5,9 @@ resources:
   - ./namespace.yaml
   - ./echo-server/ks.yaml
   - ./hajimari/ks.yaml
-  - ./wyze-bridge
+  - ./frigate
   - ./mqtt
+  - ./wyze-bridge
   - ./libreddit
+  - ./minio/ks.yaml
+  - ./cloudnative-pg/ks.yaml
