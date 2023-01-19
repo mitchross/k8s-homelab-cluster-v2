@@ -53,9 +53,9 @@ spec:
               matchOn:
                 - usbId:
                     vendor: ["1a6e", "089a"]
-            - name: "coral-pci"
-              matchOn:
-                - pciId:
-                    class: ["0880"]
-                    vendor: ["1ac1"]
-                    device: ["089a"]
+            # - name: "coral-pci"
+            #   matchOn:
+            #     - pciId:
+            #         class: ["0880"]
+            #         vendor: ["1ac1"]
+            #         device: ["089a"]
