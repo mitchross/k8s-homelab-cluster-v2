@@ -52,7 +52,7 @@ spec:
             - name: coral-tpu
               matchOn:
                 - usbId:
-                    vendor: ["18d1", "9302"]
+                    vendor: ["1a6e", "089a"]
             - name: "coral-pci"
               matchOn:
                 - pciId:
