@@ -9,8 +9,12 @@ resources:
   - ./ingress-nginx.yaml
   - ./jetstack.yaml
   - ./k8s-gateway.yaml
-  - ./kubernetes-dashboard.yaml
   - ./metallb.yaml
   - ./metrics-server.yaml
   - ./stakater.yaml
   - ./weave-gitops.yaml
+  - ./node-feature-discovery.yaml
+  - ./prometheus-community-charts.yaml
+  - ./tube.yaml
+  - ./cloudnative-pg.yaml
+  - ./kubernetes-dashboard.yaml
