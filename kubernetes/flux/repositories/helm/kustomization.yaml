@@ -18,3 +18,4 @@ resources:
   - ./tube.yaml
   - ./cloudnative-pg.yaml
   - ./kubernetes-dashboard.yaml
+  - ./intel.yaml
