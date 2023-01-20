@@ -7,4 +7,5 @@ resources:
   - ./local-path-provisioner/ks.yaml
   - ./metrics-server/ks.yaml
   - ./reloader/ks.yaml
-  - ./node-feature-discovery
+  - ./node-feature-discovery/ks.yaml
+  - ./intel-device-plugin/ks.yaml

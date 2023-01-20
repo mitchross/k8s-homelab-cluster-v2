@@ -5,6 +5,7 @@ namespace: default
 resources:
   - ./helm-release.yaml
   - ./nfs-pvc.yaml
+  - ./nodefeaturerule.yaml
   # - ./secret.sops.yaml
 configMapGenerator:
   - name: frigate-configmap
