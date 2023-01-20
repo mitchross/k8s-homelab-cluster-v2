@@ -14,8 +14,6 @@ spec:
     server: 192.168.1.133
     path: /mnt/bigtank/k8s/frigate
   mountOptions:
-    - nfsvers=4.2
-    - nconnect=8
     - hard
     - noatime
 ---
