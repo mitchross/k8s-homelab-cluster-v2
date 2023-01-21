@@ -38,3 +38,14 @@ spec:
         secretAccessKey:
           name: cloudnative-pg-secret
           key: aws-secret-access-key
+    service:
+      main:
+        annotations:
+          metallb.universe.tf/loadBalancerIPs: 192.168.1.18
+
+        ports:
+          tcp:
+            port: 5432
+            targetPort: 5432
+
+        type: LoadBalancer
