@@ -26,6 +26,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    tcp:
+      "5432": "default/postgres:5432"
     controller:
       extraEnvs:
         - name: TZ
