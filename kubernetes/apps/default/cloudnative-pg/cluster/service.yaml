@@ -4,42 +4,22 @@ kind: Service
 metadata:
   name: &app postgres
   namespace: default
+  annotations:
+    # Currently does not work
+    # https://github.com/ori-edge/k8s_gateway/issues/185
+    coredns.io/hostname: postgres.vanillax.me
   labels:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
 spec:
   type: LoadBalancer
-  annotations:
-    metallb.universe.tf/loadBalancerIPs: 192.168.1.18
+  externalTrafficPolicy: Local
+  externalIPs: 192.168.1.18
   ports:
-    tcp:
+    - name: postgres
       port: 5432
+      protocol: TCP
       targetPort: 5432
-
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: &app postgres
-  namespace: default
-  annotations:
-    hajimari.io/enabled: "false"
-  labels:
-    app.kubernetes.io/name: *app
-    app.kubernetes.io/instance: *app
-spec:
-  ingressClassName: nginx
-  rules:
-    - host: &host postgres.vanillax.me
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: *app
-                port:
-                  number: 5432
-  tls:
-    - hosts:
-        - *host
+  selector:
+    postgresql: postgres
+    role: primary
