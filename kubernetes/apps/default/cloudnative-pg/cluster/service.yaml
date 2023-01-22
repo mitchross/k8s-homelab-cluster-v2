@@ -1,23 +1,15 @@
----
 apiVersion: v1
 kind: Service
 metadata:
-  name: &app postgres
+  name: postgres-service
   namespace: default
   annotations:
-    # Currently does not work
-    # https://github.com/ori-edge/k8s_gateway/issues/185
-    coredns.io/hostname: postgres.vanillax.me
-  labels:
-    app.kubernetes.io/name: *app
-    app.kubernetes.io/instance: *app
+    metallb.universe.tf/address-pool: "default"
 spec:
-  type: LoadBalancer
-  externalIPs: 192.168.1.18
-  LoadBalancerIP: 192.168.1.18
-  metallb.universe.tf/loadBalancerIPs: 192.168.1.18
+  selector:
+    app: postgres
   ports:
     - name: postgres
       port: 5432
-      protocol: TCP
       targetPort: 5432
+  loadBalancerIP: 192.168.1.18
