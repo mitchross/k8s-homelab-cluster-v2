@@ -5,6 +5,7 @@ kind: Kustomization
 namespace: default
 resources:
   - helmrelease.yaml
+  - service.yaml
 configMapGenerator:
   - name: redis-lb-configmap
     files:

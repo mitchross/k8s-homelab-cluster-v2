@@ -33,25 +33,6 @@ spec:
     image:
       repository: public.ecr.aws/docker/library/haproxy
       tag: 2.7.2-alpine
-    service:
-      main:
-        type: LoadBalancer
-        loadBalancerIP: 192.168.1.19
-        ports:
-          http:
-            port: 8080
-            targetPort: 8080
-          redis-write:
-            port: 6379
-            targetPort: 6379
-          redis-read:
-            port: 6380
-            targetPort: 6380
-          redis-sentinel:
-            port: 26379
-            targetPort: 26379
-        externalTrafficPolicy: Local
-
     serviceMonitor:
       main:
         enabled: true
