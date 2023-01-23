@@ -36,8 +36,7 @@ spec:
     service:
       main:
         type: LoadBalancer
-        externalIPs: 192.168.1.19
-        externalTrafficPolicy: Local
+        loadBalancerIP: 192.168.1.19
         ports:
           http:
             port: 8080
@@ -51,6 +50,8 @@ spec:
           redis-sentinel:
             port: 26379
             targetPort: 26379
+        externalTrafficPolicy: Local
+
     serviceMonitor:
       main:
         enabled: true

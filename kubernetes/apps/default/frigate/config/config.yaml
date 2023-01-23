@@ -168,7 +168,7 @@ cameras:
   kitchen:
     ffmpeg:
       inputs:
-        # - path: rtsp://admin:***REMOVED***@192.168.1.182:554/cam/realmonitor?channel=1&subtype=0&authbasic=64
+        # - path: rtsp://admin:mitch2573@192.168.1.182:554/cam/realmonitor?channel=1&subtype=0&authbasic=64
         - path: rtsp://192.168.1.16:8554/kitchen
           roles:
             - detect
@@ -197,7 +197,7 @@ cameras:
   dogcam:
     ffmpeg:
       inputs:
-        # - path: rtsp://admin:***REMOVED***@192.168.1.182:554/cam/realmonitor?channel=1&subtype=0&authbasic=64
+        # - path: rtsp://admin:mitch2573@192.168.1.182:554/cam/realmonitor?channel=1&subtype=0&authbasic=64
         - path: rtsp://192.168.1.16:8554/dog-cam-2
           roles:
             - detect
