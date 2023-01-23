@@ -63,7 +63,7 @@ spec:
           hajimari.io/appName: Immich
           hajimari.io/icon: heroicons:photo
         hosts:
-          - host: &host photos.devbu.io
+          - host: &host photos.vanillax.me
             paths:
               - path: /
                 pathType: Prefix
