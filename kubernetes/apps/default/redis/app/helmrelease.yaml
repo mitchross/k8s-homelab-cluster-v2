@@ -10,6 +10,11 @@ spec:
   chart:
     spec:
       chart: redis
+      template:
+        spec:
+          nodeSelector:
+            architecture: amd64
+
       version: 17.6.0
       sourceRef:
         kind: HelmRepository
