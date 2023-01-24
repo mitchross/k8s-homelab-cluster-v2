@@ -60,8 +60,8 @@ spec:
               - *host
 
     image:
-      repository: "mrlt8/wyze-bridge"
-      tag: "latest"
+      repository: ghcr.io/mrlt8/docker-wyze-bridge
+      tag: 1.11.6-hw
       imagePullPolicy: Always
 
     env:
