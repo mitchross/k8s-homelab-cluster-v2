@@ -7,7 +7,7 @@ metadata:
     coredns.io/hostname: postgres.vanillax.me
 spec:
   type: LoadBalancer
-  loadBalancerIP: 192.168.1.18
+  loadBalancerIP: ["${SVC_POSTGRES_ADDR}"]
   ports:
     - name: postgres
       port: 5432
