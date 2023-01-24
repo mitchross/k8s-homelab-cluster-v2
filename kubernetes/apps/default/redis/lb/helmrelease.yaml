@@ -36,7 +36,8 @@ spec:
     service:
       main:
         type: LoadBalancer
-        loadBalancerIP: "${SVC_REDIS_ADDR}"
+        loadBalacerIP: "${SVC_REDIS_ADDR}"
+        externalTrafficPolicy: Local
         ports:
           http:
             port: 8080
@@ -66,13 +67,10 @@ spec:
         annotations:
           hajimari.io/icon: simple-icons:redis
         hosts:
-          - host: redis-lb.vanillax.me
+          - host: redis-lb.${SECRET_CLUSTER_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
-        tls:
-          - hosts:
-              - *host
     podSecurityContext:
       runAsUser: 1000
       runAsGroup: 1000

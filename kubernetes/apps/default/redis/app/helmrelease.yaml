@@ -3,14 +3,14 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: redis
+  name: &app redis
   namespace: default
 spec:
   interval: 15m
   chart:
     spec:
       chart: redis
-      version: 17.5.1
+      version: 17.6.0
       sourceRef:
         kind: HelmRepository
         name: bitnami
@@ -27,23 +27,19 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    global:
+      # imageRegistry: public.ecr.aws
+      storageClass: local-path
     auth:
       enabled: false
       sentinel: false
-    master:
-      persistence:
-        enabled: false
-    replica:
-      persistence:
-        enabled: false
+      # existingSecret: *app
     sentinel:
       enabled: true
       masterSet: redis-master
       getMasterTimeout: 10
       startupProbe:
         failureThreshold: 2
-      persistence:
-        enabled: false
     metrics:
       enabled: true
       serviceMonitor:
