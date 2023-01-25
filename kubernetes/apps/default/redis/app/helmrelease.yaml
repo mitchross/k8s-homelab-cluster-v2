@@ -28,8 +28,13 @@ spec:
     keepHistory: false
 
   values:
-    nodeSelector:
-      kubernetes.io/arch: amd64
+    master:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+
+    replica:
+      nodeSelector:
+        kubernetes.io/arch: amd64
     global:
       # imageRegistry: public.ecr.aws
       storageClass: local-path
