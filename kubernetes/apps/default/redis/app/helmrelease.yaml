@@ -10,11 +10,6 @@ spec:
   chart:
     spec:
       chart: redis
-      template:
-        spec:
-          nodeSelector:
-            architecture: amd64
-
       version: 17.6.0
       sourceRef:
         kind: HelmRepository
@@ -31,7 +26,10 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+
   values:
+    nodeSelector:
+      kubernetes.io/arch: amd64
     global:
       # imageRegistry: public.ecr.aws
       storageClass: local-path
