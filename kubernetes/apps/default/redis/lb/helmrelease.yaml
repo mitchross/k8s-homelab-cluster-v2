@@ -29,13 +29,15 @@ spec:
     keepHistory: false
   values:
     controller:
-      replicas: 3
+      replicas: 1
       strategy: RollingUpdate
     image:
       repository: public.ecr.aws/docker/library/haproxy
       tag: 2.7.2-alpine
     service:
       main:
+        annotations:
+          coredns.io/hostname: redis.vanillax.me
         type: LoadBalancer
         loadBalacerIP: "${SVC_REDIS_ADDR}"
         externalTrafficPolicy: Local
