@@ -4,8 +4,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: default
 resources:
-  - ./externalsecret.yaml
-  - ./nfs-pvc.yaml
-  - ./elasticsearch
-  - ./redis
-  - ./web
+    - ./secret.sops.yaml
+    - ./nfs-pvc.yaml
+    - ./elasticsearch
+ # - ./redis
+    - ./web
