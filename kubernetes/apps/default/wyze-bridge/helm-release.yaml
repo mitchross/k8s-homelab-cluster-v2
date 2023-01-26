@@ -61,7 +61,7 @@ spec:
 
     image:
       repository: ghcr.io/mrlt8/docker-wyze-bridge
-      tag: 1.11.6-hw
+      tag: 1.11.7-hw
       imagePullPolicy: Always
 
     env:
