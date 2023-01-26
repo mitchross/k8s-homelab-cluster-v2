@@ -27,7 +27,7 @@ spec:
     uninstall:
         keepHistory: false
     dependsOn:
-        - name: tubearchivist-redis
+       # - name: tubearchivist-redis
         - name: tubearchivist-elasticsearch
     values:
         controller:
