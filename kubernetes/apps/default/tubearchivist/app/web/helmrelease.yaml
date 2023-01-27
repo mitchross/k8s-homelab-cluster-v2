@@ -27,7 +27,7 @@ spec:
     uninstall:
         keepHistory: false
     dependsOn:
-       # - name: tubearchivist-redis
+    # - name: tubearchivist-redis
         - name: tubearchivist-elasticsearch
     values:
         controller:
@@ -48,6 +48,8 @@ spec:
         envFrom:
             - secretRef:
                   name: tubearchivist
+        securityContext:
+            privileged: true
         service:
             main:
                 ports:
