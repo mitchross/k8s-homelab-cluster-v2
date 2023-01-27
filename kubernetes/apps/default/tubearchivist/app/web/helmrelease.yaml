@@ -36,7 +36,7 @@ spec:
                 reloader.stakater.com/auto: 'true'
         image:
             repository: docker.io/bbilly1/tubearchivist
-            tag: unstable
+            tag: latest
         env:
             TZ: America/New_York
             ES_URL: http://tubearchivist-elasticsearch.default.svc.cluster.local:9200
