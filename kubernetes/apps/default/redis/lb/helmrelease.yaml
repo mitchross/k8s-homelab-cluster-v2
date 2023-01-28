@@ -39,6 +39,7 @@ spec:
                 enabled: true
                 annotations:
                     metallb.universe.tf/loadBalancerIPs: ${SVC_REDIS_ADDR}
+                type: LoadBalancer
                 ports:
                     http:
                         port: 8080
