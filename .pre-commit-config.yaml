@@ -1,17 +1,17 @@
 ---
 fail_fast: false
 repos:
+    - repo: https://github.com/adrienverge/yamllint.git
+      rev: v1.21.0  # or higher tag
+      hooks:
+          - id: yamllint
+            args: [--format, parsable, --strict]
+
     - repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
-      rev: 0.2.2 # or other specific tag
+      rev: 0.2.1  # or other specific tag
       hooks:
           - id: yamlfmt
-    - repo: https://github.com/adrienverge/yamllint
-      rev: v1.29.0
-      hooks:
-          - args:
-                - --config-file
-                - .yamllint.yaml
-            id: yamllint
+
     - repo: https://github.com/gruntwork-io/pre-commit
       rev: v0.1.17
       hooks:
