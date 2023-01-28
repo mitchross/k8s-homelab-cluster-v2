@@ -36,6 +36,7 @@ spec:
             tag: 2.7.2-alpine
         service:
             main:
+                enabled: true
                 annotations:
                     metallb.universe.tf/loadBalancerIPs: ${SVC_REDIS_ADDR}
                 ports:
