@@ -12,5 +12,4 @@ resources:
   - ./minio/ks.yaml
   - ./cloudnative-pg/ks.yaml
   - ./redis/ks.yaml
-  #  - ./tubearchivist/ks.yaml
   # - ./immich/ks.yaml
