@@ -28,7 +28,7 @@ spec:
     image:
       repository: libreddit/libreddit
       pullPolicy: Always
-      tag: arm
+      tag: latest
 
     env:
       LIBREDDIT_DEFAULT_SHOW_NSFW: true
@@ -80,5 +80,3 @@ spec:
       limits:
         memory: 250Mi
 
-    nodeSelector:
-      kubernetes.io/arch: arm64
