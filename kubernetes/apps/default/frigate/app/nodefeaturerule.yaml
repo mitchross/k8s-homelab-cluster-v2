@@ -3,16 +3,14 @@
 apiVersion: nfd.k8s-sigs.io/v1alpha1
 kind: NodeFeatureRule
 metadata:
-  name: google-coral-device
+    name: google-coral-device
 spec:
-  rules:
-    # Google Coral USB Accelerator
-    - name: google.coral
-      labels:
-        google.feature.node.kubernetes.io/coral: "true"
-      matchFeatures:
-        - feature: usb.device
-          matchExpressions:
-            - or:
-                - vendor: { op: In, value: [1a6e, "089a"] }
-                - vendor: { op: In, value: ["18d1", 9302"] }
+    rules:
+      # Google Coral USB Accelerator
+        - name: google.coral
+          labels:
+              google.feature.node.kubernetes.io/coral: 'true'
+          matchFeatures:
+              - feature: usb.device
+                matchExpressions:
+                    vendor: {op: In, value: ['18d1', '9302']}
