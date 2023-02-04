@@ -28,13 +28,10 @@ kind: Kustomization
 metadata:
     name: cluster-apps-cloudnative-pg-cluster
     namespace: flux-system
-    labels:
-        substitution.flux.home.arpa/enabled: 'true'
 spec:
     dependsOn:
         - name: cluster-apps-cloudnative-pg
         - name: cluster-apps-local-path-provisioner
-   # - name: cluster-apps-kyverno
         - name: cluster-apps-minio-app
 
     path: ./kubernetes/apps/default/cloudnative-pg/cluster
