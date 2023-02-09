@@ -1,0 +1,64 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app cloudflared
+  namespace: networking
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+      interval: 5m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    global:
+      nameOverride: *app
+    image:
+      repository: cloudflare/cloudflared
+      tag: 2022.12.1
+    args:
+      - tunnel
+      - --config
+      - /etc/cloudflared/default.yaml
+      - --metrics
+      - 0.0.0.0:9090
+      - run
+    service:
+      main:
+        nameOverride: metrics
+        ports:
+          http:
+            port: 9090
+    persistence:
+      config:
+        enabled: true
+        type: configMap
+        name: cloudflare-tunnel-config
+        subPath: default.yaml
+        mountPath: /etc/cloudflared/default.yaml
+        readOnly: true
+      creds:
+        enabled: true
+        type: secret
+        name: cloudflare-tunnel-credentials
+        subPath: cred.json
+        mountPath: /etc/cloudflared/cred.json
+        readOnly: true
+    resources:
+      requests:
+        memory: 64Mi
+        cpu: 10m
+      limits:
+        memory: 128Mi

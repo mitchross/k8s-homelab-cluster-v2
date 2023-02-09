@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloudflare-tunnel-config
+  namespace: networking
+  labels:
+    app.kubernetes.io/name: cloudflared
+  annotations:
+    reloader.stakater.com/match: "true"
+data:
+  config.yaml: |
+    tunnel: 66d7b675-fbbf-4c31-923f-082682070baf
+    credentials-file: /etc/cloudflared/cred.json
+    no-autoupdate: true
+    ingress:
+    - hostname: "*.${SECRET_DOMAIN}"
+      service: http://ingress-nginx-controller.networking
+    - service: http_status:404
