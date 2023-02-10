@@ -11,7 +11,7 @@ metadata:
 data:
   default.yaml: |
     tunnel: 250e133d-a96f-4d7a-a58c-f81f0bf07f0c
-    credentials-file: /etc/cloudflared/cred.json
+    credentials-file: /etc/cloudflared/creds.json
     no-autoupdate: true
     ingress:
     - hostname: "*.${SECRET_DOMAIN}"
