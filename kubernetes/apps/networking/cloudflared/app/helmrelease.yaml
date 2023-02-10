@@ -45,7 +45,7 @@ spec:
       config:
         enabled: true
         type: configMap
-        name: cloudflared-credentials
+        name: cloudflared-config
         mountPath: /etc/cloudflared/default.yaml
       creds:
         enabled: true
