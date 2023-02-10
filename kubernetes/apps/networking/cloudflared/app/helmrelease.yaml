@@ -54,7 +54,7 @@ spec:
         enabled: true
         type: secret
         name: cloudflared-credentials
-        mountPath: /etc/cloudflared/creds
+        mountPath: /etc/cloudflared/creds.json
         subPath: creds
         defaultMode: 0775
         readOnly: true
