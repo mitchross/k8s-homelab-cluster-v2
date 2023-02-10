@@ -30,7 +30,8 @@ spec:
       tag: 2022.12.1
     args:
       - tunnel
-      - --config=/etc/cloudflared/default.yaml
+      - --config
+      - /etc/cloudflared/default.yaml
       - --metrics
       - 0.0.0.0:9090
       - run
@@ -51,6 +52,8 @@ spec:
         type: secret
         name: cloudflared-credentials
         mountPath: /etc/cloudflared/creds
+        defaultMode: 0775
+        readOnly: true
     resources:
       requests:
         memory: 64Mi
