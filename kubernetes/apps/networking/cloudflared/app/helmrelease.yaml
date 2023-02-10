@@ -45,17 +45,13 @@ spec:
       config:
         enabled: true
         type: configMap
-        name: cloudflare-tunnel-config
-        subPath: default.yaml
+        name: cloudflared-credentials
         mountPath: /etc/cloudflared/default.yaml
-        readOnly: true
       creds:
         enabled: true
         type: secret
-        name: cloudflare-tunnel-secret
-        subPath: cred.json
-        mountPath: /etc/cloudflared/cred.json
-        readOnly: true
+        name: cloudflared-credentials
+        mountPath: /etc/cloudflared/creds
     resources:
       requests:
         memory: 64Mi
