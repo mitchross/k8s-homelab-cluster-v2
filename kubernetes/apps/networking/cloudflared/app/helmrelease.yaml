@@ -46,7 +46,10 @@ spec:
         enabled: true
         type: configMap
         name: cloudflared-config
+        subPath: default.yaml
         mountPath: /etc/cloudflared/default.yaml
+        defaultMode: 0775
+        readOnly: true
       creds:
         enabled: true
         type: secret
