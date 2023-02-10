@@ -9,7 +9,7 @@ metadata:
   annotations:
     reloader.stakater.com/match: "true"
 data:
-  config.yaml: |
+  default.yaml: |
     tunnel: 250e133d-a96f-4d7a-a58c-f81f0bf07f0c
     credentials-file: /etc/cloudflared/cred.json
     no-autoupdate: true
