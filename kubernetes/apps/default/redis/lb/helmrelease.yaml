@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helmrelease_v2beta1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -15,7 +15,6 @@ spec:
                 kind: HelmRepository
                 name: bjw-s
                 namespace: flux-system
-
     maxHistory: 3
     install:
         createNamespace: true
@@ -31,15 +30,17 @@ spec:
         controller:
             replicas: 3
             strategy: RollingUpdate
+            rollingUpdate:
+                unavailable: 2
+                surge: 0
+            annotations:
+                reloader.stakater.com/auto: "true"
         image:
             repository: public.ecr.aws/docker/library/haproxy
-            tag: 2.7.3-alpine
+            tag: "2.7.2"
         service:
             main:
-                enabled: true
-                annotations:
-                    metallb.universe.tf/loadBalancerIPs: ${SVC_REDIS_ADDR}
-                type: LoadBalancer
+                type: ClusterIP
                 ports:
                     http:
                         port: 8080
@@ -53,6 +54,22 @@ spec:
                     redis-sentinel:
                         port: 26379
                         targetPort: 26379
+        ingress:
+            main:
+                enabled: true
+                ingressClassName: nginx
+                annotations:
+                    nginx.ingress.kubernetes.io/whitelist-source-range: |
+                        10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+                    hajimari.io/enable: "false"
+                hosts:
+                    - host: &host redis-ui.${SECRET_DOMAIN}
+                      paths:
+                          - path: /
+                            pathType: Prefix
+                tls:
+                    - hosts:
+                          - *host
         serviceMonitor:
             main:
                 enabled: true
@@ -62,32 +79,22 @@ spec:
                       path: /metrics
                       interval: 1m
                       scrapeTimeout: 10s
-        ingress:
-            main:
-                enabled: true
-                ingressClassName: nginx
-                annotations:
-                    nginx.ingress.kubernetes.io/whitelist-source-range: |
-                        10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
-                    hajimari.io/enable: 'true'
-                hosts:
-                    - host: &host redis-lb.${SECRET_DOMAIN}
-                      paths:
-                          - path: /
-                            pathType: Prefix
-                tls:
-                    - hosts:
-                          - *host
         podSecurityContext:
             runAsUser: 1000
             runAsGroup: 1000
             fsGroup: 1000
-            fsGroupChangePolicy: OnRootMismatch
+            fsGroupChangePolicy: "OnRootMismatch"
         persistence:
             config:
                 enabled: true
                 type: configMap
-                name: redis-lb-configmap # overriden by kustomizeconfig
+                name: redis-lb-configmap
                 mountPath: /usr/local/etc/haproxy/haproxy.cfg
                 subPath: haproxy.cfg
                 readOnly: true
+        resources:
+            requests:
+                cpu: 15m
+                memory: 10Mi
+            limits:
+                memory: 50Mi
