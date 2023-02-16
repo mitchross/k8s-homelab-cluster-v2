@@ -11,6 +11,6 @@ resources:
     - ./libreddit
     - ./minio/ks.yaml
     - ./cloudnative-pg/ks.yaml
-    - ./redis/ks.yaml
+    #- ./redis/ks.yaml
     - ./speedtest
-    - ./immich/ks.yaml
+    #- ./immich/ks.yaml
