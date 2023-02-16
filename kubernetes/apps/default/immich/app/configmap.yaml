@@ -18,7 +18,7 @@ data:
   IMMICH_MACHINE_LEARNING_URL: http://immich-machine-learning.default.svc.cluster.local:3003
   # Below are deprecated and can only be set in the Immich Admin settings
   # OAUTH_ENABLED: "true"
-  # OAUTH_ISSUER_URL: https://auth.devbu.io/.well-known/openid-configuration
+  # OAUTH_ISSUER_URL: https://auth.${SECRET_CLUSTER_DOMAIN}/.well-known/openid-configuration
   # OAUTH_CLIENT_ID: immich
   # OAUTH_CLIENT_SECRET: "${SECRET_IMMICH_OAUTH_CLIENT_SECRET}"
   # OAUTH_AUTO_REGISTER: "true"
