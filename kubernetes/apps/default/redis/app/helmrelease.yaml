@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -28,59 +28,19 @@ spec:
     keepHistory: false
   values:
     global:
+      # imageRegistry: public.ecr.aws
       storageClass: local-path
     auth:
       enabled: false
       sentinel: false
       # existingSecret: *app
-    master:
-      persistence:
-        enabled: true
-        size: 1Gi
-      resources:
-        requests:
-          cpu: 15m
-          memory: 20Mi
-        limits:
-          memory: 100Mi
-    replica:
-      persistence:
-        enabled: true
-        size: 1Gi
-      resources:
-        requests:
-          cpu: 15m
-          memory: 20Mi
-        limits:
-          memory: 100Mi
-    commonConfiguration: |-
-      # Enable AOF https://redis.io/topics/persistence#append-only-file
-      appendonly yes
-      # Disable RDB persistence, AOF persistence already enabled.
-      save ""
-      maxmemory 94371840
-      maxmemory-policy allkeys-lru
     sentinel:
       enabled: true
       masterSet: redis-master
       getMasterTimeout: 10
       startupProbe:
         failureThreshold: 2
-      persistence:
-        enabled: false
-      resources:
-        requests:
-          cpu: 10m
-          memory: 10Mi
-        limits:
-          memory: 50Mi
     metrics:
       enabled: true
       serviceMonitor:
         enabled: true
-      resources:
-        requests:
-          cpu: 10m
-          memory: 10Mi
-        limits:
-          memory: 20Mi
