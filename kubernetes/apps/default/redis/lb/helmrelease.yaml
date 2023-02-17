@@ -67,7 +67,7 @@ spec:
         annotations:
           hajimari.io/icon: simple-icons:redis
         hosts:
-          - host: redis-lb.${SECRET_CLUSTER_DOMAIN}
+          - host: redis-lb.vanillax.me
             paths:
               - path: /
                 pathType: Prefix
