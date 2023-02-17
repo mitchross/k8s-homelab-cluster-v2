@@ -63,7 +63,7 @@ spec:
           hajimari.io/appName: Immich
           hajimari.io/icon: heroicons:photo
         hosts:
-          - host: &host photos.${SECRET_CLUSTER_DOMAIN}
+          - host: &host photos.vanillax.me
             paths:
               - path: /
                 pathType: Prefix
