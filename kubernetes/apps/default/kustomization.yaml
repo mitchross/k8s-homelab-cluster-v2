@@ -15,4 +15,4 @@ resources:
     - ./speedtest
     - ./immich/ks.yaml
    # - ./tubearchivist/ks.yaml
-    - ./tube
+    #- ./tube
