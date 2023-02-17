@@ -1,0 +1,95 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: tubearchivist
+  namespace: default
+spec:
+  chart:
+    spec:
+      chart: tubearchivist
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: stiforr
+        namespace: flux-system
+      version: 0.8.1
+  interval: 6h0m0s
+  install:
+    remediation:
+      retries: 30
+  upgrade:
+    remediation:
+      retries: 30
+  values:
+    image:
+      repository: stiforr/tubearchivist
+      tag: "custom"
+      pullPolicy: Always
+    env:
+      TA_HOST: "tube.vanillax.me"
+      ES_URL: "http://tubearchivist-elasticsearch:9200"
+      ELASTIC_PASSWORD: "changeme"
+    envFrom:
+      - secretRef:
+          name: tubearchivist-elasticsearch
+    redis:
+      master:
+        persistence:
+          storageClass: tubearchivist-nfs
+    elasticsearch:
+      master:
+        persistence:
+          storageClass: tubearchivist-nfs
+          accessModes:
+            - ReadWriteMany
+      data:
+        persistence:
+          storageClass: tubearchivist-nfs
+          accessModes:
+            - ReadWriteMany
+      global:
+        storageClass: tubearchivist-nfs
+      extraEnvVars:
+        - name: ES_JAVA_OPTS
+          value: "-Xms512m -Xmx512m"
+        - name: ELASTIC_PASSWORD
+          value: "changeme"
+        - name: cluster.initial_master_nodes
+          value: ""
+      resources:
+        limits:
+          cpu: 2000m
+          memory: 1024Mi
+    persistence:
+      youtube:
+        enabled: true
+        existingClaim: tubearchivist-nfs
+        subPath: youtube
+      config:
+        enabled: false
+        storageClass: tubearchivist-nfs
+      cache:
+        storageClass: tubearchivist-nfs
+        accessMode: ReadWriteMany
+        size: 20Gi
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+        hosts:
+          - host: &host tube.vanillax.me
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+            secretName: tubearchivist-tls
+    service:
+      main:
+        ports:
+          http:
+            port: 8000
