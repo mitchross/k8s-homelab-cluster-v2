@@ -22,10 +22,6 @@ spec:
       namespace: default
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
-      name: tubearchivist-redis
-      namespace: default
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
       name: tubearchivist-elasticsearch
       namespace: default
   interval: 30m
