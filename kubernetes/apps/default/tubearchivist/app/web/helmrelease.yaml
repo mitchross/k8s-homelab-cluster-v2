@@ -39,7 +39,7 @@ spec:
     env:
       TZ: America/New_York
       ES_URL: http://tubearchivist-elasticsearch.default.svc.cluster.local:9200
-      REDIS_HOST: tubearchivist-redis.default.svc.cluster.local
+      REDIS_HOST: redis-lb.default.svc.cluster.local
       HOST_UID: 568
       HOST_GID: 568
       TA_HOST: &host tubearchivist.vanillax.me
