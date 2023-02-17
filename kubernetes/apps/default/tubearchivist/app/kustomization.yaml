@@ -6,4 +6,5 @@ namespace: default
 resources:
   - ./nfs-pvc.yaml
   - ./elasticsearch
+  - ./web
   - ./secret.sops.yaml
