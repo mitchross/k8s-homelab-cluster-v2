@@ -14,5 +14,5 @@ resources:
     - ./redis/ks.yaml
     - ./speedtest
     - ./immich/ks.yaml
-   # - ./tubearchivist/ks.yaml
+    - ./tubearchivist/ks.yaml
     #- ./tube
