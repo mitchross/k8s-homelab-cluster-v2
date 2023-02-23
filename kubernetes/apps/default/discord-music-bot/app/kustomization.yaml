@@ -9,7 +9,7 @@ resources:
 configMapGenerator:
     - name: jmusicbot-configmap
       files:
-          - config.txt=./jmb/config.txt
+          - config.txt=./jmb/config2.txt
 generatorOptions:
     disableNameSuffixHash: true
     annotations:
