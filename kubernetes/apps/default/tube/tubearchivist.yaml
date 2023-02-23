@@ -13,7 +13,7 @@ spec:
         kind: HelmRepository
         name: stiforr
         namespace: flux-system
-      version: 0.8.1
+      version: 0.8.4
   interval: 6h0m0s
   install:
     remediation:
