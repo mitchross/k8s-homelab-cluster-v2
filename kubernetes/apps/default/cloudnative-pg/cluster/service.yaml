@@ -6,13 +6,13 @@ metadata:
     namespace: default
     annotations:
         coredns.io/hostname: postgres.vanillax.me
+        metallb.universe.tf/loadBalancerIPs: ${SVC_POSTGRES_ADDR}
     labels:
         app.kubernetes.io/name: *app
         app.kubernetes.io/instance: *app
 spec:
     type: LoadBalancer
     externalTrafficPolicy: Local
-    loadBalancerIP: ['${SVC_POSTGRES_ADDR}']
     ports:
         - name: postgres
           port: 5432
