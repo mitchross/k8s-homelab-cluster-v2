@@ -15,5 +15,5 @@ resources:
     - ./speedtest
     - ./immich/ks.yaml
     - ./discord-music-bot/ks.yaml
-    #- ./tubearchivist/ks.yaml
+    - ./tubearchivist/ks.yaml
     #- ./tube
