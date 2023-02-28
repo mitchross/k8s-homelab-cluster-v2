@@ -2,30 +2,27 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-    name: youtube-nfs
+  name: youtube-nfs
 spec:
-    storageClassName: youtube-nfs
-    capacity:
-        storage: 1Mi
-    accessModes:
-        - ReadWriteMany
-    persistentVolumeReclaimPolicy: Retain
-    nfs:
-        server: 192.168.1.133
-        path: /mnt/bigtank/k8s/youtube
-    mountOptions:
-        - hard
-        - noatime
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: youtube-nfs
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: 192.168.1.133
+    path: /mnt/bigtank/k8s/youtube
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-    name: youtube-nfs
-    namespace: default
+  name: youtube-nfs
+  namespace: default
 spec:
-    accessModes:
-        - ReadWriteMany
-    storageClassName: youtube-nfs
-    resources:
-        requests:
-            storage: 1Mi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: iyoutubemmich-nfs
+  resources:
+    requests:
+      storage: 1Mi
