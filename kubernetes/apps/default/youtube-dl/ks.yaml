@@ -31,7 +31,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: ./kubernetes/apps/default/ytdl-material/mongo
+  path: ./kubernetes/apps/default/youtube-dl/mongo
   prune: true
   sourceRef:
     kind: GitRepository
