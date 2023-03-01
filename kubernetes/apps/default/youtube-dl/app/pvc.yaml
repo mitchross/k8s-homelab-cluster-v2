@@ -4,15 +4,19 @@ kind: PersistentVolume
 metadata:
   name: youtube-nfs
 spec:
+  storageClassName: youtube-nfs
   capacity:
     storage: 1Mi
   accessModes:
     - ReadWriteMany
-  storageClassName: youtube-nfs
+
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: 192.168.1.133
     path: /mnt/bigtank/k8s/youtube
+  mountOptions:
+      - hard
+      - noatime
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -22,7 +26,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: iyoutubemmich-nfs
+  storageClassName: youtube-nfs
   resources:
     requests:
       storage: 1Mi
