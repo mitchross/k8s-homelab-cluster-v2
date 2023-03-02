@@ -20,7 +20,7 @@ spec:
       strategy: RollingUpdate
     image:
       repository: docker.io/library/mongo
-      tag: latest
+      tag: 4.4.6
     env:
       MONGO_INITDB_ROOT_USERNAME:
         valueFrom:
@@ -49,16 +49,3 @@ spec:
           http:
             port: 27017
 
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: kubernetes.io/arch
-                  operator: In
-                  values:
-                    - "amd64"
-                - key: feature.node.kubernetes.io/cpu-cpuid.AVX
-                  operator: In
-                  values:
-                    - "true"
