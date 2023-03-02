@@ -4,6 +4,7 @@ namespace: default
 resources:
   - ./helmrelease.yaml
   - ./secret.sops.yaml
+  - ./nfs-pvc.yaml
 labels:
   - pairs:
       app.kubernetes.io/name: ytdl-material
