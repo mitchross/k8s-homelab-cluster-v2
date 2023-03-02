@@ -41,7 +41,7 @@ spec:
       data:
         enabled: true
         mountPath: /data/db
-        existingClaim: youtube-nfs
+        existingClaim: mongo-nfs
         subPath: mongo
 
     service:
