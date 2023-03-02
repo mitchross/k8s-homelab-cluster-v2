@@ -24,14 +24,15 @@ spec:
     env:
       MONGO_INITDB_ROOT_USERNAME:
         valueFrom:
-          secretKeyRef:
+          secretRef:
             name: youtubedl-secret
             key: MONGO_USERNAME
       MONGO_INITDB_ROOT_PASSWORD:
         valueFrom:
-          secretKeyRef:
+          secretRef:
             name: youtubedl-secret
             key: MONGO_PASSWORD
+            
     podSecurityContext:
       runAsUser: 1000
       runAsGroup: 1000
