@@ -37,12 +37,12 @@ spec:
       runAsGroup: 1000
       fsGroup: 1000
       # fsGroupChangePolicy: "OnRootMismatch"
-    persistence:
-      data:
-        enabled: true
-        mountPath: /data/db
-        existingClaim: youtube-nfs
-        subPath: mongo
+    volumeClaimTemplates:
+            - name: mongo
+              mountPath: /data/db
+              size: 5Gi
+              storageClass: local-path
+
     service:
       main:
         ports:
