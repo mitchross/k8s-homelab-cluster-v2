@@ -6,4 +6,5 @@ namespace: default
 resources:
   - ./mongo
   - ./youtube-dl
+  - ./secret.sops.yaml
 
