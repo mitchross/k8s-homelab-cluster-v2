@@ -20,7 +20,7 @@ spec:
       strategy: RollingUpdate
     image:
       repository: docker.io/library/mongo
-      tag: 4.4.6
+      tag: latest
     env:
       MONGO_INITDB_ROOT_USERNAME:
         valueFrom:
