@@ -47,7 +47,12 @@ spec:
 
     service:
       main:
+        type: LoadBalancer
+        annotations:
+          metallb.universe.tf/loadBalancerIPs: 192.168.1.22
+        externalTrafficPolicy: Local
         ports:
           http:
             port: 27017
+            targetPort: 27017
 
