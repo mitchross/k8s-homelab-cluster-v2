@@ -67,8 +67,10 @@ spec:
         env:
             - name: ROTATE_DOOR
               value: 'True'
-            - name: NET_MODE
-              value: 'LAN'
+            # - name: NET_MODE
+            #   value: 'LAN'
+            - name: RECORD_ALL
+              value: 'True'
 
         envFrom:
             - secretRef:
@@ -77,7 +79,7 @@ spec:
             media:
                 enabled: true
                 existingClaim: wyze-nfs
-                mountPath: /recordings
+                mountPath: /record
         resources:
             requests:
                 cpu: 750m
