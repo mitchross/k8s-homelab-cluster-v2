@@ -67,6 +67,8 @@ spec:
         env:
             - name: ROTATE_DOOR
               value: 'True'
+            - name: NET_MODE
+              value: 'LAN'
 
         envFrom:
             - secretRef:
