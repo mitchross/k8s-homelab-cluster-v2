@@ -71,6 +71,8 @@ spec:
             #   value: 'LAN'
             - name: RECORD_ALL
               value: 'True'
+            - name: RECORD_LENGTH
+              value: '1800'
 
         envFrom:
             - secretRef:
