@@ -1,0 +1,33 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: wyze-nfs
+  namespace: default
+spec:
+  storageClassName: wyze-nfs
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadWriteMany
+
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: 192.168.1.80
+    path: /mnt/LabTank/k8s/wyze
+  mountOptions:
+      - hard
+      - noatime
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: wyze-nfs
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: wyze-nfs
+  resources:
+    requests:
+      storage: 1Mi

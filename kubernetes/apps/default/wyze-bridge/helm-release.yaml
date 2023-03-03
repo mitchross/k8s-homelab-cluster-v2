@@ -73,6 +73,11 @@ spec:
         envFrom:
             - secretRef:
                   name: wyze-secrets
+        persistence:
+            media:
+                enabled: true
+                existingClaim: wyze-nfs
+                mountPath: /recordings
         resources:
             requests:
                 cpu: 750m
