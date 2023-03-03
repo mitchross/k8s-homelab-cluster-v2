@@ -14,5 +14,5 @@ resources:
     - ./redis/ks.yaml
     - ./speedtest
     - ./immich/ks.yaml
-    - ./youtube-dl/ks.yaml
+   # - ./youtube-dl/ks.yaml
 
