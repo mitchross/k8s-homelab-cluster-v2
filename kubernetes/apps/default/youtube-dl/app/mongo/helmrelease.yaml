@@ -24,12 +24,12 @@ spec:
     env:
       MONGO_INITDB_ROOT_USERNAME:
         valueFrom:
-          secretRef:
+          secretKeyRef:
             name: youtubedl-secret
             key: MONGO_USERNAME
       MONGO_INITDB_ROOT_PASSWORD:
         valueFrom:
-          secretRef:
+          secretKeyRef:
             name: youtubedl-secret
             key: MONGO_PASSWORD
             
