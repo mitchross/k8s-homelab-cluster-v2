@@ -22,7 +22,6 @@ spec:
       kind: HelmRelease
       name: ytdl-material
       namespace: default
-
   interval: 30m
   retryInterval: 1m
   timeout: 5m
