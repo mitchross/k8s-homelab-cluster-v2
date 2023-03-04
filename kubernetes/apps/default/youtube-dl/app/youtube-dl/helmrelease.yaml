@@ -31,8 +31,6 @@ spec:
       tag: nightly-2023-02-28
     env:
       TZ: "America/Detroit"
-      UID: "1000"
-      GID: "1000"
       ytdl_use_local_db: "false"
       write_ytdl_config: "true"
       ytdl_mongodb_connection_string:
@@ -40,11 +38,7 @@ spec:
           secretKeyRef:
             name: &secret youtubedl-secret
             key: MONGO_CONNECTION
-    podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
-      fsGroupChangePolicy: "OnRootMismatch"
+
     persistence:
       data:
         enabled: true
