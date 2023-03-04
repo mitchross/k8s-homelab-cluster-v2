@@ -32,7 +32,7 @@ spec:
           secretKeyRef:
             name: youtubedl-secret
             key: MONGO_PASSWORD
-            
+
     podSecurityContext:
       runAsUser: 1000
       runAsGroup: 1000
@@ -56,3 +56,10 @@ spec:
             port: 27017
             targetPort: 27017
 
+    resources:
+      requests:
+        cpu: 100m
+        memory: 250Mi
+
+      limits:
+        memory: 250Mi
