@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - helmrelease.yaml
   - nfs-pvc.yaml
+  - nfs-cache-pvc.yaml

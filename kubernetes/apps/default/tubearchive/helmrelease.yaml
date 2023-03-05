@@ -35,14 +35,14 @@ spec:
     redis:
       master:
         persistence:
-          storageClass: tubearchivist-nfs
+          storageClass: tubearchivist-cache-nfs
     elasticsearch:
       image:
         repository: elasticsearch
         tag: 8.6.0
       master:
         persistence:
-          storageClass: tubearchivist-nfs
+          storageClass: tubearchivist-cache-nfs
       extraEnvVars:
         - name: path.repo
           value: /usr/share/elasticsearch/data/snapshot
