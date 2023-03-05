@@ -23,8 +23,8 @@ spec:
       retries: 30
   values:
     image:
-      repository: stiforr/tubearchivist
-      tag: custom-0.3.3-testing
+      repository: bbilly1/tubearchivist
+      tag: v0.3.4
     env:
       TA_HOST: "tubearchivist.vanillax.me"
       TA_PASSWORD: "password"
