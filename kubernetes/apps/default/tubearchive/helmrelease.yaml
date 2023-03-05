@@ -80,7 +80,7 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: youtube
         hosts:
-          - host: &host "youtube.vanillax.me"
+          - host: &host "tubearchivist.vanillax.me"
             paths:
               - path: /
                 pathType: Prefix
