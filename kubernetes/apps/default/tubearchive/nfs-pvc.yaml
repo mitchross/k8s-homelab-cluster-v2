@@ -1,0 +1,32 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: tubearchivist-nfs
+spec:
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: tubearchivist-nfs
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: 192.168.1.133
+    path: /mnt/bigtank/k8s/tubearchive
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tubearchivist-nfs
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: tubearchivist-nfs
+  resources:
+    requests:
+      storage: 1Mi
