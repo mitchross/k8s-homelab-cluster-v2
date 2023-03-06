@@ -34,7 +34,7 @@ spec:
     persistence:
       config:
         enabled: true
-        storageClass: youtube-nfs
+        storageClass: local-path
         mountPath: /config
         size: 5Gi
       downloads:
