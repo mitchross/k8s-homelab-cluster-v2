@@ -40,8 +40,8 @@ spec:
       TZ: America/New_York
       ES_URL: http://tubearchivist-elasticsearch.default.svc.cluster.local:9200
       REDIS_HOST: redis-lb.default.svc.cluster.local
-      HOST_UID: 1000
-      HOST_GID: 1000
+      HOST_UID: 568
+      HOST_GID: 568
       TA_HOST: &host tubearchivist.vanillax.me
       TA_USERNAME: admin
     envFrom:
@@ -70,6 +70,13 @@ spec:
         tls:
           - hosts:
               - *host
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: "OnRootMismatch"
+      supplementalGroups:
+        - 100
     volumeClaimTemplates:
       - name: config
         mountPath: /cache
