@@ -30,6 +30,8 @@ spec:
       tag: "latest"
     env:
       TZ: "America/Detroit"
+      PUID: 1000
+      PGID: 1000
     volumeClaimTemplates:
       - name: config
         mountPath: /config

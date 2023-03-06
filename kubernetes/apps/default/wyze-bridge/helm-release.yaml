@@ -67,12 +67,14 @@ spec:
         env:
             - name: ROTATE_DOOR
               value: 'True'
-            # - name: NET_MODE
-            #   value: 'LAN'
+            - name: NET_MODE
+              value: 'LAN'
             - name: RECORD_ALL
               value: 'True'
             - name: RECORD_LENGTH
               value: '1800'
+            - name: FRESH_DATE
+              value: 'True'
 
         envFrom:
             - secretRef:
