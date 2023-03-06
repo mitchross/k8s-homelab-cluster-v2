@@ -66,9 +66,9 @@ spec:
         subPath: youtube
       config:
         enabled: false
-        storageClass: tubearchivist-nfs
+        storageClass: tubearchivist-cache-nfs
       cache:
-        storageClass: tubearchivist-nfs
+        storageClass: tubearchivist-cache-nfs
         accessMode: ReadWriteMany
         size: 20Gi
     ingress:
