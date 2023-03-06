@@ -3,6 +3,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: tubesync-config-nfs
+  namespace: default
 spec:
   capacity:
     storage: 1Mi
