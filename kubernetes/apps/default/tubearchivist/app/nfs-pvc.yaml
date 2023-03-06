@@ -12,7 +12,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: 192.168.1.133
-    path: /mnt/bigtank/k8s/tubearchivist
+    path: /mnt/bigtank/k8s/tubearchive
   mountOptions:
     - hard
     - nfsvers=4.1
