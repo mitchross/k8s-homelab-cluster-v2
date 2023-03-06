@@ -57,7 +57,7 @@ spec:
       volumePermissions:
         enabled: true
       global:
-        kibanaEnabled: true
+        kibanaEnabled: false
 
     persistence:
       youtube:
