@@ -37,6 +37,7 @@ spec:
         storageClass: tubesync-config-nfs
         mountPath: /config
         size: 5Gi
+        subPath: youtube
       downloads:
         enabled: true
         existingClaim: youtube-nfs
