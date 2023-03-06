@@ -37,12 +37,10 @@ spec:
         size: 1Gi
         storageClass: local-path
     persistence:
-
       downloads:
         enabled: true
         existingClaim: youtube-nfs
         mountPath: /downloads
-        subPath: YoutubeDL
 
     service:
       main:
