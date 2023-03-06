@@ -30,15 +30,13 @@ spec:
       tag: "latest"
     env:
       TZ: "America/Detroit"
-      PUID: 1000
-      PGID: 1000
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClass: local-path
+
     persistence:
+      config:
+        enabled: true
+        storageClass: tubesync-config-nfs
+        mountPath: /config
+        size: 5Gi
       downloads:
         enabled: true
         existingClaim: youtube-nfs

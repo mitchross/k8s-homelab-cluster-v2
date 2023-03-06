@@ -4,6 +4,7 @@ namespace: default
 resources:
   - ./helmrelease.yaml
   - ./nfs-yt-pvc.yaml
+  - ./nfs-config-pvc.yaml
 labels:
   - pairs:
       app.kubernetes.io/name: tubesync

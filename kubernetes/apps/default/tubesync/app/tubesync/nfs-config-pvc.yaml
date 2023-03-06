@@ -1,0 +1,32 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: tubesync-config-nfs
+spec:
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: tubesync-config-nfs
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: 192.168.1.133
+    path: /mnt/ssd_tank/compute/tubesync-config
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tubesync-config-nfs
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: tubesync-config-nfs
+  resources:
+    requests:
+      storage: 1Mi
