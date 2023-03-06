@@ -30,13 +30,14 @@ spec:
       tag: "latest"
     env:
       TZ: "America/Detroit"
-
-    persistence:
-      config:
-        enabled: true
-        storageClass: local-path
+    volumeClaimTemplates:
+      - name: config
         mountPath: /config
-        size: 5Gi
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: local-path
+    persistence:
+
       downloads:
         enabled: true
         existingClaim: youtube-nfs
