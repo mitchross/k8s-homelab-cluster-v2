@@ -34,7 +34,7 @@ spec:
     persistence:
       config:
         enabled: true
-        storageClass: tubesync-config-nfs
+        storageClass: youtube-config-nfs
         mountPath: /config
         size: 5Gi
         subPath: youtube
