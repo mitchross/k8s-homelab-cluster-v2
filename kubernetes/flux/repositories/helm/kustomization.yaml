@@ -20,3 +20,4 @@ resources:
   - ./kubernetes-dashboard.yaml
   - ./intel.yaml
   - ./stiforr.yaml
+  - ./csi-driver-nfs.yaml
