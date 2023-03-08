@@ -35,7 +35,7 @@ spec:
       config:
         enabled: true
         storageClass: youtube-config-nfs
-        mountPath: /config
+       # mountPath: /config
         size: 5Gi
       downloads:
         enabled: true
