@@ -34,7 +34,7 @@ spec:
     persistence:
       config:
         enabled: true
-        storageClass: nfs-fast
+        existingClaim: youtube-config-nfs
        # mountPath: /config
         size: 5Gi
       downloads:

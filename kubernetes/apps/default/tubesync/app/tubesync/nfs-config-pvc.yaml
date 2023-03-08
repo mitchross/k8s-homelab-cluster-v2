@@ -2,7 +2,8 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: nfs-fast
+  name: youtube-config-nfs
+  namespace: default
 spec:
   accessModes:
     - ReadWriteMany
