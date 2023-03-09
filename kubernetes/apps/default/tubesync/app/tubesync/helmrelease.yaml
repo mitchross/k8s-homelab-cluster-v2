@@ -31,6 +31,9 @@ spec:
     env:
       TZ: "America/Detroit"
       TUBESYNC_WORKERS: 8
+    envFrom:
+      - secretRef:
+          name: tubesync-db-secret
 
     persistence:
       config:

@@ -5,6 +5,7 @@ resources:
   - ./helmrelease.yaml
   - ./nfs-yt-pvc.yaml
   - ./nfs-config-pvc.yaml
+  - ./secret.sops.yaml
 labels:
   - pairs:
       app.kubernetes.io/name: tubesync
