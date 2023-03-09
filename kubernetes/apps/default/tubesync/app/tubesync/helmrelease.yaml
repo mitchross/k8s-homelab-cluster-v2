@@ -30,6 +30,7 @@ spec:
       tag: "latest"
     env:
       TZ: "America/Detroit"
+      TUBESYNC_WORKERS: 8
 
     persistence:
       config:
