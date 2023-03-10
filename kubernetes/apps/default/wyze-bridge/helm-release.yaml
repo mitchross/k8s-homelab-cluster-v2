@@ -61,7 +61,7 @@ spec:
 
         image:
             repository: ghcr.io/mrlt8/docker-wyze-bridge
-            tag: 1.11.10
+            tag: 1.11.10-hw
             imagePullPolicy: Always
 
         env:
@@ -75,7 +75,8 @@ spec:
               value: '1800'
             - name: FRESH_DATA
               value: 'True'
-
+            - name: FFMPEG_CMD
+              value: 'ffmpeg -loglevel verbose -f h264 -hwaccel qsv -vaapi_device /dev/dri/renderD128 -i - -c:v h264_qsv -rtsp_transport tcp -f rtsp rtsp://0.0.0.0:8554/{cam_name}'
         envFrom:
             - secretRef:
                   name: wyze-secrets
