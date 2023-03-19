@@ -74,3 +74,18 @@ tasks:
     dir: "{{.ANSIBLE_DIR}}"
     cmds:
       - ansible kubernetes -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml -a '/usr/bin/systemctl poweroff' --become
+
+  update:
+    desc: apt-update on the nodes
+    dir: "{{.ANSIBLE_DIR}}"
+    interactive: true
+    cmds:
+      - ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml {{.ANSIBLE_PLAYBOOK_DIR}}/cluster-update.yml
+
+
+  guest-agent:
+    desc: guest-agent install
+    dir: "{{.ANSIBLE_DIR}}"
+    interactive: true
+    cmds:
+      - ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml {{.ANSIBLE_PLAYBOOK_DIR}}/cluster-guest-agent.yml
