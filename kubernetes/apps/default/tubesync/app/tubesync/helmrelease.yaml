@@ -45,6 +45,10 @@ spec:
         enabled: true
         existingClaim: youtube-nfs
         mountPath: /downloads
+    podSecurityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
 
     service:
       main:
