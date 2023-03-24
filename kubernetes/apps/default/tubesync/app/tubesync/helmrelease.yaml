@@ -31,6 +31,8 @@ spec:
     env:
       TZ: "America/Detroit"
       TUBESYNC_WORKERS: 8
+      PUID: 1000
+      PGID: 1000
 
     envFrom:
       - secretRef:
