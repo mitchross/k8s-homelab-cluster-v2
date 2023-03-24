@@ -31,8 +31,7 @@ spec:
     env:
       TZ: "America/Detroit"
       TUBESYNC_WORKERS: 8
-      PUID: 1000
-      PGID: 1000
+
     envFrom:
       - secretRef:
           name: tubesync-db-secret
@@ -41,16 +40,12 @@ spec:
       config:
         enabled: true
         existingClaim: youtube-config-nfs
-       # mountPath: /config
+        # mountPath: /config
         size: 10Gi
       downloads:
         enabled: true
         existingClaim: youtube-nfs
         mountPath: /downloads
-    podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
 
     service:
       main:
