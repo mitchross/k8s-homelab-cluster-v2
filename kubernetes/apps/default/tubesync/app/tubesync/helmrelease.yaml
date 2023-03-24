@@ -40,7 +40,7 @@ spec:
       config:
         enabled: true
         existingClaim: youtube-config-nfs
-        # mountPath: /config
+        mountPath: /config
         size: 10Gi
       downloads:
         enabled: true
