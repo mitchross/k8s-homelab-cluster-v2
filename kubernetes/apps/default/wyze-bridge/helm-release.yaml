@@ -49,7 +49,7 @@ spec:
                 annotations:
                     nginx.ingress.kubernetes.io/whitelist-source-range: |
                         10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
-                    hajimari.io/enable: 'true'
+                    hajimari.io/enable: "true"
                 hosts:
                     - host: &host wyze.${SECRET_DOMAIN}
                       paths:
@@ -66,15 +66,17 @@ spec:
 
         env:
             - name: ROTATE_DOOR
-              value: 'True'
+              value: "True"
             # - name: NET_MODE
             #   value: 'LAN'
             - name: RECORD_ALL
-              value: 'True'
+              value: "True"
             - name: RECORD_LENGTH
-              value: '1800'
+              value: "1800"
             - name: FRESH_DATA
-              value: 'True'
+              value: "True"
+            - name: LIBVA_DRIVER_NAME
+              value: i965
             # - name: FFMPEG_CMD
             #   value: 'ffmpeg -loglevel verbose -f h264 -hwaccel qsv -vaapi_device /dev/dri/renderD128 -i - -c:v h264_qsv -rtsp_transport tcp -f rtsp rtsp://0.0.0.0:8554/{cam_name}'
         envFrom:
@@ -85,12 +87,15 @@ spec:
                 enabled: true
                 existingClaim: wyze-nfs
                 mountPath: /record
+        nodeSelector:
+            google.feature.node.kubernetes.io/coral: "true"
+            intel.feature.node.kubernetes.io/gpu: "true"
+
         resources:
             requests:
-                cpu: 750m
-                memory: 500M
+                cpu: 10m
+                memory: 250Mi
+                gpu.intel.com/i915: "1"
             limits:
-                memory: 2000M
-        nodeSelector:
-            google.feature.node.kubernetes.io/coral: 'true'
-            intel.feature.node.kubernetes.io/gpu: 'true'
+                memory: 2500Mi
+                gpu.intel.com/i915: "1"
