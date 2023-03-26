@@ -27,6 +27,8 @@ spec:
     values:
         strategy:
             type: Recreate
+        securityContext:
+            privileged: true
 
         service:
             main:
