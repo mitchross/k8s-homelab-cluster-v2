@@ -63,7 +63,7 @@ spec:
 
         image:
             repository: ghcr.io/mitchross/dockerwyzebridge-test
-            tag: v2.2
+            tag: v2.3
             imagePullPolicy: Always
 
         env:
