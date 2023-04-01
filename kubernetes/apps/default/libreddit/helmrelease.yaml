@@ -31,8 +31,8 @@ spec:
       tag: latest
 
     env:
-      LIBREDDIT_DEFAULT_SHOW_NSFW: true
-      LIBREDDIT_DEFAULT_WIDE: true
+      LIBREDDIT_DEFAULT_SHOW_NSFW: "on"
+      LIBREDDIT_DEFAULT_WIDE: "on"
 
     service:
       main:
