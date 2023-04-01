@@ -12,6 +12,7 @@ resources:
   - ./nfs-pvc.yaml
   - ./web
   - ./typesense
+  - ./redis
 labels:
   - pairs:
       app.kubernetes.io/name: immich
