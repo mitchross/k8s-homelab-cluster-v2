@@ -39,7 +39,7 @@ spec:
     elasticsearch:
       image:
         repository: elasticsearch
-        tag: 8.7.0
+        tag: 8.6.2
       master:
         persistence:
           storageClass: tubearchivist-cache-nfs
