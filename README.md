@@ -497,8 +497,8 @@ The benefits of a public repository include:
       ```
   6.  Update `./kubernetes/flux/config/cluster.yaml`:
       ```yaml
-      apiVersion: source.toolkit.fluxcd.io/v1beta2
-      kind: GitRepository
+      apiVersion: v1beta2
+      kind: GitRepositorysource.toolkit.fluxcd.io/
       metadata:
         name: home-kubernetes
         namespace: flux-system
