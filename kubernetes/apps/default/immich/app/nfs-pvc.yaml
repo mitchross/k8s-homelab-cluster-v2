@@ -13,7 +13,7 @@ spec:
   nfs:
     server: 192.168.1.133
     path: /mnt/bigtank/k8s/immich
-
+  mountOptions: ["nfsvers=4.2", "nconnect=8", "hard", "noatime"]
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
