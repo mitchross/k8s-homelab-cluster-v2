@@ -17,7 +17,11 @@ spec:
   superuserSecret:
     name: cloudnative-pg
   monitoring:
-    enablePodMonitor: false
+    enablePodMonitor: true
+  postgresql:
+    parameters:
+      max_connections: "600"
+      shared_buffers: 512MB
   backup:
     retentionPolicy: 30d
     barmanObjectStore:
