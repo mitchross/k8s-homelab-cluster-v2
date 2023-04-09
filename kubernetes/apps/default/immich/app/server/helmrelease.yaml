@@ -27,7 +27,6 @@ spec:
   uninstall:
     keepHistory: false
   dependsOn:
-    - name: immich-redis
     - name: immich-typesense
   values:
     initContainers:
@@ -73,4 +72,4 @@ spec:
     resources:
       requests:
         cpu: 100m
-        memory: 250mi
+        memory: 250Mi
