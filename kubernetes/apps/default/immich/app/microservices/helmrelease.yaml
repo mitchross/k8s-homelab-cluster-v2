@@ -62,5 +62,5 @@ spec:
             app.kubernetes.io/name: *app
     resources:
       requests:
-        cpu: 10m
-        memory: 250mi
+        cpu: 200m
+        memory: 350Mi
