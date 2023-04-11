@@ -24,7 +24,7 @@ spec:
   values:
     image:
       repository: bbilly1/tubearchivist
-      tag: v0.3.4
+      tag: v0.3.5
     env:
       TA_HOST: "tubearchivist.vanillax.me"
       TA_PASSWORD: "password"
