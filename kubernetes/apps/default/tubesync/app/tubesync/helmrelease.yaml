@@ -43,7 +43,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: youtube-config-nfs
+        existingClaim: youtube-config-local
         mountPath: /config
         size: 10Gi
       downloads:
