@@ -14,7 +14,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: 192.168.1.133
-    path: /mnt/ssd_tank/compute/tubesync-config
+    path: /mnt/bigtank/k8s/youtube/config
   mountOptions:
       - hard
       - noatime
