@@ -15,6 +15,6 @@ resources:
     - ./speedtest
     - ./immich/ks.yaml
    # - ./youtube-dl/ks.yaml
-    - ./tubesync/ks.yaml
+  #  - ./tubesync/ks.yaml
    # - ./tubearchivist/ks.yaml
 
