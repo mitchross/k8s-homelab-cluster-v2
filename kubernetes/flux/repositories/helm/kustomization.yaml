@@ -21,3 +21,4 @@ resources:
   - ./intel.yaml
   - ./stiforr.yaml
   - ./csi-driver-nfs.yaml
+  - ./rook-ceph.yaml
