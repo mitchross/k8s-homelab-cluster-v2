@@ -76,9 +76,9 @@ spec:
           - name: k3s-worker-pve-1
             devices:
               - name: /dev/disk/by-id/ata-T-FORCE_512GB_TPBF2303010020100802
-          - name: k3s-worker-dell-1
+          - name: k3s-worker-nuc-1
             devices:
-              - name: /dev/disk/by-id/ata-T-FORCE_512GB_TPBF2303010020100298
+              - name: /dev/disk/by-id/scsi-0ATA_T-FORCE_512GB_TPBF2303010020100298
     cephBlockPools:
       - name: ceph-blockpool
         spec:
