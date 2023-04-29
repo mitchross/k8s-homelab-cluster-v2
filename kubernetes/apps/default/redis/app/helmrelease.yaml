@@ -29,7 +29,7 @@ spec:
   values:
     global:
       # imageRegistry: public.ecr.aws
-      storageClass: local-path
+      storageClass: ceph-block
     auth:
       enabled: false
       sentinel: false

@@ -75,7 +75,7 @@ spec:
         mountPath: /cache
         accessMode: ReadWriteOnce
         size: 1Gi
-        storageClass: local-path
+        storageClass: ceph-block
     persistence:
       library:
         enabled: true
