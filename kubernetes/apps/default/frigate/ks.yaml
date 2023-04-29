@@ -8,7 +8,6 @@ metadata:
 spec:
     dependsOn:
         - name: cluster-apps-intel-device-plugin-gpu
-        - name: cluster-apps-node-feature-rules
         - name: cluster-apps-rook-ceph-cluster
     path: ./kubernetes/apps/default/frigate/app
     prune: true
