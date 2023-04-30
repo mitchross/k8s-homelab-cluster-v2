@@ -33,6 +33,7 @@ spec:
         - name: cluster-apps-cloudnative-pg
         - name: cluster-apps-minio-app
         - name: cluster-apps-local-path-provisioner
+        - name: cluster-apps-rook-ceph-cluster
 
     path: ./kubernetes/apps/default/cloudnative-pg/cluster
     prune: true
