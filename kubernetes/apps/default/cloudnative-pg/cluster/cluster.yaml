@@ -4,7 +4,7 @@ apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
   name: postgres
-  namespace: databases
+  namespace: default
   annotations:
     kyverno.io/ignore: 'true'
 spec:
@@ -13,7 +13,7 @@ spec:
   primaryUpdateStrategy: unsupervised
   storage:
     size: 20Gi
-    storageClass: ceph-block
+    storageClass: local-path
   superuserSecret:
     name: cloudnative-pg
   monitoring:
