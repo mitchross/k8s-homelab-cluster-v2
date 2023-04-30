@@ -43,7 +43,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: youtube-config-nfs
+        storageClass: ceph-block
         mountPath: /config
         size: 10Gi
       downloads:
