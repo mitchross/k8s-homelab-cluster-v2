@@ -5,7 +5,7 @@ resources:
     - ./namespace.yaml
     - ./echo-server/ks.yaml
     - ./hajimari/ks.yaml
-    #- ./frigate/ks.yaml
+    - ./frigate/ks.yaml
     - ./mqtt
     - ./wyze-bridge
     - ./libreddit
