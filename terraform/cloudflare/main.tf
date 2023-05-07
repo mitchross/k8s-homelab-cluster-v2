@@ -91,3 +91,5 @@ resource "cloudflare_record" "root" {
   type    = "CNAME"
   ttl     = 1
 }
+
+

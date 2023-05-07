@@ -20,3 +20,21 @@ tasks:
     dir: "{{.TERRAFORM_DIR}}/cloudflare"
     cmds:
       - terraform apply {{.CLI_ARGS}}
+
+  init-proxmox:
+    desc: Initialize terraform dependencies
+    dir: "{{.TERRAFORM_DIR}}/proxmox"
+    cmds:
+      - terraform init {{.CLI_ARGS}}
+
+  plan-proxmox:
+    desc: Show the changes terraform will make
+    dir: "{{.TERRAFORM_DIR}}/proxmox"
+    cmds:
+      - terraform plan {{.CLI_ARGS}}
+
+  apply-proxmox:
+    desc: Apply the changes to Proxmox
+    dir: "{{.TERRAFORM_DIR}}/proxmox"
+    cmds:
+      - terraform apply {{.CLI_ARGS}}
