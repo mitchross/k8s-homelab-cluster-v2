@@ -50,8 +50,8 @@ spec:
     server: 192.168.1.133
     path: /mnt/bigtank/k8s/youtube/config
   mountOptions:
-      - hard
-      - noatime
+    - hard
+    - noatime
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

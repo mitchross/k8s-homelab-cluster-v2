@@ -38,8 +38,6 @@ spec:
       - secretRef:
           name: tubesync-db-secret
 
-
-      
     persistence:
       config:
         enabled: true

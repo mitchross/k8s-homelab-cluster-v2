@@ -5,7 +5,7 @@ metadata:
   name: &app cloudflared
   namespace: networking
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
       chart: app-template
@@ -14,53 +14,89 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-      interval: 5m
+  maxHistory: 3
   install:
     createNamespace: true
     remediation:
-      retries: 5
+      retries: 3
   upgrade:
+    cleanupOnFail: true
     remediation:
-      retries: 5
+      retries: 3
+  uninstall:
+    keepHistory: false
   values:
-    global:
-      nameOverride: *app
+    controller:
+      replicas: 1
+      strategy: RollingUpdate
+      annotations:
+        reloader.stakater.com/auto: "true"
     image:
-      repository: cloudflare/cloudflared
+      repository: docker.io/cloudflare/cloudflared
       tag: 2023.5.0
+    env:
+      NO_AUTOUPDATE: "true"
+      TUNNEL_CRED_FILE: /etc/cloudflared/creds/credentials.json
+      TUNNEL_METRICS: 0.0.0.0:8080
+      TUNNEL_TRANSPORT_PROTOCOL: auto
+      TUNNEL_ID:
+        valueFrom:
+          secretKeyRef:
+            name: cloudflared-secret
+            key: TUNNEL_ID
     args:
       - tunnel
       - --config
-      - /etc/cloudflared/default.yaml
-      - --metrics
-      - 0.0.0.0:9090
+      - /etc/cloudflared/config/config.yaml
       - run
+      - "$(TUNNEL_ID)"
     service:
       main:
-        nameOverride: metrics
         ports:
           http:
-            port: 9090
+            port: 8080
+    serviceMonitor:
+      main:
+        enabled: true
+        endpoints:
+          - port: http
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 30s
+    probes:
+      liveness: &probes
+        enabled: true
+        custom: true
+        spec:
+          httpGet:
+            path: /ready
+            port: http
+          initialDelaySeconds: 0
+          periodSeconds: 10
+          timeoutSeconds: 1
+          failureThreshold: 3
+      readiness: *probes
+      startup:
+        enabled: false
     persistence:
       config:
         enabled: true
         type: configMap
-        name: cloudflared-config
-        subPath: default.yaml
-        mountPath: /etc/cloudflared/default.yaml
-        defaultMode: 0775
+        name: cloudflared-configmap
+        subPath: config.yaml
+        mountPath: /etc/cloudflared/config/config.yaml
         readOnly: true
       creds:
         enabled: true
         type: secret
-        name: cloudflared-credentials
-        mountPath: /etc/cloudflared/creds.json
-        subPath: creds.json
-        defaultMode: 0775
+        name: cloudflared-secret
+        subPath: credentials.json
+        mountPath: /etc/cloudflared/creds/credentials.json
         readOnly: true
     resources:
       requests:
-        memory: 64Mi
-        cpu: 10m
+        cpu: 5m
+        memory: 10Mi
       limits:
-        memory: 128Mi
+        memory: 256Mi

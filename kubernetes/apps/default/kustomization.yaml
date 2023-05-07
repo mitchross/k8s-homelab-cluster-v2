@@ -13,7 +13,5 @@ resources:
     - ./cloudnative-pg/ks.yaml
     - ./redis/ks.yaml
     - ./speedtest
-   # - ./immich/ks.yaml
+    # - ./immich/ks.yaml
     - ./tubesync/ks.yaml
-
-
