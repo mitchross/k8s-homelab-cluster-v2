@@ -14,3 +14,4 @@ rules:
     max-spaces-inside: 0
   indentation: enable
   comments-indentation: disable
+  trailing-spaces: disable
