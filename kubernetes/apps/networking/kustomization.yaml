@@ -3,9 +3,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./namespace.yaml
-  # not needed with cloudflare tunnels- ./cloudflare-ddns/ks.yaml
+  - ./cloudflared/ks.yaml
   - ./external-dns/ks.yaml
   - ./ingress-nginx/ks.yaml
   - ./k8s-gateway/ks.yaml
   - ./metallb/ks.yaml
-  - ./cloudflared/ks.yaml
