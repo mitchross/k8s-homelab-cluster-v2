@@ -1,22 +1,16 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/nfd.k8s-sigs.io/nodefeaturerule_v1alpha1.json
 apiVersion: nfd.k8s-sigs.io/v1alpha1
 kind: NodeFeatureRule
 metadata:
   name: google-coral-device
 spec:
   rules:
-    - name: google.coral
+    - # Google Coral USB Accelerator
+      name: google.coral
       labels:
         google.feature.node.kubernetes.io/coral: "true"
       matchFeatures:
         - feature: usb.device
           matchExpressions:
-            vendor:
-              op: In
-              value:
-                - "18d1" # Google Coral USB Accelerator
-                - "1a6e" # Global Unichip Corp.
-            product:
-              op: In
-              value:
-                - "9302" # Google Coral USB Accelerator product
-                - "089a" # Global Unichip Corp. product
+            vendor: { op: In, value: ["1a6e", "089a"] }
