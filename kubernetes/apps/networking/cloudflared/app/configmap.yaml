@@ -10,7 +10,7 @@ metadata:
     reloader.stakater.com/match: "true"
 data:
   default.yaml: |
-    tunnel: 250e133d-a96f-4d7a-a58c-f81f0bf07f0c
+    tunnel: 7c53a114-1f08-4ede-9c37-6b24971b20d5
     credentials-file: /etc/cloudflared/creds.json
     no-autoupdate: true
     ingress:
