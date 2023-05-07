@@ -65,7 +65,7 @@ spec:
             # repository: ghcr.io/mitchross/dockerwyzebridge-test
             # tag: v3
             repository: ghcr.io/mrlt8/docker-wyze-bridge
-            tag: 2.1.5-hw
+            tag: 2.1.4-hw
             imagePullPolicy: Always
 
         env:
@@ -95,8 +95,12 @@ spec:
                 enabled: true
                 existingClaim: wyze-nfs
                 mountPath: /record
+                
         nodeSelector:
+            node-role.kubernetes.io/worker: "true"
+            google.feature.node.kubernetes.io/coral: "true"
             intel.feature.node.kubernetes.io/gpu: "true"
+
         resources:
             requests:
                 cpu: 10m

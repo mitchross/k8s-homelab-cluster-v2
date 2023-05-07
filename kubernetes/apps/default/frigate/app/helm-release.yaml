@@ -130,6 +130,7 @@ spec:
         #   hostPathType: CharDevice
 
         nodeSelector:
+            node-role.kubernetes.io/worker: "true"
             google.feature.node.kubernetes.io/coral: "true"
             intel.feature.node.kubernetes.io/gpu: "true"
 
