@@ -15,7 +15,7 @@ spec:
         kind: HelmRepository
         name: rook-ceph
         namespace: flux-system
-  maxHistory: 2
+  maxHistory: 3
   install:
     createNamespace: true
     remediation:
@@ -34,30 +34,21 @@ spec:
       dashboard:
         ingressClassName: nginx
         annotations:
-          nginx.ingress.kubernetes.io/whitelist-source-range: |
-            10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
           hajimari.io/appName: "Rook"
           hajimari.io/icon: mdi:chess-rook
         host:
-          name: &host rook.vanillax.me
+          name: &host "rook.${SECRET_DOMAIN}"
           path: /
         tls:
           - hosts:
               - *host
-    toolbox:
-      enabled: true
     configOverride: |
       [global]
       bdev_enable_discard = true
       bdev_async_discard = true
-      osd_class_update_on_start = false
     cephClusterSpec:
       network:
         provider: host
-        connections:
-          compression:
-            # TODO: Test out enabling this on next cluster rebuild
-            enabled: false
       crashCollector:
         disable: false
       dashboard:
@@ -72,13 +63,13 @@ spec:
         nodes:
           - name: k3s-worker-pve3-1
             devices:
-              - name: /dev/sdb
+              - name: /dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi10
           - name: k3s-worker-pve-1
             devices:
-              - name: /dev/sdb
+              - name: /dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi5
           - name: k3s-worker-nuc-1
             devices:
-              - name: /dev/sda
+              - name: /dev/disk/by-id/scsi-SATA_T-FORCE_512GB_TPBF2303010020100298
     cephBlockPools:
       - name: ceph-blockpool
         spec:
@@ -101,69 +92,5 @@ spec:
             csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
             csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
             csi.storage.k8s.io/fstype: ext4
-    cephFileSystems:
-      - name: ceph-filesystem
-        spec:
-          metadataPool:
-            replicated:
-              size: 3
-          dataPools:
-            - failureDomain: host
-              replicated:
-                size: 3
-              name: data0
-          metadataServer:
-            activeCount: 1
-            activeStandby: true
-            resources:
-              requests:
-                cpu: 500m
-                memory: 2Gi
-              limits:
-                memory: 2Gi
-        storageClass:
-          enabled: true
-          isDefault: false
-          name: ceph-filesystem
-          pool: data0
-          reclaimPolicy: Delete
-          allowVolumeExpansion: true
-          parameters:
-            csi.storage.k8s.io/provisioner-secret-name: rook-csi-cephfs-provisioner
-            csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph
-            csi.storage.k8s.io/controller-expand-secret-name: rook-csi-cephfs-provisioner
-            csi.storage.k8s.io/controller-expand-secret-namespace: rook-ceph
-            csi.storage.k8s.io/node-stage-secret-name: rook-csi-cephfs-node
-            csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
-            csi.storage.k8s.io/fstype: ext4
-    cephObjectStores:
-      - name: ceph-objectstore
-        spec:
-          metadataPool:
-            failureDomain: host
-            replicated:
-              size: 3
-          dataPool:
-            failureDomain: host
-            erasureCoded:
-              dataChunks: 2
-              codingChunks: 1
-          preservePoolsOnDelete: true
-          gateway:
-            port: 80
-            resources:
-              requests:
-                cpu: 500m
-                memory: 1Gi
-              limits:
-                memory: 2Gi
-            instances: 2
-          healthCheck:
-            bucket:
-              interval: 60s
-        storageClass:
-          enabled: true
-          name: ceph-bucket
-          reclaimPolicy: Delete
-          parameters:
-            region: us-east-1
+    cephFileSystems: []
+    cephObjectStores: []
