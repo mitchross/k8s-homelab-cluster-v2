@@ -72,13 +72,13 @@ spec:
         nodes:
           - name: k3s-worker-pve3-1
             devices:
-              - name: /dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi10
+              - name: /dev/sdb
           - name: k3s-worker-pve-1
             devices:
-              - name: /dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi5
+              - name: /dev/sdb
           - name: k3s-worker-nuc-1
             devices:
-              - name: /dev/disk/by-id/scsi-SATA_T-FORCE_512GB_TPBF2303010020100298
+              - name: /dev/sda
     cephBlockPools:
       - name: ceph-blockpool
         spec:
