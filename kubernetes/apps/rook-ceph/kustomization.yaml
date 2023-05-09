@@ -1,6 +1,5 @@
 ---
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
-#force update
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
