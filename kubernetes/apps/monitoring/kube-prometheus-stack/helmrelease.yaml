@@ -213,6 +213,13 @@ spec:
         retention: 6h
         enableAdminAPI: true
         walCompression: true
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "2048Mi"
+            cpu: "500m"
 
     thanosRuler:
       enabled: false
