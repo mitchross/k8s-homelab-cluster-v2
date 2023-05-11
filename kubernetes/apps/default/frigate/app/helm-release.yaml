@@ -43,9 +43,6 @@ spec:
         #       name: frigate-secret
         service:
             main:
-                annotations:
-                    metallb.universe.tf/loadBalancerIPs: ${SVC_FRIGATE_ADDR}
-
                 ports:
                     http:
                         port: &port 5000
