@@ -43,8 +43,8 @@ spec:
         #       name: frigate-secret
         service:
             main:
-                # annotations:
-                #     metallb.universe.tf/loadBalancerIPs: ${SVC_FRIGATE_ADDR}
+                annotations:
+                    metallb.universe.tf/loadBalancerIPs: ${SVC_FRIGATE_ADDR}
 
                 ports:
                     http:
