@@ -42,9 +42,9 @@ spec:
         enabled: true
         ingressClassName: nginx
         annotations:
-          # external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
-          # external-dns.home.arpa/enabled: "true"
-          hajimari.io/icon: video-input-antenna
+          nginx.ingress.kubernetes.io/whitelist-source-range: |
+            10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+          hajimari.io/enable: "true"
         hosts:
           - host: &host "speedtest.${SECRET_DOMAIN}"
             paths:
