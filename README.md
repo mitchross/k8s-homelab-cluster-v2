@@ -1,8 +1,16 @@
-# Template for deploying k3s backed by Flux
+# Template for deploying Kubernetes (k3s) backed by Flux
 
-This is a highly opinionated template for deploying a single [k3s](https://k3s.io) cluster with [Ansible](https://www.ansible.com) and [SOPS](https://toolkit.fluxcd.io/guides/mozilla-sops/). Upon completion you will be able to expose web applications you choose to the internet with [Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/)
+This is a highly opinionated template for deploying a single Kubernetes ([k3s](https://k3s.io)) cluster with [Ansible](https://www.ansible.com) and managing applications with [Flux](https://toolkit.fluxcd.io/). Upon completion you will be able to expose web applications you choose to the internet with [Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/).
 
-The purpose here is to showcase how you can deploy an entire Kubernetes cluster and show it off to the world using the [GitOps](https://www.weave.works/blog/what-is-gitops-really) tool [Flux](https://toolkit.fluxcd.io/). When completed, your Git repository will be driving the state of your Kubernetes cluster. In addition with the help of the [Ansible](https://github.com/ansible-collections/community.sops), and [Flux](https://toolkit.fluxcd.io/guides/mozilla-sops/) SOPS integrations you'll be able to commit [Age](https://github.com/FiloSottile/age) encrypted secrets to your public repo.
+There are some limitations or nuances to bring up before you would want to take a dive in trying this out:
+
+1. This was designed to run in your home network on bare metal machines or VMs **NOT** in the cloud.
+2. You **MUST** have a domain you can manage on Cloudflare.
+3. Secrets will be commited to your Git repository **AND** they will be encrypted by SOPS.
+4. By default your domain name will **NOT** be visible to the public.
+5. To reach internal-only apps you **MUST** have a DNS server that supports split DNS (Pi-Hole, Blocky, Dnsmasq, Unbound, etc...) deployed somewhere outside the cluster **ON** your home network.
+
+With that out of the way please continue on if you are still interested...
 
 ## Overview
 
@@ -75,7 +83,7 @@ Clone **your new repo** to you local workstation and `cd` into it.
 
 1. Install the following CLI tools on your workstation, if you are **NOT** using [Homebrew](https://brew.sh/) on MacOS or Linux **ignore** steps 4 and 5.
 
-   - Required: [age](https://github.com/FiloSottile/age), [ansible](https://www.ansible.com), [flux](https://toolkit.fluxcd.io/), [weave-gitops](https://docs.gitops.weave.works/docs/installation/weave-gitops/), [go-task](https://github.com/go-task/task), [direnv](https://github.com/direnv/direnv), [ipcalc](http://jodies.de/ipcalc), [jq](https://stedolan.github.io/jq/), [kubectl](https://kubernetes.io/docs/tasks/tools/), [python-pip3](https://pypi.org/project/pip/), [pre-commit](https://github.com/pre-commit/pre-commit), [sops v3](https://github.com/mozilla/sops), [terraform](https://www.terraform.io), [yq v4](https://github.com/mikefarah/yq)
+   - Required: [age](https://github.com/FiloSottile/age), [ansible](https://www.ansible.com), [flux](https://toolkit.fluxcd.io/), [weave-gitops](https://docs.gitops.weave.works/docs/installation/weave-gitops/), [go-task](https://github.com/go-task/task), [direnv](https://github.com/direnv/direnv), [ipcalc](http://jodies.de/ipcalc), [jq](https://stedolan.github.io/jq/), [kubectl](https://kubernetes.io/docs/tasks/tools/), [python-pip3](https://pypi.org/project/pip/), [pre-commit](https://github.com/pre-commit/pre-commit), [sops v3](https://github.com/mozilla/sops), [yq v4](https://github.com/mikefarah/yq)
 
    - Recommended: [helm](https://helm.sh/), [kustomize](https://github.com/kubernetes-sigs/kustomize), [stern](https://github.com/stern/stern), [yamllint](https://github.com/adrienverge/yamllint)
 
@@ -282,7 +290,7 @@ In order to expose services to the internet you will need to create a [Cloudflar
 
 2. Push you changes to git
 
-   📍 **Verify** all the `*.sops.yaml` and `*.sops.yml` files under the `./ansible`, `./kubernetes`, and `./terraform` folders are **encrypted** with SOPS
+   📍 **Verify** all the `*.sops.yaml` and `*.sops.yml` files under the `./ansible`, and `./kubernetes` directories are **encrypted** with SOPS
 
    ```sh
    git add -A
@@ -375,17 +383,22 @@ task cluster:resources
 
 ### 🌐 DNS
 
-📍 The `external-dns` application created in the `networking` namespace will handle creating public DNS records. By default, `echo-server` and the `flux-webhook` are the only public domain exposed on your Cloudflare domain. In order to make additional applications public you must set an ingress annotation (`external-dns.alpha.kubernetes.io/target`) like done in the `HelmRelease` for `echo-server`.
+📍 The `external-dns` application created in the `networking` namespace will handle creating public DNS records. By default, `echo-server` and the `flux-webhook` are the only public sub-domains exposed. In order to make additional applications public you must set an ingress annotation (`external-dns.alpha.kubernetes.io/target`) like done in the `HelmRelease` for `echo-server`.
 
-`k8s_gateway` is deployed on the IP choosen for `${BOOTSTRAP_METALLB_K8S_GATEWAY_ADDR}`. Inorder to test DNS you can point your clients DNS to the `${BOOTSTRAP_METALLB_K8S_GATEWAY_ADDR}` IP address and load `https://hajimari.${BOOTSTRAP_CLOUDFLARE_DOMAIN}` in your browser.
+For split DNS to work it is required to have `${SECRET_DOMAIN}` point to the `${METALLB_K8S_GATEWAY_ADDR}` load balancer IP address on your home DNS server. This will ensure DNS requests for `${SECRET_DOMAIN}` will only get routed to your `k8s_gateway` service thus providing **internal** DNS resolution to your cluster applications/ingresses from any device that uses your home DNS server.
 
-You can also try debugging with the command `dig`, e.g. `dig @${BOOTSTRAP_METALLB_K8S_GATEWAY_ADDR} hajimari.${BOOTSTRAP_CLOUDFLARE_DOMAIN}` and you should get a valid answer containing your `${BOOTSTRAP_METALLB_INGRESS_ADDR}` IP address.
+For and example with Pi-Hole apply the following file and restart dnsmasq:
 
-#### Making internal DNS work with conditional forwarding
+```sh
+# /etc/dnsmasq.d/99-k8s-gateway-forward.conf
+server=/${SECRET_DOMAIN}/${METALLB_K8S_GATEWAY_ADDR}
+```
 
-There are many guides out there on how to set up conditional DNS forwarding (also know as split-horizon DNS or split DNS) for Opnsense, Pi-Hole, Adguard Home and other DNS solutions. What is recommended is to have your `${SECRET_DOMAIN}` point to the `${BOOTSTRAP_METALLB_K8S_GATEWAY_ADDR}` load balancer IP address on one of those solutions. This will ensure only DNS requests for `${SECRET_DOMAIN}` will only get routed to your `k8s_gateway` service thus providing **internal** DNS resolution to your cluster applications/ingresses from any device that uses your home DNS server.
+Now try to resolve an internal-only domain with `dig @${pi-hole-ip} hajimari.${SECRET_DOMAIN}` it should resolve to your `${METALLB_INGRESS_ADDR}` IP.
 
-Now if nothing is working, that is expected. This is DNS after all!
+If having trouble you can ask for help in [this](https://github.com/onedr0p/flux-cluster-template/discussions/719) Github discussion.
+
+If nothing is working, that is expected. This is DNS after all!
 
 ### 🤖 Renovatebot
 
