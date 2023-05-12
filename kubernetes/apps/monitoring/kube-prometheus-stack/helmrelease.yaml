@@ -218,7 +218,7 @@ spec:
             memory: "512Mi"
             cpu: "250m"
           limits:
-            memory: "4048Mi"
+            memory: "4999Mi"
             cpu: "500m"
 
     thanosRuler:
