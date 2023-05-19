@@ -6,7 +6,7 @@ metadata:
   name: &app immich-server
   namespace: default
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: app-template
@@ -34,7 +34,7 @@ spec:
         image: ghcr.io/onedr0p/postgres-initdb:14.8
         imagePullPolicy: IfNotPresent
         envFrom:
-          - secretRef:
+          - secretRef: 
               name: immich-secret
     controller:
       replicas: 2

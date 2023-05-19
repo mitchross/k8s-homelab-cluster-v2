@@ -96,7 +96,7 @@ spec:
                 enabled: true
                 existingClaim: wyze-nfs
                 mountPath: /record
-                
+
         nodeSelector:
             node-role.kubernetes.io/worker: "true"
             google.feature.node.kubernetes.io/coral: "true"
