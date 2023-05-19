@@ -8,10 +8,10 @@ tasks:
     cmds:
       - pre-commit install --install-hooks
 
-  # run:
-  #   desc: Run pre-commit
-  #   cmds:
-  #     - pre-commit run --all-files
+  run:
+    desc: Run pre-commit
+    cmds:
+      - pre-commit run --all-files
 
   update:
     desc: Update pre-commit hooks
