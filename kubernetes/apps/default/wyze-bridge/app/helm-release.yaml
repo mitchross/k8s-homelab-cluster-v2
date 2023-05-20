@@ -66,7 +66,7 @@ spec:
             # repository: ghcr.io/mitchross/dockerwyzebridge-test
             # tag: v3
             repository: ghcr.io/mrlt8/docker-wyze-bridge
-            tag: 2.1.6-hw
+            tag: 2.1.7-hw
             imagePullPolicy: Always
 
         env:
