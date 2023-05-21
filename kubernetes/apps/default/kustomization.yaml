@@ -10,7 +10,7 @@ resources:
     - ./wyze-bridge/ks.yaml
     - ./libreddit
     - ./minio/ks.yaml
-    # - ./cloudnative-pg/ks.yaml
+    - ./cloudnative-pg/ks.yaml
     - ./redis/ks.yaml
     - ./speedtest
     - ./immich/ks.yaml
