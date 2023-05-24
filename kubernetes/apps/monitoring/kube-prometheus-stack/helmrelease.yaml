@@ -102,7 +102,7 @@ spec:
       enabled: true
       endpoints: # ips of servers
         - 192.168.1.200
-        - 192.168.1.202
+        - 192.168.1.201
         - 192.168.1.199
 
     coreDns:
@@ -115,7 +115,7 @@ spec:
       enabled: true
       endpoints: # ips of servers
         - 192.168.1.200
-        - 192.168.1.202
+        - 192.168.1.201
         - 192.168.1.199
       service:
         enabled: true
@@ -126,14 +126,14 @@ spec:
       enabled: true
       endpoints: # ips of servers
         - 192.168.1.200
-        - 192.168.1.202
+        - 192.168.1.201
         - 192.168.1.199
 
     kubeProxy:
       enabled: true
       endpoints: # ips of servers
         - 192.168.1.200
-        - 192.168.1.202
+        - 192.168.1.201
         - 192.168.1.199
 
     kubeStateMetrics:
