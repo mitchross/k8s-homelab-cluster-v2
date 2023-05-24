@@ -6,7 +6,7 @@ metadata:
   name: rook-ceph-operator
   namespace: rook-ceph
 spec:
-  interval: 30m
+  interval: 15m
   chart:
     spec:
       chart: rook-ceph
@@ -28,6 +28,4 @@ spec:
     keepHistory: false
   values:
     monitoring:
-      enabled: true
-    crds:
       enabled: true
