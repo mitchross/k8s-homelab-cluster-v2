@@ -22,3 +22,4 @@ resources:
   - ./stiforr.yaml
   - ./csi-driver-nfs.yaml
   - ./rook-ceph.yaml
+  - ./longhorn-charts.yaml
