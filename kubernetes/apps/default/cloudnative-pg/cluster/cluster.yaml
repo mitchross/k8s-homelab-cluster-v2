@@ -22,22 +22,22 @@ spec:
     parameters:
       max_connections: "600"
       shared_buffers: 512MB
-  backup:
-    retentionPolicy: 30d
-    barmanObjectStore:
-      wal:
-        compression: bzip2
-        maxParallel: 8
-      destinationPath: s3://postgresql/
-      endpointURL: https://s3.${SECRET_DOMAIN}
-      serverName: postgres-v1
-      s3Credentials:
-        accessKeyId:
-          name: cloudnative-pg
-          key: MINIO_ACCESS_KEY
-        secretAccessKey:
-          name: cloudnative-pg
-          key: MINIO_SECRET_KEY
+  # backup:
+  #   retentionPolicy: 30d
+  #   barmanObjectStore:
+  #     wal:
+  #       compression: bzip2
+  #       maxParallel: 8
+  #     destinationPath: s3://postgresql/
+  #     endpointURL: https://s3.${SECRET_DOMAIN}
+  #     serverName: postgres-v1
+  #     s3Credentials:
+  #       accessKeyId:
+  #         name: cloudnative-pg
+  #         key: MINIO_ACCESS_KEY
+  #       secretAccessKey:
+  #         name: cloudnative-pg
+  #         key: MINIO_SECRET_KEY
 #  bootstrap:
 #    recovery:
 #      source: &prev-cluster postgres-v2
