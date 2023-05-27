@@ -90,7 +90,7 @@ spec:
               mountPath: /data
               accessMode: ReadWriteOnce
               size: 5Gi
-              storageClass: ceph-block
+              storageClass: longhorn
         persistence:
             config-file:
                 enabled: true
