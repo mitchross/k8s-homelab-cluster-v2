@@ -5,11 +5,12 @@ resources:
     - ./namespace.yaml
     - ./echo-server/ks.yaml
     - ./hajimari/ks.yaml
-    - ./frigate/ks.yaml
-    - ./mqtt
-    - ./wyze-bridge/ks.yaml
-    - ./libreddit
     - ./minio/ks.yaml
+    - ./cloudnative-pg/ks.yaml
+    - ./wyze-bridge/ks.yaml
+    - ./mqtt
+    - ./frigate/ks.yaml
+    - ./libreddit
     - ./redis/ks.yaml
     - ./speedtest
     - ./immich/ks.yaml
