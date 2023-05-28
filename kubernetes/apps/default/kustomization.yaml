@@ -6,7 +6,7 @@ resources:
     - ./echo-server/ks.yaml
     - ./hajimari/ks.yaml
     - ./minio/ks.yaml
-    - ./cloudnative-pg/ks.yaml
+   # - ./cloudnative-pg/ks.yaml
     - ./wyze-bridge/ks.yaml
     - ./mqtt
     - ./frigate/ks.yaml
