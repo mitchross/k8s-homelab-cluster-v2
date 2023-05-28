@@ -63,8 +63,10 @@ spec:
                           - *host
 
         image:
-            repository: mitchross09/dockerwyzebridge
-            tag: 2.1.7-hw-custom
+            # repository: ghcr.io/mitchross/dockerwyzebridge-test
+            # tag: v3
+            repository: ghcr.io/mrlt8/docker-wyze-bridge
+            tag: dev-hw@sha256:697bad343d0eec71c7f7f5c118bd8d8faaf33b4ff6eed8ba33e6a3839aa780cc
             imagePullPolicy: IfNotPresent
 
         env:
