@@ -63,11 +63,9 @@ spec:
                           - *host
 
         image:
-            # repository: ghcr.io/mitchross/dockerwyzebridge-test
-            # tag: v3
-            repository: ghcr.io/mrlt8/docker-wyze-bridge
-            tag: 2.1.7-hw
-            imagePullPolicy: Always
+            repository: mitchross09/dockerwyzebridge
+            tag: 2.1.7-hw-custom
+            imagePullPolicy: IfNotPresent
 
         env:
             - name: ROTATE_DOOR
