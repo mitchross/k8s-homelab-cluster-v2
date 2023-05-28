@@ -29,7 +29,7 @@ spec:
   values:
     global:
       # imageRegistry: public.ecr.aws
-      storageClass: ceph-block
+      storageClass: longhorn
     auth:
       enabled: false
       sentinel: false
