@@ -98,14 +98,14 @@ spec:
 
         nodeSelector:
             node-role.kubernetes.io/worker: "true"
-            google.feature.node.kubernetes.io/coral: "true"
-            intel.feature.node.kubernetes.io/gpu: "true"
+            # google.feature.node.kubernetes.io/coral: "true"
+            # intel.feature.node.kubernetes.io/gpu: "true"
 
-        resources:
-            requests:
-                cpu: 10m
-                memory: 250Mi
-                gpu.intel.com/i915: "1"
-            limits:
-                memory: 2500Mi
-                gpu.intel.com/i915: "1"
+        # resources:
+        #     requests:
+        #         cpu: 10m
+        #         memory: 250Mi
+        #         gpu.intel.com/i915: "1"
+        #     limits:
+        #         memory: 2500Mi
+        #         gpu.intel.com/i915: "1"
