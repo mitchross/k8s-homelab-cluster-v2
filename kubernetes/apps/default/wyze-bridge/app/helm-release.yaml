@@ -66,7 +66,8 @@ spec:
             # repository: ghcr.io/mitchross/dockerwyzebridge-test
             # tag: v3
             repository: ghcr.io/mrlt8/docker-wyze-bridge
-            tag: dev-hw@sha256:697bad343d0eec71c7f7f5c118bd8d8faaf33b4ff6eed8ba33e6a3839aa780cc
+            tag: dev@sha256:354b289d63e4e86ba6fc8861cb914497dd2241c353cbbaee6aab50bf6efa0b65
+
             imagePullPolicy: IfNotPresent
 
         env:
@@ -82,8 +83,8 @@ spec:
               value: "True"
             - name: LIBVA_DRIVER_NAME
               value: i965
-            - name: H264_ENC
-              value: h264_qsv
+            # - name: H264_ENC
+            #   value: h264_qsv
             # - name: FFMPEG_CMD
             #   value: 'ffmpeg -loglevel verbose -hwaccel qsv -c:v h264_qsv -i - -c:v copy -c:a copy -rtsp_transport tcp -f rtsp rtsp://0.0.0.0:8554/{cam_name}'
         envFrom:
