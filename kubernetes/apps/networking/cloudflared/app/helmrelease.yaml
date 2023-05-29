@@ -5,7 +5,7 @@ metadata:
   name: cloudflared
   namespace: networking
 spec:
-  interval: 30m
+  interval: 15m
   chart:
     spec:
       chart: app-template
@@ -63,7 +63,7 @@ spec:
             scheme: http
             path: /metrics
             interval: 1m
-            scrapetimeout: 5m
+            scrapeTimeout: 30s
     probes:
       liveness: &probes
         enabled: true

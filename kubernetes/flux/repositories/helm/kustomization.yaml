@@ -23,3 +23,4 @@ resources:
   - ./csi-driver-nfs.yaml
   - ./rook-ceph.yaml
   - ./longhorn-charts.yaml
+  - ./kubernetes-dashboard.yaml

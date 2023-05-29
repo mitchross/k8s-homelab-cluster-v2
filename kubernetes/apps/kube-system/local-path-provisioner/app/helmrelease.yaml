@@ -5,7 +5,7 @@ metadata:
   name: local-path-provisioner
   namespace: kube-system
 spec:
-  interval: 30m
+  interval: 15m
   chart:
     spec:
       chart: ./deploy/chart/local-path-provisioner
