@@ -17,7 +17,6 @@ resources:
   - ./prometheus-community-charts.yaml
   - ./tube.yaml
   - ./cloudnative-pg.yaml
-  - ./kubernetes-dashboard.yaml
   - ./intel.yaml
   - ./stiforr.yaml
   - ./csi-driver-nfs.yaml
