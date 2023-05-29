@@ -16,3 +16,4 @@ xanmanning.k3s*
 .terraform.tfstate*
 terraform.tfstate*
 passwords.txt
+.config.env.old
