@@ -41,7 +41,7 @@ spec:
     persistence:
       config:
         enabled: true
-        storageClass: ceph-block
+        storageClass: longhorn
         mountPath: /config
         size: 10Gi
       downloads:
