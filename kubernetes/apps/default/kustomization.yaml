@@ -13,5 +13,5 @@ resources:
   - ./libreddit
   - ./redis/ks.yaml
   - ./speedtest
-  - ./immich/ks.yaml
+#  - ./immich/ks.yaml
   - ./tubesync/ks.yaml
