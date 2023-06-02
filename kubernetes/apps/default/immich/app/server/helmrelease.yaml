@@ -52,11 +52,20 @@ spec:
           name: immich-secret
       - configMapRef:
           name: immich-configmap
-    service:
-      main:
-        ports:
-          http:
-            port: 3001
+        service:
+            main:
+                annotations:
+                    metallb.universe.tf/loadBalancerIPs: 192.168.1.23
+
+                ports:
+                    http:
+                        port: 3001
+                        targetPort: 3001
+                    httpx:
+                        port: 2283
+                        targetPort: 2283
+
+                type: LoadBalancer
     persistence:
       library:
         enabled: true
