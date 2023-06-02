@@ -27,15 +27,15 @@ spec:
   uninstall:
     keepHistory: false
   dependsOn:
-    - name: immich-typesense
+  - name: immich-typesense
   values:
     initContainers:
       01-init-db:
         image: ghcr.io/onedr0p/postgres-initdb:14.8
         imagePullPolicy: IfNotPresent
         envFrom:
-          - secretRef: 
-              name: immich-secret
+        - secretRef:
+            name: immich-secret
     controller:
       replicas: 2
       strategy: RollingUpdate
@@ -46,38 +46,33 @@ spec:
       tag: v1.59.1
     command: /bin/sh
     args:
-      - ./start-server.sh
+    - ./start-server.sh
     envFrom:
-      - secretRef:
-          name: immich-secret
-      - configMapRef:
-          name: immich-configmap
-        service:
-            main:
-                annotations:
-                    metallb.universe.tf/loadBalancerIPs: 192.168.1.23
-
-                ports:
-                    http:
-                        port: 3001
-                        targetPort: 3001
-                    httpx:
-                        port: 2283
-                        targetPort: 2283
-
-                type: LoadBalancer
+    - secretRef:
+        name: immich-secret
+    - configMapRef:
+        name: immich-configmap
+    service:
+      main:
+        annotations:
+          metallb.universe.tf/loadBalancerIPs: 192.168.1.23
+        ports:
+          http:
+            port: 3001
+            targetPort: 3001
+        type: LoadBalancer
     persistence:
       library:
         enabled: true
         existingClaim: immich-nfs
         mountPath: /usr/src/app/upload
     topologySpreadConstraints:
-      - maxSkew: 1
-        topologyKey: kubernetes.io/hostname
-        whenUnsatisfiable: DoNotSchedule
-        labelSelector:
-          matchLabels:
-            app.kubernetes.io/name: *app
+    - maxSkew: 1
+      topologyKey: kubernetes.io/hostname
+      whenUnsatisfiable: DoNotSchedule
+      labelSelector:
+        matchLabels:
+          app.kubernetes.io/name: *app
     resources:
       requests:
         cpu: 200m
