@@ -36,6 +36,15 @@ spec:
         envFrom:
           - secretRef: 
               name: immich-secret
+    service:
+      main:
+        ports:
+          http:
+            port: 3001
+            targetPort: 3001
+        type: LoadBalancer
+        annotations:
+          metallb.universe.tf/loadBalancerIPs: "192.168.1.23"
     controller:
       replicas: 2
       strategy: RollingUpdate
@@ -52,14 +61,6 @@ spec:
           name: immich-secret
       - configMapRef:
           name: immich-configmap
-    service:
-        main:
-            ports:
-                http:
-                  port: &port 3001
-                api:
-                  port: 2283
-
     persistence:
       library:
         enabled: true
