@@ -53,11 +53,13 @@ spec:
       - configMapRef:
           name: immich-configmap
     service:
-      main:
-          annotations:
-            metallb.universe.tf/loadBalancerIPs: 192.168.1.23
-          http:
-            port: 3001
+        main:
+            ports:
+                http:
+                  port: &port 3001
+                api:
+                  port: 2283
+
     persistence:
       library:
         enabled: true
