@@ -33,6 +33,7 @@ spec:
       TUBESYNC_WORKERS: 8
       PUID: 1000
       PGID: 1000
+      TUBESYNC_RESET_DOWNLOAD_DIR: False
 
     envFrom:
       - secretRef:
