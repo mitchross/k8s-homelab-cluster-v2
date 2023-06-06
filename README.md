@@ -27,7 +27,7 @@ The following components will be installed in your [k3s](https://k3s.io/) cluste
 - [ingress-nginx](https://kubernetes.github.io/ingress-nginx/) - Kubernetes ingress controller used for a HTTP reverse proxy of Kubernetes ingresses
 - [local-path-provisioner](https://github.com/rancher/local-path-provisioner) - provision persistent local storage with Kubernetes
 
-_Additional applications include [hajimari](https://github.com/toboshii/hajimari), [error-pages](https://github.com/tarampampam/error-pages), [echo-server](https://github.com/Ealenn/Echo-Server), [system-upgrade-controller](https://github.com/rancher/system-upgrade-controller), [reloader](https://github.com/stakater/Reloader), and [kured](https://github.com/weaveworks/kured)_
+_Additional applications include [hajimari](https://github.com/toboshii/hajimari), [echo-server](https://github.com/Ealenn/Echo-Server), [system-upgrade-controller](https://github.com/rancher/system-upgrade-controller), [reloader](https://github.com/stakater/Reloader), and [kured](https://github.com/weaveworks/kured)_
 
 ## 📝 Prerequisites
 
@@ -48,7 +48,7 @@ With that out of the way please continue on if you are still interested...
 
 ### 💻 Systems
 
-- One or more nodes with a fresh install of [Fedora Server 37+](https://getfedora.org/en/server/download/) or [Ubuntu 22.04 Server](https://ubuntu.com/download/server) (not minimal).
+- One or more nodes with a fresh install of [Ubuntu 22.04 Server](https://ubuntu.com/download/server) (not minimal / not raspi edition).
   - These nodes can be ARM64/AMD64 bare metal or VMs.
   - An odd number of control plane nodes, greater than or equal to 3 is required if deploying more than one control plane node.
 - A [Cloudflare](https://www.cloudflare.com/) account with a domain, this will be managed by external-dns. You can [register new domains](https://www.cloudflare.com/products/registrar/) directly thru Cloudflare.
@@ -198,9 +198,9 @@ In order to expose services to the internet you will need to create a [Cloudflar
    task configure
    ```
 
-### ⚡ Preparing Fedora or Ubuntu Server with Ansible
+### ⚡ Preparing Ubuntu Server with Ansible
 
-📍 Here we will be running a Ansible Playbook to prepare Fedora or Ubuntu Server for running a Kubernetes cluster.
+📍 Here we will be running an Ansible Playbook to prepare Ubuntu server for running a Kubernetes cluster.
 
 📍 Nodes are not security hardened by default, you can do this with [dev-sec/ansible-collection-hardening](https://github.com/dev-sec/ansible-collection-hardening) or similar if supported. This is an advanced configuration and generally not recommended unless you want to [DevSecOps](https://www.ibm.com/topics/devsecops) your cluster and nodes.
 
@@ -226,7 +226,7 @@ In order to expose services to the internet you will need to create a [Cloudflar
    task ansible:ping
    ```
 
-5. Run the Fedora/Ubuntu Server Ansible prepare playbook
+5. Run the Ansible prepare playbook
 
    ```sh
    task ansible:prepare
@@ -533,8 +533,10 @@ You should be able to access the dashboard at `https://kubernetes.${SECRET_DOMAI
 
 Below is a general guide on trying to debug an issue with an resource or application. For example, if a workload/resource is not showing up or a pod has started but in a `CrashLoopBackOff` or `Pending` state.
 
-1. Start by checking all Flux Kustomizations and verify they are healthy.
+1. Start by checking all Flux Kustomizations & Git Repository & OCI Repository and verify they are healthy.
 
+- `flux get sources oci -A`
+- `flux get sources git -A`
 - `flux get ks -A`
 
 2. Then check all the Flux Helm Releases and verify they are healthy.
