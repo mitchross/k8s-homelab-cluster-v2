@@ -76,4 +76,4 @@ spec:
         memory: 350Mi
 
       limits:
-        memory: 3600Mi
+        memory: 5000Mi
