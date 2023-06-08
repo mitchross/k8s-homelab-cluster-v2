@@ -43,8 +43,6 @@ spec:
         enabled: true
         ingressClassName: nginx
         annotations:
-          external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
-          external-dns.home.arpa/enabled: "true"
           hajimari.io/icon: video-input-antenna
         hosts:
           - host: &host "rancher-demo.${SECRET_DOMAIN}"
