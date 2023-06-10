@@ -66,7 +66,7 @@ spec:
             # repository: ghcr.io/mitchross/dockerwyzebridge-test
             # tag: v3
             repository: ghcr.io/mrlt8/docker-wyze-bridge
-            tag: dev@sha256:d3872c6a4e48d10ff27a381882e21fd2488d63d34159204f21172db6b88333f1
+            tag: dev@sha256:2bcc408448ab690f438ccc27c11fefe47b8563d18d01f364d1545ffd928f97ac
 
             imagePullPolicy: IfNotPresent
 
