@@ -66,8 +66,7 @@ spec:
             # repository: mitchross09/dockerwyzebridge
             # tag: 2.3.0-hw-custom-newbuild3
             repository: ghcr.io/mrlt8/docker-wyze-bridge
-            tag: dev@sha256:74ceafda173b3f3520db18985f9bb2cac0d6fd25ffdaea8a619c68c52ea78992
-
+            tag: dev-hw@sha256:2eb3f48e03014752ef60224deb0bff4644badfba259f3e1103d7180311e8a908
             imagePullPolicy: IfNotPresent
 
         env:
