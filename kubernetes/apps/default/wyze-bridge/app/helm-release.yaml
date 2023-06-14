@@ -80,8 +80,6 @@ spec:
               value: "1800"
             - name: FRESH_DATA
               value: "True"
-            - name: LIBVA_DRIVER_NAME
-              value: i965
             # - name: H264_ENC
             #   value: h264_qsv
             # - name: FFMPEG_CMD
