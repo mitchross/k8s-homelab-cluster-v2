@@ -84,8 +84,8 @@ spec:
               value: i965
             - name: H264_ENC
               value: h264_qsv
-            # - name: FFMPEG_CMD
-            #   value: '-f h264 -i - -vcodec h264_qsv -f flv rtsp://0.0.0.0:8554/{cam_name}'
+            - name: FFMPEG_CMD
+              value: 'ffmpeg -loglevel verbose -f h264 -hwaccel qsv -hwaccel_output_format qsv -i - -c:v h264_qsv -rtsp_transport tcp -f rtsp rtsp://0.0.0.0:8554/{cam_name}'
         envFrom:
             - secretRef:
                   name: wyze-secrets
