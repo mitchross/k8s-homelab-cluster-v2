@@ -80,10 +80,10 @@ spec:
               value: "1800"
             - name: FRESH_DATA
               value: "True"
-            # - name: H264_ENC
-            #   value: h264_qsv
-            - name: FFMPEG_CMD
-              value: 'ffmpeg -loglevel verbose -f h264 -hwaccel qsv -hwaccel_output_format qsv -i - -c:v h264_qsv -rtsp_transport tcp -f rtsp rtsp://0.0.0.0:8554/{cam_name}'
+            - name: H264_ENC
+              value: h264_qsv
+            # - name: FFMPEG_CMD
+            #   value: 'ffmpeg -loglevel verbose -f h264 -hwaccel qsv -hwaccel_output_format qsv -i - -c:v h264_qsv -rtsp_transport tcp -f rtsp rtsp://0.0.0.0:8554/{cam_name}'
         envFrom:
             - secretRef:
                   name: wyze-secrets
