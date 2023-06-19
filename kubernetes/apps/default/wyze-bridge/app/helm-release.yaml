@@ -63,8 +63,8 @@ spec:
                           - *host
 
         image:
-            repository: mitchross09/dockerwyzebridge
-            tag: 2.3.0-hw-qsv-1@sha256:bfc1ea8f9b0f558a2f33d39587adea327b248b06116732289665b2639c47bd17
+            repository: mitchross09/docker-wyze-bridge
+            tag: intel-qsv
             # repository: ghcr.io/mrlt8/docker-wyze-bridge
             # tag: dev-hw@sha256:2eb3f48e03014752ef60224deb0bff4644badfba259f3e1103d7180311e8a908
             imagePullPolicy: IfNotPresent
