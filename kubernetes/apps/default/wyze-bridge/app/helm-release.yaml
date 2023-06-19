@@ -1,106 +1,107 @@
----
 # yaml-language-server: $schema=https://raw.githubusercontent.com/JJGadgets/flux2-schemas/main/helmrelease-helm-v2beta1.json
 #forceupdate
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-    name: wyze-bridge
-    namespace: default
+  name: wyze-bridge
+  namespace: default
 spec:
-    interval: 30m
-    chart:
-        spec:
-            chart: app-template
-            version: 1.5.1
-            interval: 30m
-            sourceRef:
-                kind: HelmRepository
-                name: bjw-s
-                namespace: flux-system
-    install:
-        createNamespace: true
-        remediation:
-            retries: 5
-    upgrade:
-        remediation:
-            retries: 10
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.5.1
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 10
 
-    values:
-        strategy:
-            type: Recreate
-        securityContext:
-            privileged: true
+  values:
+    strategy:
+      type: Recreate
+    securityContext:
+      privileged: true
 
-        service:
-            main:
-                annotations:
-                    metallb.universe.tf/loadBalancerIPs: ${SVC_WYZE_ADDR}
+    service:
+      main:
+        annotations:
+          metallb.universe.tf/loadBalancerIPs: ${SVC_WYZE_ADDR}
 
-                ports:
-                    http:
-                        port: 5000
-                        targetPort: 5000
-                    rtsp:
-                        port: 8554
-                        targetPort: 8554
+        ports:
+          http:
+            port: 5000
+            targetPort: 5000
+          rtsp:
+            port: 8554
+            targetPort: 8554
 
-                type: LoadBalancer
-        ingress:
-            main:
-                enabled: true
-                ingressClassName: nginx
-                annotations:
-                    nginx.ingress.kubernetes.io/whitelist-source-range: |
-                        10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
-                    hajimari.io/enable: "true"
-                hosts:
-                    - host: &host wyze.${SECRET_DOMAIN}
-                      paths:
-                          - path: /
-                            pathType: Prefix
-                tls:
-                    - hosts:
-                          - *host
+        type: LoadBalancer
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          nginx.ingress.kubernetes.io/whitelist-source-range: |
+            10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+          hajimari.io/enable: "true"
+        hosts:
+        - host: &host wyze.${SECRET_DOMAIN}
+          paths:
+          - path: /
+            pathType: Prefix
+        tls:
+        - hosts:
+          - *host
 
-        image:
-            repository: mitchross09/docker-wyze-bridge
-            tag: intel-qsv
-            # repository: ghcr.io/mrlt8/docker-wyze-bridge
-            # tag: dev-hw@sha256:2eb3f48e03014752ef60224deb0bff4644badfba259f3e1103d7180311e8a908
-            imagePullPolicy: IfNotPresent
+    image:
+      repository: mitchross09/docker-wyze-bridge
+      tag: intel-qsv
+      # repository: ghcr.io/mrlt8/docker-wyze-bridge
+      # tag: dev-hw@sha256:2eb3f48e03014752ef60224deb0bff4644badfba259f3e1103d7180311e8a908
+      imagePullPolicy: IfNotPresent
 
-        env:
-            - name: ROTATE_DOOR
-              value: "True"
-            # - name: NET_MODE
-            #   value: 'LAN'
-            - name: RECORD_ALL
-              value: "True"
-            - name: RECORD_LENGTH
-              value: "1800"
-            - name: FRESH_DATA
-              value: "True"
-            # - name: H264_ENC
-            #   value: h264_qsv
-            - name: FFMPEG_CMD
-              value: 'ffmpeg -loglevel verbose -c:v h264_qsv -i - -c:v h264_qsv -rtsp_transport tcp -f rtsp rtsp://0.0.0.0:8554/{cam_name}'
-        envFrom:
-            - secretRef:
-                  name: wyze-secrets
-        persistence:
-            media:
-                enabled: true
-                existingClaim: wyze-nfs
-                mountPath: /record
+    env:
+    - name: ROTATE_DOOR
+      value: "True"
+    # - name: NET_MODE
+    #   value: 'LAN'
+    - name: RECORD_ALL
+      value: "True"
+    - name: RECORD_LENGTH
+      value: "1800"
+    - name: FRESH_DATA
+      value: "True"
+    # - name: H264_ENC
+    #   value: h264_qsv
+    - name: LIBVA_DRIVER_NAME
+      value: i965
+    - name: FFMPEG_CMD
+      value: 'ffmpeg -loglevel verbose -c:v h264_qsv -i - -c:v h264_qsv -rtsp_transport tcp -f rtsp rtsp://0.0.0.0:8554/{cam_name}'
+    envFrom:
+    - secretRef:
+        name: wyze-secrets
+    persistence:
+      media:
+        enabled: true
+        existingClaim: wyze-nfs
+        mountPath: /record
 
-        nodeSelector:
-            node-role.kubernetes.io/worker: "true"
-            google.feature.node.kubernetes.io/coral: "true"
-            intel.feature.node.kubernetes.io/gpu: "true"
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"
+      google.feature.node.kubernetes.io/coral: "true"
+      intel.feature.node.kubernetes.io/gpu: "true"
 
-        resources:
-            requests:
-                cpu: 10m
-                memory: 250Mi
-            limits:
-                memory: 2500Mi   
+    resources:
+      requests:
+        cpu: 10m
+        memory: 250Mi
+      limits:
+        memory: 2500Mi
