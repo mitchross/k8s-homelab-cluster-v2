@@ -36,7 +36,7 @@ spec:
             tag: 0.12.1
         env:
             TZ: America/New_York
-            LIBVA_DRIVER_NAME: i965
+            LIBVA_DRIVER_NAME: iHD
 
         # envFrom:
         #   - secretRef:
