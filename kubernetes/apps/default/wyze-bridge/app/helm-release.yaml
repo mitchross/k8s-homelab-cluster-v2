@@ -83,8 +83,8 @@ spec:
     #   value: h264_qsv
     - name: LIBVA_DRIVER_NAME
       value: i965
-    # - name: FFMPEG_CMD
-    #   value: 'ffmpeg -loglevel verbose -f h264 -hwaccel qsv -hwaccel_output_format qsv -i - -c:v h264_qsv -b:v 3000k -rtsp_transport tcp -f rtsp rtsp://0.0.0.0:8554/{cam_name}'
+    - name: FFMPEG_CMD
+      value: 'ffmpeg -hwaccel qsv -c:v h264_qsv -i - -c:v h264_qsv -b:v 4000k -rtsp_transport tcp -f rtsp rtsp://0.0.0.0:8554/{cam_name}'
     envFrom:
     - secretRef:
         name: wyze-secrets
