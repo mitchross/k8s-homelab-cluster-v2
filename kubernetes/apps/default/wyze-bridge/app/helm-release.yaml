@@ -62,10 +62,10 @@ spec:
           - *host
 
     image:
-      repository: mitchross09/docker-wyze-bridge
-      tag: intel-qsv
-    #   repository: ghcr.io/mrlt8/docker-wyze-bridge
-    #   tag: dev-hw@sha256:2eb3f48e03014752ef60224deb0bff4644badfba259f3e1103d7180311e8a908
+      # repository: mitchross09/docker-wyze-bridge
+      # tag: intel-qsv
+      repository: ghcr.io/mrlt8/docker-wyze-bridge
+      tag: latest-hw@sha256:230d9bdb7a77fbcfd6362c5f3c336e1641bbf095a2de5b642c7c03f3c4237c5e
       imagePullPolicy: IfNotPresent
 
     env:
@@ -82,7 +82,7 @@ spec:
     # - name: H264_ENC
     #   value: h264_qsv
     - name: LIBVA_DRIVER_NAME
-      value: iHD
+      value: i965
     # - name: FFMPEG_CMD
     #   value: 'ffmpeg -loglevel verbose -f h264 -hwaccel qsv -hwaccel_output_format qsv -i - -c:v h264_qsv -b:v 3000k -rtsp_transport tcp -f rtsp rtsp://0.0.0.0:8554/{cam_name}'
     envFrom:
