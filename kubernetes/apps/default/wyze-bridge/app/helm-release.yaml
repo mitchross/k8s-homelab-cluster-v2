@@ -65,7 +65,7 @@ spec:
       # repository: mitchross09/docker-wyze-bridge
       # tag: qsv-2.3.5-1
       repository: ghcr.io/mrlt8/docker-wyze-bridge
-      tag: edge-qsv@sha256:f9010928cd51733e3d47a9b539410cc1559b24d039e82ddf1481b58d92b9ad85
+      tag: dev-qsv@sha256:739607dd7552ad667092ca6c0802df50bf508bc670e3c5b77e44387a12042d77
 
 
       imagePullPolicy: IfNotPresent
@@ -81,10 +81,10 @@ spec:
       value: "1800"
     - name: FRESH_DATA
       value: "True"
-    # - name: H264_ENC
-    #   value: h264_qsv
+    - name: H264_ENC
+      value: h264_qsv
     - name: LIBVA_DRIVER_NAME
-      value: iHD
+      value: i965
     # - name: FFMPEG_CMD
     #   value: "ffmpeg -hwaccel qsv -c:v h264_qsv -i - -c:v h264_qsv -b:v 4000k -rtsp_transport tcp -f rtsp rtsp://0.0.0.0:8554/{cam_name}"
     envFrom:
