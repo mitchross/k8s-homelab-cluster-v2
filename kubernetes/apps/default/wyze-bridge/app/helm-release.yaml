@@ -72,8 +72,8 @@ spec:
 
     env:
   
-    # - name: NET_MODE
-    #   value: 'LAN'
+    - name: NET_MODE
+      value: 'LAN'
     - name: RECORD_ALL
       value: "True"
     - name: RECORD_LENGTH
