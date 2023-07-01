@@ -71,14 +71,15 @@ spec:
       imagePullPolicy: IfNotPresent
 
     env:
-    - name: ROTATE_DOOR
-      value: "True"
-    # - name: NET_MODE
-    #   value: 'LAN'
+  
+    - name: NET_MODE
+      value: 'LAN'
     - name: RECORD_ALL
       value: "True"
     - name: RECORD_LENGTH
       value: "1800"
+    - name: ROTATE_DOOR
+      value: "True"
     - name: FRESH_DATA
       value: "True"
     - name: H264_ENC
