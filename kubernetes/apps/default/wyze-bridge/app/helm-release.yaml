@@ -65,7 +65,7 @@ spec:
       # repository: mitchross09/docker-wyze-bridge
       # tag: qsv-2.3.5-1
       repository: ghcr.io/mrlt8/docker-wyze-bridge
-      tag: dev-qsv@sha256:739607dd7552ad667092ca6c0802df50bf508bc670e3c5b77e44387a12042d77
+      tag: dev-qsv@sha256:61c7a0fbdfd8fe01c4ce9049d68526b9a0600303cc857e71a5ba0c3b5f28dae4
 
 
       imagePullPolicy: IfNotPresent
@@ -86,8 +86,8 @@ spec:
       value: h264_qsv
     - name: LIBVA_DRIVER_NAME
       value: i965
-    # - name: FFMPEG_CMD
-    #   value: "ffmpeg -loglevel info -f h264 -i - -c:v h264_qsv -filter:v transpose=clock -profile:v high -preset fast -force_key_frames expr:gte(t,n_forced*2) -movflags +empty_moov+default_base_moof+frag_keyframe -f rtsp -rtsp_transport tcp rtsp://0.0.0.0:8554/{cam_name}"
+    - name: FFMPEG_CMD
+      value: "ffmpeg -loglevel verbose -hwaccel qsv -c:v h264_qsv -i - -vf vpp_qsv=transpose=1 -c:v h264_qsv -scenario videosurveillance -rtsp_transport tcp -f rtsp rtsp://0.0.0.0:8554/{cam_name}"
     envFrom:
     - secretRef:
         name: wyze-secrets
