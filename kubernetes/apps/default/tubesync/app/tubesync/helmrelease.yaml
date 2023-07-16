@@ -27,7 +27,7 @@ spec:
   values:
     image:
       repository: ghcr.io/meeb/tubesync
-      tag: "latest@sha256:696750022d3e697f8f4e7d0207b915e755e741b32dc091f3869b1698eeefa5d6"
+      tag: "latest@sha256:d0f121006e3c29d5f825c95296cb472c88c13a85f55d0c41300a461282af802b"
     env:
       TZ: "America/Detroit"
       TUBESYNC_WORKERS: 8
