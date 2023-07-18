@@ -78,8 +78,8 @@ spec:
       value: "True"
     - name: RECORD_LENGTH
       value: "1800"
-    # - name: ROTATE_DOOR
-    #   value: "True"
+    - name: ROTATE_DOOR
+      value: "True"
     - name: FRESH_DATA
       value: "True"
     - name: H264_ENC
