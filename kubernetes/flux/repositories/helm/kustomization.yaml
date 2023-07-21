@@ -26,4 +26,4 @@ resources:
   - ./rook-ceph.yaml
   - ./longhorn-charts.yaml
   - ./deliveryhero-charts.yaml
-  - ./coredns
+  - ./coredns.yaml
