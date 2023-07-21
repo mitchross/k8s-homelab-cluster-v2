@@ -1,0 +1,80 @@
+# https://github.com/Tzahi12345/YoutubeDL-Material/blob/master/docker-compose.yml
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: tubesync
+  namespace: default
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      interval: 30m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+
+  values:
+    image:
+      repository: ghcr.io/meeb/tubesync
+      tag: "latest@sha256:d0f121006e3c29d5f825c95296cb472c88c13a85f55d0c41300a461282af802b"
+    env:
+      TZ: "America/Detroit"
+      TUBESYNC_WORKERS: 8
+      PUID: 1000
+      PGID: 1000
+      TUBESYNC_RESET_DOWNLOAD_DIR: False
+
+    envFrom:
+      - secretRef:
+          name: tubesync-db-secret
+
+    persistence:
+      config:
+        enabled: true
+        storageClass: longhorn
+        mountPath: /config
+        size: 10Gi
+      downloads:
+        enabled: true
+        existingClaim: youtube-nfs
+        mountPath: /downloads
+
+    service:
+      main:
+        ports:
+          http:
+            port: 4848
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          nginx.ingress.kubernetes.io/whitelist-source-range: |
+            10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+          hajimari.io/enable: "true"
+        hosts:
+          - host: &host "tubesync.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+    resources:
+      requests:
+        cpu: 250m
+        memory: 350Mi
+
+      limits:
+        memory: 5000Mi
