@@ -1,0 +1,37 @@
+---
+kubernetes:
+  children:
+    master:
+      hosts:
+        k3s-master-dell-1:
+          ansible_user: vanillax
+          ansible_host: 192.168.1.199
+        k3s-master-pve-1:
+          ansible_user: vanillax
+          ansible_host: 192.168.1.200
+        k3s-master-pve3-1:
+          ansible_user: vanillax
+          ansible_host: 192.168.1.201
+    worker:
+      hosts:
+        k3s-worker-nuc-1:
+          ansible_user: vanillax
+          ansible_host: 192.168.1.202
+        k3s-worker-pve-1:
+          ansible_user: vanillax
+          ansible_host: 192.168.1.203
+        k3s-worker-pve-2:
+          ansible_user: vanillax
+          ansible_host: 192.168.1.204
+        k3s-worker-pve3-1:
+          ansible_user: vanillax
+          ansible_host: 192.168.1.205
+        k3s-worker-pve3-2:
+          ansible_user: vanillax
+          ansible_host: 192.168.1.206
+        k3s-worker-dell-1:
+          ansible_user: vanillax
+          ansible_host: 192.168.1.198
+        k3s-worker-dell-2:
+          ansible_user: vanillax
+          ansible_host: 192.168.1.207
