@@ -36,7 +36,7 @@ spec:
         maxParallel: 8
       destinationPath: s3://postgresql/
       endpointURL: http://s3.vanillax.me
-      serverName: postgres-v1
+      serverName: postgres-v2
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-secret
