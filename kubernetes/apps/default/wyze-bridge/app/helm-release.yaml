@@ -78,6 +78,8 @@ spec:
       value: "1800"
     # - name: ROTATE_DOOR
     #   value: "True"
+    - name: ROTATE_CAM_FRONT_DOOR
+      value: "1"
     - name: FRESH_DATA
       value: "True"
     - name: DEBUG_FFMPEG
