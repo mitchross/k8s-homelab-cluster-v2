@@ -10,4 +10,3 @@ kubeconfig
 *.key
 # Ansible
 .venv*
-replacements.txt
