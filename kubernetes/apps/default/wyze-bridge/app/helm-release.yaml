@@ -76,16 +76,14 @@ spec:
       value: "True"
     - name: RECORD_LENGTH
       value: "1800"
-    # - name: ROTATE_DOOR
-    #   value: "True"
-    - name: ROTATE_CAM_FRONT_DOOR
-      value: "1"
+    - name: ROTATE_DOOR
+      value: "True"
     - name: FRESH_DATA
       value: "True"
     - name: DEBUG_FFMPEG
       value: "True"
-    - name: H264_ENC
-      value: h264_qsv
+    # - name: H264_ENC
+    #   value: h264_qsv
     - name: LIBVA_DRIVER_NAME
       value: iHD
     # - name: FFMPEG_CMD
