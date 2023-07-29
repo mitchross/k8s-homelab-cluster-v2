@@ -65,7 +65,7 @@ spec:
       # repository: mitchross09/docker-wyze-bridge
       # tag: qsv-2.3.5-1
       repository: ghcr.io/mrlt8/docker-wyze-bridge
-      tag: dev-qsv@sha256:05fdf8a997565a5922d68bd0feba256d36c9a54977ebf503580f9101496572da
+      tag: dev-qsv@sha256:a691b83b4f3b40995dc56f526231d66886564229a0da3f8a8a8a20026d352699
       imagePullPolicy: IfNotPresent
 
     env:
