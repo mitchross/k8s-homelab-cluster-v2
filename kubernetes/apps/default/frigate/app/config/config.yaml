@@ -111,7 +111,7 @@ cameras:
     frontdoor:
         ffmpeg:
             inputs:
-                - path: rtsp://192.168.1.16:8554/front-door
+                - path: rtsp://192.168.1.16:8554/porch
                   roles:
                       - detect
                       - record
@@ -139,7 +139,7 @@ cameras:
     driveway:
         ffmpeg:
             inputs:
-                - path: rtsp://192.168.1.16:8554/garage-driveway
+                - path: rtsp://192.168.1.16:8554/driveway
                   roles:
                       - detect
                       - record
