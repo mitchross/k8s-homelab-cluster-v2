@@ -20,6 +20,17 @@ detectors:
 ffmpeg:
     hwaccel_args: preset-intel-qsv-h264
 
+go2rtc:
+  streams:
+    frigate_garage_hq: rtsp://192.168.1.16:8554/garage
+    frigate_deck_hq: rtsp://192.168.1.16:8554/deck
+    frigate_shed_hq: rtsp://192.168.1.16:8554/shed
+    frigate_frontdoor_hq: rtsp://192.168.1.16:8554/porch
+    frigate_driveway_hq: rtsp://192.168.1.16:8554/driveway
+    frigate_kitchen_hq: rtsp://192.168.1.16:8554/kitchen
+    frigate_dogcam_hq: rtsp://192.168.1.16:8554/dog-cam-2
+    frigate_livingroom_hq: rtsp://192.168.1.16:8554/living-room
+
 cameras:
     garage:
         ffmpeg:
