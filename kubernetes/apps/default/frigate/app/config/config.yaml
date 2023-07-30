@@ -22,14 +22,14 @@ ffmpeg:
 
 go2rtc:
   streams:
-    frigate_garage_hq: rtsp://192.168.1.16:8554/garage
-    frigate_deck_hq: rtsp://192.168.1.16:8554/deck
-    frigate_shed_hq: rtsp://192.168.1.16:8554/shed
-    frigate_frontdoor_hq: rtsp://192.168.1.16:8554/porch
-    frigate_driveway_hq: rtsp://192.168.1.16:8554/driveway
-    frigate_kitchen_hq: rtsp://192.168.1.16:8554/kitchen
-    frigate_dogcam_hq: rtsp://192.168.1.16:8554/dog-cam-2
-    frigate_livingroom_hq: rtsp://192.168.1.16:8554/living-room
+   garage: rtsp://192.168.1.16:8554/garage
+   deck: rtsp://192.168.1.16:8554/deck
+   shed: rtsp://192.168.1.16:8554/shed
+   frontdoor: rtsp://192.168.1.16:8554/porch
+   driveway: rtsp://192.168.1.16:8554/driveway
+   kitchen: rtsp://192.168.1.16:8554/kitchen
+   dogcam: rtsp://192.168.1.16:8554/dog-cam-2
+   livingroom: rtsp://192.168.1.16:8554/living-room
 
 cameras:
     garage:
