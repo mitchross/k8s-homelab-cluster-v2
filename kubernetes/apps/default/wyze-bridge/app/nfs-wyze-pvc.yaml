@@ -14,7 +14,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: 192.168.1.80
-    path: /mnt/LabTank/k8s/wyze
+    path: /mnt/FastTank/k8s/wyze
   mountOptions:
     - hard
     - noatime
