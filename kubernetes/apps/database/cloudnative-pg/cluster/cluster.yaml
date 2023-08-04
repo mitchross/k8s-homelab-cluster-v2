@@ -4,11 +4,11 @@ apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
   name: postgres
-  namespace: default
+  namespace: database
   annotations:
     kyverno.io/ignore: "true"
 spec:
-  instances: 5
+  instances: 3
   imageName: ghcr.io/cloudnative-pg/postgresql:15.2
   inheritedMetadata:
     labels:
