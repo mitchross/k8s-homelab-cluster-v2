@@ -27,3 +27,4 @@ resources:
   - ./longhorn-charts.yaml
   - ./deliveryhero-charts.yaml
   - ./coredns.yaml
+  - ./komodor.yaml
