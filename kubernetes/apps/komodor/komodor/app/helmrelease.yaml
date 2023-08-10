@@ -34,6 +34,5 @@ spec:
       enableAgentTaskExecution: true
       enableAgentTaskExecutionV2: true
       enableHelm: true
-      namespace: monitoring
     helm:
       enableActions: true  
