@@ -9,10 +9,9 @@ spec:
   chart:
     spec:
       chart: k8s-watcher
-      version: 6.58.7
       sourceRef:
         kind: HelmRepository
-        name: komodorio
+        name: komodorio-charts
         namespace: flux-system
   maxHistory: 2
   install:
