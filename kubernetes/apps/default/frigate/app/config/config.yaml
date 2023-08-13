@@ -27,6 +27,7 @@ go2rtc:
    shed: rtsp://192.168.1.16:8554/shed
    frontdoor: rtsp://192.168.1.16:8554/porch
    driveway: rtsp://192.168.1.16:8554/driveway
+   driveway2: rtsp://192.168.1.16:8554/driveway2
    kitchen: rtsp://192.168.1.16:8554/kitchen
    dogcam: rtsp://192.168.1.16:8554/dog-cam-2
    livingroom: rtsp://192.168.1.16:8554/living-room
@@ -159,6 +160,34 @@ cameras:
         detect:
             width: 1296
             height: 1728
+            fps: 5
+        record:
+            enabled: true
+            retain:
+                days: 15
+                mode: motion
+            events:
+                retain:
+                    default: 15
+                    mode: active_objects
+        objects:
+            track:
+                - person
+                - car
+                - dog
+                - cat
+    driveway2:
+        ffmpeg:
+            inputs:
+                - path: rtsp://192.168.1.16:8554/driveway2
+                  roles:
+                      - detect
+                      - record
+        snapshots:
+            bounding_box: true
+        detect:
+            width: 1280
+            height: 720
             fps: 5
         record:
             enabled: true
