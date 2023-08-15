@@ -79,7 +79,7 @@ spec:
     - name: ROTATE_DOOR
       value: "True"
     - name: FRESH_DATA
-      value: "False"
+      value: "True"
     - name: DEBUG_FFMPEG
       value: "False"
     # - name: H264_ENC
