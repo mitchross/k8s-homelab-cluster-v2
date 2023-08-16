@@ -82,6 +82,9 @@ spec:
       value: "True"
     - name: DEBUG_FFMPEG
       value: "False"
+    - name: WYZE_BETA_API
+      value: "True"
+
     # - name: H264_ENC
     #   value: h264_qsv
     # - name: LIBVA_DRIVER_NAME
