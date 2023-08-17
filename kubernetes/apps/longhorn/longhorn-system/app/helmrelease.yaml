@@ -16,6 +16,7 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
+    
     persistence:
       defaultClass: true
       defaultFsType: ext4
@@ -27,4 +28,4 @@ spec:
       concurrentAutomaticEngineUpgradePerNodeLimit: 1
       defaultLonghornStaticStorageClass: longhorn
       orphanAutoDeletion: true
-    #  backupTarget: "nfs://${SECRET_NFS_SERVER}:${SECRET_NFS_BACKUP_LH}"
+      backupTarget: "nfs://192.168.1.133:/mnt/bigtank/k8s/longhorn-backup"
