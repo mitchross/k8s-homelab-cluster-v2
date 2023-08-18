@@ -40,8 +40,10 @@ bootstrap_node_cidr:
 bootstrap_kube_vip_addr:
 # The Load balancer IP for k8s_gateway, choose an available IP in your nodes network that is not being used
 bootstrap_k8s_gateway_addr:
-# The Load balancer IP for ingress-nginx, choose an available IP in your nodes network that is not being used
-bootstrap_ingress_nginx_addr:
+# The Load balancer IP for external nginx, choose an available IP in your nodes network that is not being used
+bootstrap_external_nginx_addr:
+# The Load balancer IP for internal nginx, choose an available IP in your nodes network that is not being used
+bootstrap_internal_nginx_addr:
 
 # Keep the next three options default unless you know what you are doing
 # (Advanced) Enable ipv6
@@ -51,7 +53,6 @@ bootstrap_ipv6_enabled: false
 bootstrap_cluster_cidr: 10.42.0.0/16
 # (Advanced) For ipv6 use format 10.43.0.0/16,fd78:c889:47fb:e0::/112
 bootstrap_service_cidr: 10.43.0.0/16
-
 
 # Node information
 bootstrap_nodes:
