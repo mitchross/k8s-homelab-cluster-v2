@@ -66,7 +66,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        ingressClassName: internal
         annotations:
           hajimari.io/icon: mdi:pail
         hosts:
@@ -81,10 +81,10 @@ spec:
               - *console-host
       s3:
         enabled: true
-        ingressClassName: nginx
+        ingressClassName: external
         annotations:
           external-dns.home.arpa/enabled: "true"
-          external-dns.alpha.kubernetes.io/target: ingress.vanillax.me
+          external-dns.alpha.kubernetes.io/target: external.vanillax.me
           nginx.ingress.kubernetes.io/proxy-connect-timeout: "180"
           nginx.ingress.kubernetes.io/proxy-body-size: 1024m
           nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
