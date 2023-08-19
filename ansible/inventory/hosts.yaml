@@ -37,4 +37,4 @@ kubernetes:
           ansible_host: 192.168.1.207
         k3s-worker-dell-3:
           ansible_user: vanillax
-          ansible_host: 192.168.1.207
+          ansible_host: 192.168.1.208
