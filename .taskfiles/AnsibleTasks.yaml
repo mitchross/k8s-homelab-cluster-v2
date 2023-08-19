@@ -53,7 +53,6 @@ tasks:
     dir: "{{.ANSIBLE_DIR}}"
     cmd: ansible all -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yaml --one-line -a 'uptime'
 
-
   update:
     desc: apt-get update
     dir: "{{.ANSIBLE_DIR}}"
