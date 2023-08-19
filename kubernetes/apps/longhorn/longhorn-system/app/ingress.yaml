@@ -8,7 +8,7 @@ metadata:
     hajimari.io/appName: Longhorn
     hajimari.io/icon: clarity:hard-drive-disks-solid
 spec:
-  ingressClassName: nginx
+  ingressClassName: internal
   rules:
     - host: &host longhorn.vanillax.me
       http:
