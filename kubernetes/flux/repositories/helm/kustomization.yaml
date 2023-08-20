@@ -18,9 +18,3 @@ resources:
   - ./prometheus-community.yaml
   - ./stakater.yaml
   - ./weave-gitops.yaml
-  - ./longhorn-charts.yaml
-  - ./cloudnative-pg.yaml
-  - ./komodorio.yaml
-  - ./node-feature-discovery.yaml
-  - ./intel.yaml
-
