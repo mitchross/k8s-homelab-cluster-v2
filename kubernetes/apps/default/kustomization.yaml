@@ -4,3 +4,13 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./hajimari/ks.yaml
+  - ./minio/ks.yaml
+  - ./wyze-bridge/ks.yaml
+  - ./mqtt
+  - ./frigate/ks.yaml
+  - ./libreddit
+  - ./speedtest
+  - ./immich/ks.yaml
+  - ./tubesync/ks.yaml
+  - ./scrypted/ks.yaml
+  - ./rancher-demo
