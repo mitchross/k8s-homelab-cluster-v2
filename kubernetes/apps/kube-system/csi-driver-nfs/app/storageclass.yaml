@@ -1,0 +1,72 @@
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: wyze-nfs
+provisioner: nfs.csi.k8s.io
+parameters:
+  server: 192.168.1.80
+  share: /mnt/FastTank/k8s/wyze
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+mountOptions: ["hard", "noatime"]
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: frigate-nfs
+provisioner: nfs.csi.k8s.io
+parameters:
+  server: 192.168.1.133
+  share: /mnt/bigtank/k8s/frigate
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+mountOptions: ["hard", "noatime"]
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: youtube-nfs
+provisioner: nfs.csi.k8s.io
+parameters:
+  server: 192.168.1.133
+  share: /mnt/bigtank/k8s/youtube
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+mountOptions: ["hard", "noatime"]
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: longhorn-backup
+provisioner: nfs.csi.k8s.io
+parameters:
+  server: 192.168.1.133
+  share: /mnt/bigtank/k8s/longhorn-backup
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+mountOptions: ["hard", "noatime"]
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: minio-nfs
+provisioner: nfs.csi.k8s.io
+parameters:
+  server: 192.168.1.133
+  share: /mnt/bigtank/k8s/minio
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+mountOptions: ["hard", "noatime"]
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: immich-nfs
+provisioner: nfs.csi.k8s.io
+parameters:
+  server: 192.168.1.133
+  share: /mnt/bigtank/k8s/immich
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+mountOptions: ["hard", "noatime"]
