@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helmrelease_v2beta1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -15,9 +15,8 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 2
   install:
-    createNamespace: true
     remediation:
       retries: 3
   upgrade:
@@ -28,23 +27,21 @@ spec:
     keepHistory: false
   dependsOn:
     - name: immich-server
+      namespace: default
   values:
     controller:
-      replicas: 2
       strategy: RollingUpdate
       annotations:
-        reloader.stakater.com/auto: "true"
+        configmap.reloader.stakater.com/reload: &configMap immich-configmap
+        secret.reloader.stakater.com/reload: &secret immich-secret
     image:
       repository: ghcr.io/immich-app/immich-web
-      tag: v1.75.2
-    command: /bin/sh
-    args:
-      - ./entrypoint.sh
+      tag: v1.76.0
     envFrom:
-      - secretRef:
-          name: immich-secret
       - configMapRef:
-          name: immich-configmap
+          name: *configMap
+      - secretRef:
+          name: *secret
     service:
       main:
         ports:
@@ -55,12 +52,12 @@ spec:
         enabled: true
         ingressClassName: internal
         annotations:
+          
           nginx.ingress.kubernetes.io/configuration-snippet: |
             rewrite /api/(.*) /$1 break;
           nignx.ingress.kubernetes.io/force-ssl-redirect: "true"
           nginx.ingress.kubernetes.io/proxy-body-size: "0"
-          hajimari.io/appName: Immich
-          hajimari.io/icon: heroicons:photo
+          
         hosts:
           - host: &host photos.vanillax.me
             paths:
@@ -74,6 +71,7 @@ spec:
         tls:
           - hosts:
               - *host
+
     persistence:
       library:
         enabled: true
@@ -88,5 +86,5 @@ spec:
             app.kubernetes.io/name: *app
     resources:
       requests:
-        cpu: 200m
-        memory: 350Mi
+        cpu: 100m
+        memory: 250Mi

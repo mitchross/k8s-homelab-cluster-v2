@@ -6,23 +6,14 @@ metadata:
   namespace: default
 data:
   DB_PORT: "5432"
-  DISABLE_REVERSE_GEOCODING: "true"
-  ENABLE_MAPBOX: "false"
-  LOG_LEVEL: verbose
-  NODE_ENV: "production"
-  # REDIS_HOSTNAME: redis-lb.default.svc.cluster.local
-  REDIS_HOSTNAME: immich-redis.default.svc.cluster.local
-  REDIS_PORT: "6379"
-  # REDIS_DBINDEX: "10"
-  IMMICH_WEB_URL: http://immich-web.default.svc.cluster.local:3000
-  IMMICH_SERVER_URL: http://immich-server.default.svc.cluster.local:3001
   IMMICH_MACHINE_LEARNING_URL: http://immich-machine-learning.default.svc.cluster.local:3003
-
-  TYPESENSE_HOST: immich-typesense.default.svc.cluster.local
+  IMMICH_SERVER_URL: http://immich-server.default.svc.cluster.local:3001
+  IMMICH_WEB_URL: http://immich-web.default.svc.cluster.local:3000
+  LOG_LEVEL: verbose
+  REDIS_URL: immich-redis.default.svc.cluster.local:6379
+  TRANSFORMERS_CACHE: /usr/src/app/.transformers_cache
   TYPESENSE_DATA_DIR: /config
-  TYPESENSE_PORT: "8108"
-  TYPESENSE_PROTOCOL: http
-
+  TYPESENSE_HOST: immich-typesense.default.svc.cluster.local
   # Below are deprecated and can only be set in the Immich Admin settings
   # OAUTH_ENABLED: "true"
   # OAUTH_ISSUER_URL: https://auth.${SECRET_CLUSTER_DOMAIN}/.well-known/openid-configuration

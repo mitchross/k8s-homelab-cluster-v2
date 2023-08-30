@@ -29,14 +29,14 @@ spec:
     controller:
       type: statefulset
       annotations:
-        configmap.reloader.stakater.com/reload: &configmap immich-configmap
+        configmap.reloader.stakater.com/reload: &configMap immich-configmap
         secret.reloader.stakater.com/reload: &secret immich-secret
     image:
       repository: docker.io/typesense/typesense
       tag: 0.25.0
     envFrom:
       - configMapRef:
-          name: *configmap
+          name: *configMap
       - secretRef:
           name: *secret
     service:
@@ -63,9 +63,9 @@ spec:
       - name: config
         mountPath: /config
         accessMode: ReadWriteOnce
-        size: 5Gi
+        size: 1Gi
         storageClass: longhorn
     resources:
       requests:
-        cpu: 200m
-        memory: 350Mi
+        cpu: 100m
+        memory: 250Mi
