@@ -28,6 +28,8 @@ spec:
   dependsOn:
     - name: immich-server
       namespace: default
+    - name: immich-redis
+      namespace: default
   values:
     controller:
       strategy: RollingUpdate
@@ -36,7 +38,7 @@ spec:
         secret.reloader.stakater.com/reload: &secret immich-secret
     image:
       repository: ghcr.io/immich-app/immich-web
-      tag: v1.76.0
+      tag: v1.76.1
     envFrom:
       - configMapRef:
           name: *configMap
@@ -52,12 +54,11 @@ spec:
         enabled: true
         ingressClassName: internal
         annotations:
-          
+         
           nginx.ingress.kubernetes.io/configuration-snippet: |
             rewrite /api/(.*) /$1 break;
           nignx.ingress.kubernetes.io/force-ssl-redirect: "true"
           nginx.ingress.kubernetes.io/proxy-body-size: "0"
-          
         hosts:
           - host: &host photos.vanillax.me
             paths:
@@ -71,7 +72,11 @@ spec:
         tls:
           - hosts:
               - *host
-
+    podSecurityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      fsGroupChangePolicy: OnRootMismatch
     persistence:
       library:
         enabled: true

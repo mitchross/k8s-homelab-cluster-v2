@@ -15,10 +15,3 @@ data:
   TRANSFORMERS_CACHE: /usr/src/app/.transformers_cache
   TYPESENSE_DATA_DIR: /config
   TYPESENSE_HOST: immich-typesense.default.svc.cluster.local
-  # Below are deprecated and can only be set in the Immich Admin settings
-  # OAUTH_ENABLED: "true"
-  # OAUTH_ISSUER_URL: https://auth.${SECRET_CLUSTER_DOMAIN}/.well-known/openid-configuration
-  # OAUTH_CLIENT_ID: immich
-  # OAUTH_CLIENT_SECRET: "${SECRET_IMMICH_OAUTH_CLIENT_SECRET}"
-  # OAUTH_AUTO_REGISTER: "true"
-  # OAUTH_BUTTON_TEXT: "Login with Authelia"
