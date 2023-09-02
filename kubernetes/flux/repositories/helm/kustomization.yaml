@@ -21,4 +21,5 @@ resources:
   - ./node-feature-discovery.yaml
   - ./intel.yaml
   - ./longhorn-charts.yaml
+  - ./komodorio.yaml
   
