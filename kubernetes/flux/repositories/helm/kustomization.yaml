@@ -22,4 +22,5 @@ resources:
   - ./intel.yaml
   - ./longhorn-charts.yaml
   - ./komodorio.yaml
+  - ./cloudnative-pg.yaml
   
