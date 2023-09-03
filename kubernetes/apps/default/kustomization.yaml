@@ -10,7 +10,7 @@ resources:
   - ./frigate/ks.yaml
   - ./libreddit
   - ./speedtest
- # - ./immich/ks.yaml
+  - ./immich/ks.yaml
   - ./tubesync/ks.yaml
   - ./scrypted/ks.yaml
   - ./rancher-demo
