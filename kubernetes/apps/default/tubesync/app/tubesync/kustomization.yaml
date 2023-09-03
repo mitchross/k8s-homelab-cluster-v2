@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: default
 resources:
   - ./helmrelease.yaml
-#  - ./nfs-yt-pvc.yaml
+  - ./nfs-yt-pvc.yaml
   - ./secret.sops.yaml
 labels:
   - pairs:
