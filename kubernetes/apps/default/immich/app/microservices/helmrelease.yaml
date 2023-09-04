@@ -70,8 +70,6 @@ spec:
         enabled: true
         type: emptyDir
         mountPath: /usr/src/app/.transformers_cache
-    nodeSelector:
-      intel.feature.node.kubernetes.io/gpu: "true"
     topologySpreadConstraints:
       - maxSkew: 1
         topologyKey: kubernetes.io/hostname
@@ -79,11 +77,3 @@ spec:
         labelSelector:
           matchLabels:
             app.kubernetes.io/name: *app
-    resources:
-      requests:
-        gpu.intel.com/i915: "1"
-        cpu: 100m
-        memory: 1000Mi
-      limits:
-        gpu.intel.com/i915: "1"
-        memory: 6000Mi
