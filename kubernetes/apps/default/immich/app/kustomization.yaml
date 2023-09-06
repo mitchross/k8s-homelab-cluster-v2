@@ -11,5 +11,5 @@ resources:
   - ./server
   - ./nfs-pvc.yaml
   - ./web
-  #- ./typesense
+  - ./typesense
   - ./redis
