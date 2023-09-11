@@ -35,7 +35,7 @@ spec:
         compression: bzip2
         maxParallel: 8
       destinationPath: s3://postgres-v1/
-      endpointURL: http://s3.vanillax.me
+      endpointURL: https://s3.vanillax.me
       serverName: postgres-v1
       s3Credentials:
         accessKeyId:
