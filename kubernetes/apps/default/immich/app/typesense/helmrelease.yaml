@@ -67,5 +67,5 @@ spec:
         storageClass: longhorn
     resources:
       requests:
-        cpu: 100m
-        memory: 250Mi
+        cpu: 300m
+        memory: 650Mi
