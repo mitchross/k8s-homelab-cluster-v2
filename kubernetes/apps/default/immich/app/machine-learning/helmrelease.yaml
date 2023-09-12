@@ -44,16 +44,12 @@ spec:
           name: *configMap
       - secretRef:
           name: *secret
-    podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
-      fsGroupChangePolicy: OnRootMismatch
     service:
       main:
         ports:
           http:
             port: 3003
+
     persistence:
       library:
         enabled: true
@@ -61,7 +57,8 @@ spec:
         mountPath: /usr/src/app/upload
       cache:
         enabled: true
-        type: emptyDir
+        existingClaim: immich-machine-learning-cache
+        mountPath: /cache
       geocoding-dump:
         enabled: true
         type: emptyDir
