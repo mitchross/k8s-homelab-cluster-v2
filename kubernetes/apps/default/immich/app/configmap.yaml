@@ -14,4 +14,4 @@ data:
   REDIS_PORT: "6379"
   TRANSFORMERS_CACHE: /usr/src/app/.transformers_cache
   TYPESENSE_DATA_DIR: /config
-  TYPESENSE_HOST: immich-machine-learning.default.svc.cluster.local
+  TYPESENSE_HOST: immich-typesense.default.svc.cluster.local
