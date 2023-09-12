@@ -62,8 +62,8 @@ spec:
     volumeClaimTemplates:
       - name: config
         mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 1Gi
+        accessMode: ReadWriteMany
+        size: 2Gi
         storageClass: longhorn
     resources:
       requests:
