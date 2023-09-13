@@ -81,10 +81,8 @@ spec:
               - *console-host
       s3:
         enabled: true
-        ingressClassName: external
+        ingressClassName: internal
         annotations:
-          external-dns.home.arpa/enabled: "true"
-          external-dns.alpha.kubernetes.io/target: external.vanillax.me
           nginx.ingress.kubernetes.io/proxy-connect-timeout: "180"
           nginx.ingress.kubernetes.io/proxy-body-size: 1024m
           nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
