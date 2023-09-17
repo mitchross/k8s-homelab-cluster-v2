@@ -43,6 +43,8 @@ spec:
         #       name: frigate-secret
         service:
             main:
+                annotations:
+                    io.cilium/lb-ipam-ips: ${SVC_FRIGATE_ADDR}
                 ports:
                     http:
                         port: &port 5000
