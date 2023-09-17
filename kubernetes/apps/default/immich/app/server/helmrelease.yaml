@@ -51,6 +51,8 @@ spec:
     args: ["start-server.sh"]
     envFrom: *envFrom
     service:
+      annotations:
+          io.cilium/lb-ipam-ips: "192.168.1.18"
       main:
         ports:
           http:
