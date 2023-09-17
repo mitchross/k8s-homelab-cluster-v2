@@ -52,9 +52,14 @@ spec:
     envFrom: *envFrom
     service:
       main:
+        annotations:
+          io.cilium/lb-ipam-ips: "192.168.1.18"
         ports:
           http:
             port: 3001
+          api:
+            port: 2283
+        type: LoadBalancer
     podSecurityContext:
       runAsUser: 1000
       runAsGroup: 1000
