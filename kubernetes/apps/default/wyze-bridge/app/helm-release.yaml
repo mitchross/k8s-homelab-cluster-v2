@@ -44,23 +44,22 @@ spec:
             targetPort: 8554
 
         type: LoadBalancer
-    ingress:
-      main:
-        enabled: true
-        ingressClassName: internal
-        annotations:
-          nginx.ingress.kubernetes.io/whitelist-source-range: |
-            10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
-          hajimari.io/enable: "true"
-        hosts:
-        - host: &host wyze.vanillax.me
-          paths:
-          - path: /
-            pathType: Prefix
-        tls:
-        - hosts:
-          - *host
-
+      ingress:
+            main:
+                enabled: true
+                ingressClassName: internal
+                annotations:
+                    nginx.ingress.kubernetes.io/whitelist-source-range: |
+                        10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+                    hajimari.io/enable: "false"
+                hosts:
+                    - host: &host wyze.vanillax.me
+                      paths:
+                          - path: /
+                            pathType: Prefix
+                tls:
+                    - hosts:
+                          - *host
     image:
       # repository: mitchross09/docker-wyze-bridge
       # tag: qsv-2.3.5-1
