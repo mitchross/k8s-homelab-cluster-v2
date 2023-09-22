@@ -55,6 +55,7 @@ spec:
         ports:
           http:
             port: 4848
+        type: LoadBalancer
     ingress:
       main:
         enabled: true
