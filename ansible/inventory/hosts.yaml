@@ -26,15 +26,6 @@ kubernetes:
         k3s-worker-pve3-1:
           ansible_user: vanillax
           ansible_host: 192.168.1.205
-        k3s-worker-pve3-2:
-          ansible_user: vanillax
-          ansible_host: 192.168.1.206
         k3s-worker-dell-1:
           ansible_user: vanillax
           ansible_host: 192.168.1.198
-        k3s-worker-dell-2:
-          ansible_user: vanillax
-          ansible_host: 192.168.1.207
-        k3s-worker-dell-3:
-          ansible_user: vanillax
-          ansible_host: 192.168.1.208
