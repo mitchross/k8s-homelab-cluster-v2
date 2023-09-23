@@ -36,9 +36,17 @@ spec:
             io.cilium/lb-ipam-ips: "192.168.1.16"
           ports:
             http:
-              port: &port 5000
-            rtsp:
+              enabled: true
+              port: 5000
+            rtmp:
+              enabled: true
+              port: 1935
+            rstp:
+              enabled: true
               port: 8554
+            hls:
+              enabled: true
+              port: 8888
 
           type: LoadBalancer
       ingress:
@@ -80,6 +88,8 @@ spec:
       value: "False"
     - name: WYZE_BETA_API
       value: "True"
+    - name: TZ
+      value: America/Detroit
 
     # - name: H264_ENC
     #   value: h264_qsv
