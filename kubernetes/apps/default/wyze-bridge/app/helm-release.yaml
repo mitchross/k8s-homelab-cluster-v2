@@ -30,41 +30,41 @@ spec:
     securityContext:
       privileged: true
 
-      service:
-        main:
-          annotations:
-            io.cilium/lb-ipam-ips: "192.168.1.16"
-          ports:
-            http:
-              enabled: true
-              port: 5000
-            rtmp:
-              enabled: true
-              port: 1935
-            rstp:
-              enabled: true
-              port: 8554
-            hls:
-              enabled: true
-              port: 8888
+    service:
+      main:
+        annotations:
+          io.cilium/lb-ipam-ips: "192.168.1.16"
+        ports:
+          http:
+            enabled: true
+            port: 5000
+          rtmp:
+            enabled: true
+            port: 1935
+          rstp:
+            enabled: true
+            port: 8554
+          hls:
+            enabled: true
+            port: 8888
 
-          type: LoadBalancer
-      ingress:
-        main:
-          enabled: true
-          ingressClassName: internal
-          annotations:
-            nginx.ingress.kubernetes.io/whitelist-source-range: |
-              10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
-            hajimari.io/enable: "true"
-          hosts:
-          - host: &host wyze.vanillax.me
-            paths:
-            - path: /
-              pathType: Prefix
-          tls:
-          - hosts:
-            - *host
+        type: LoadBalancer
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: internal
+        annotations:
+          nginx.ingress.kubernetes.io/whitelist-source-range: |
+            10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+          hajimari.io/enable: "true"
+        hosts:
+        - host: &host wyze.vanillax.me
+          paths:
+          - path: /
+            pathType: Prefix
+        tls:
+        - hosts:
+          - *host
     image:
       # repository: mitchross09/docker-wyze-bridge
       # tag: qsv-2.3.5-1
