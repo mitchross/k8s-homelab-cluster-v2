@@ -24,12 +24,17 @@ metadata:
     ingressClassName: internal
 spec:
   rules:
-    - host: &host wizard.vanillax.me
+    - host: wizard.vanillax.me
       http:
         paths:
           - path: /
             pathType: Prefix
+            backend:
+              service:
+                name: wizard-coder-15b
+                port:
+                  number: 8000
   tls:
     - hosts:
-        - *host
+        - wizard.vanillax.me
 
