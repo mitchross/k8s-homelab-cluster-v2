@@ -27,7 +27,6 @@ spec:
       env:
         DEFAULT_MODEL_HG_REPO_ID: "TheBloke/WizardCoder-15B-1.0-GGML"
         DEFAULT_MODEL_FILE: "WizardCoder-15B-1.0.ggmlv3.q4_1.bin"
-    resources: {}
     model:
       persistence:
         size: "25Gi"
@@ -38,6 +37,9 @@ spec:
       type: "ClusterIP"
       port: 8000
       annotations: {}
-    nodeSelector: {}
-    tolerations: []
-    affinity: {}
+    resources:
+      requests:
+        cpu: 5000m
+        memory: 4000Mi
+      limits:
+        memory: 12000Mi
