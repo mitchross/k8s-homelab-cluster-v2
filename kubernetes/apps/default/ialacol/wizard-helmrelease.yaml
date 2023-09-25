@@ -33,7 +33,7 @@ spec:
         size: "25Gi"
         accessModes:
           - "ReadWriteOnce"
-        storageClassName: null
+        storageClassName: longhorn
     service:
       type: "ClusterIP"
       port: 8000
