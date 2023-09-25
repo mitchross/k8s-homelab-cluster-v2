@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: wizard-coder-15b
+  name: ialacol
   namespace: default
   annotations: {}
 spec:
@@ -10,13 +10,13 @@ spec:
     - port: 8000
       targetPort: 8000
   selector:
-    app: wizard-coder-15b
+    app: ialacol
 
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: wizard-coder-15b
+  name: ialacol
   namespace: default
   annotations:
     nginx.ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
@@ -31,7 +31,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: wizard-coder-15b
+                name: ialacol
                 port:
                   number: 8000
   tls:
