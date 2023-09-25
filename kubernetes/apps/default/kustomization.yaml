@@ -14,3 +14,4 @@ resources:
   - ./tubesync/ks.yaml
   - ./scrypted/ks.yaml
   - ./rancher-demo
+  - ./ialacol
