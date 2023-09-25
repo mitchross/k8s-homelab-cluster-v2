@@ -1,0 +1,45 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: wizard-coder-15b
+  namespace: default
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: ialacol  # The name of the chart within the repo
+      version: "0.11.4"  # Replace this with your desired version
+      sourceRef:
+        kind: HelmRepository
+        name: starchat  # Must match the HelmRepository name
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    replicas: 1
+    deployment:
+      image: quay.io/chenhunghan/ialacol:latest
+      env:
+        DEFAULT_MODEL_HG_REPO_ID: TheBloke/WizardLM-Uncensored-Falcon-7B-GGML
+        DEFAULT_MODEL_FILE: wizardlm-7b-uncensored.ggccv1.q4_0.bin
+    model:
+      persistence:
+        size: "25Gi"
+        accessModes:
+          - "ReadWriteOnce"
+        storageClassName: longhorn
+    # service:
+    #   type: "ClusterIP"
+    #   port: 8000
+    #   annotations: {}
+    resources:
+      requests:
+        cpu: 5000m
+        memory: 6000Mi
+      limits:
+        memory: 12000Mi
