@@ -33,10 +33,10 @@ spec:
         accessModes:
           - "ReadWriteOnce"
         storageClassName: longhorn
-    service:
-      type: "ClusterIP"
-      port: 8000
-      annotations: {}
+    # service:
+    #   type: "ClusterIP"
+    #   port: 8000
+    #   annotations: {}
     resources:
       requests:
         cpu: 5000m

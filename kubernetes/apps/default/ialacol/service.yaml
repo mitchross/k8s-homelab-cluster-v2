@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wizard-coder-15b
+  annotations: {}
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8000
+      targetPort: 8000
+  selector:
+    app: wizard-coder-15b
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: main-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+    hajimari.io/enable: "false"
+    ingressClassName: internal
+spec:
+  rules:
+    - host: &host wizard.vanillax.me
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - *host
+
