@@ -1,0 +1,8 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: starchat
+  namespace: flux-system
+spec:
+  url: https://chenhunghan.github.io/ialacol
+  interval: 1m

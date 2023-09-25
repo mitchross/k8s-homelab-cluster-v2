@@ -23,4 +23,4 @@ resources:
   - ./longhorn-charts.yaml
   - ./komodorio.yaml
   - ./cloudnative-pg.yaml
-  
+  - ./ialacol.yaml
