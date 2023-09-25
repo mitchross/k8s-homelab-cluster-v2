@@ -34,19 +34,12 @@ spec:
           - "ReadWriteOnce"
         storageClassName: longhorn
     service:
-      ingress:
-        enabled: true
-        className: internal
-        annotations:
-          hajimari.io/icon: sawtooth-wave
-        hosts:
-          - host: &host "wizard.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
+      type: "ClusterIP"
+      port: 8000
+      annotations: {}
     resources:
       requests:
         cpu: 5000m
-        memory: 4000Mi
+        memory: 6000Mi
       limits:
         memory: 12000Mi
