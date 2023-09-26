@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   #- wizard-helmrelease.yaml
   - falcon-helmrelease.yaml
-  - service.yaml
+#  - service.yaml
