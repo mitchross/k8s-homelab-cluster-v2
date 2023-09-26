@@ -27,6 +27,8 @@ spec:
       env:
         DEFAULT_MODEL_HG_REPO_ID: TheBloke/WizardLM-Uncensored-Falcon-7B-GGML
         DEFAULT_MODEL_FILE: wizardlm-7b-uncensored.ggccv1.q4_0.bin
+        # the file name of the model file is missing `falcon` so we need to set the model type
+        MODE_TYPE: falcon
     model:
       persistence:
         size: "25Gi"
