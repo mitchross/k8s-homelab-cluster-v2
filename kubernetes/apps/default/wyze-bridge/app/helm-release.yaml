@@ -47,6 +47,12 @@ spec:
           hls:
             enabled: true
             port: 8888
+          webrtc:
+            enabled: true 
+            port: 8889
+          webrtcice:
+            enabled: true 
+            port: 8189      
 
         type: LoadBalancer
     ingress:
@@ -90,6 +96,8 @@ spec:
       value: "True"
     - name: TZ
       value: America/Detroit
+    - name: WB_IP
+      value: 192.168.1.16
 
     # - name: H264_ENC
     #   value: h264_qsv
