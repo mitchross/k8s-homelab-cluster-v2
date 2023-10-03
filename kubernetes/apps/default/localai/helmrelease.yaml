@@ -12,7 +12,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: go-skynet
-        namespace: default
+        namespace: flux-system
   values:
     replicaCount: 1
     deployment:
