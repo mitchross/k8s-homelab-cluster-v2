@@ -24,3 +24,4 @@ resources:
   - ./komodorio.yaml
   - ./cloudnative-pg.yaml
   - ./ialacol.yaml
+  - ./localai.yaml
