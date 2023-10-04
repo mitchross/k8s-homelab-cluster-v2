@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: k8s-watcher
-      version: "1.16.15"
+      version: "1.16.16"
       sourceRef:
         kind: HelmRepository
         name: komodorio
