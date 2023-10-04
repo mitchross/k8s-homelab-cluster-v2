@@ -33,7 +33,7 @@ spec:
               service:
                 name: localai
                 port:
-                  number: 8000
+                  number: 80
   tls:
     - hosts:
         - localai.vanillax.me
