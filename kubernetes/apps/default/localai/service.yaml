@@ -7,8 +7,8 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-    - port: 8080
-      targetPort: 8080
+    - port: 80
+      targetPort: 80
   selector:
     app: localai
 
@@ -33,7 +33,7 @@ spec:
               service:
                 name: localai
                 port:
-                  number: 8080
+                  number: 80
   tls:
     - hosts:
         - localai.vanillax.me
