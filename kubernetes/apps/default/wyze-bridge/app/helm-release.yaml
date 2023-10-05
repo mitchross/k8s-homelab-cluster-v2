@@ -85,7 +85,7 @@ spec:
     - name: RECORD_ALL
       value: "True"
     - name: RECORD_LENGTH
-      value: "1800"
+      value: "500"
     - name: ROTATE_DOOR
       value: "True"
     - name: FRESH_DATA
