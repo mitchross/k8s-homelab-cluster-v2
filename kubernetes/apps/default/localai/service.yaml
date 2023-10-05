@@ -5,7 +5,7 @@ metadata:
   namespace: default
   annotations: {}
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   ports:
     - port: 8080
       targetPort: 8080
