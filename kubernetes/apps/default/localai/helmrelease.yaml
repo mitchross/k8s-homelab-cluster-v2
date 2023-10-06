@@ -37,28 +37,42 @@ spec:
     models:
       forceDownload: false
       list:
-        - url: "https://gpt4all.io/models/ggml-gpt4all-j.bin"
-          # basicAuth: base64EncodedCredentials
+      - url: "https://gpt4all.io/models/ggml-gpt4all-j.bin"
+        # basicAuth: base64EncodedCredentials
       persistence:
         pvc:
           enabled: false
           size: 6Gi
           accessModes:
-            - ReadWriteOnce
+          - ReadWriteOnce
           annotations: {}
           storageClass: longhorn
         hostPath:
           enabled: false
           path: "/models"
+    service:
+      main:
+        ports:
+          http:
+            port: 3000
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: internal
+        annotations:
+          nginx.ingress.kubernetes.io/whitelist-source-range: |
+            10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+          hajimari.io/enable: "false"
+        hosts:
+        - host: &host localai.vanillax.me
+          paths:
+          - path: /
+            pathType: Prefix
+        tls:
+        - hosts:
+          - *host
     nodeSelector: {}
     tolerations: []
     affinity: {}
-    service:
-      type: ClusterIP
-      port: 80
-      annotations: {}
-      # If using an AWS load balancer, you'll need to override the default 60s load balancer idle timeout
-      # service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "1200"
 
-    ingress:
-      enabled: false
+
