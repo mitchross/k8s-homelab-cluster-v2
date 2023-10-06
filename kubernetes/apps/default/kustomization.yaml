@@ -7,7 +7,7 @@ resources:
   - ./minio/ks.yaml
   - ./wyze-bridge/ks.yaml
   - ./mqtt
- # - ./frigate/ks.yaml
+  - ./frigate/ks.yaml
   - ./libreddit
   - ./speedtest
   - ./immich/ks.yaml
@@ -15,4 +15,4 @@ resources:
   - ./scrypted/ks.yaml
   - ./rancher-demo
   #- ./ialacol
-  - ./localai
+ # - ./localai
