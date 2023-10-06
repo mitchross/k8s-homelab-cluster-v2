@@ -51,12 +51,10 @@ spec:
           enabled: false
           path: "/models"
     service:
-      main:
         ports:
           http:
             port: 8080
     ingress:
-      main:
         enabled: true
         ingressClassName: internal
         annotations:
