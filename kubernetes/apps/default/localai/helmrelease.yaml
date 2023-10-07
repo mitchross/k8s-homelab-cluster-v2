@@ -37,7 +37,7 @@ spec:
     models:
       forceDownload: false
       list:
-      - url: "https://gpt4all.io/models/ggml-gpt4all-j.bin"
+      - url: "https://gpt4all.io/models/starcoderbase-7b-ggml.bin"
         # basicAuth: base64EncodedCredentials
       persistence:
         pvc:
