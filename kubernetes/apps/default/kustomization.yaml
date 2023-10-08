@@ -15,4 +15,4 @@ resources:
   - ./scrypted/ks.yaml
   - ./rancher-demo
   #- ./ialacol
-  - ./localai
+  #- ./localai
