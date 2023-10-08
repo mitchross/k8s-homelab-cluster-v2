@@ -37,7 +37,7 @@ spec:
     models:
       forceDownload: false
       list:
-      - url: "https://gpt4all.io/models/starcoderbase-7b-ggml.bin"
+      - url: "https://huggingface.co/nomic-ai/gpt4all-falcon-ggml/resolve/main/ggml-model-gpt4all-falcon-q4_0.bin"
         # basicAuth: base64EncodedCredentials
       persistence:
         pvc:
