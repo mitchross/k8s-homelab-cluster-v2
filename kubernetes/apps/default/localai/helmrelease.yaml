@@ -20,6 +20,8 @@ spec:
       env:
         threads: 4
         context_size: 512
+        rebuild: true
+        debug: true
       modelsPath: "/models"
     resources:
       limits:
