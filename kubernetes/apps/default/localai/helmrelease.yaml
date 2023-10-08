@@ -20,7 +20,7 @@ spec:
       env:
         threads: 4
         context_size: 512
-        rebuild: true
+        rebuild: false
         debug: true
       modelsPath: "/models"
     resources:
@@ -39,7 +39,7 @@ spec:
     models:
       forceDownload: false
       list:
-      - url: "https://huggingface.co/nomic-ai/gpt4all-falcon-ggml/resolve/main/ggml-model-gpt4all-falcon-q4_0.bin"
+      - url: "https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGML/resolve/main/llama-2-7b-chat.ggmlv3.q4_0.bin"
         # basicAuth: base64EncodedCredentials
       persistence:
         pvc:
