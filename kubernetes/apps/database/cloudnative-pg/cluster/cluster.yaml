@@ -19,9 +19,9 @@ spec:
     storageClass: longhorn
   superuserSecret:
     name: cloudnative-pg-secret
-  # bootstrap:
-  #   recovery:
-  #     source: &previous-cluster postgres-v2
+  bootstrap:
+    recovery:
+      source: &previous-cluster postgres-v1
   postgresql:
     parameters:
       max_connections: "600"
@@ -36,7 +36,7 @@ spec:
         maxParallel: 8
       destinationPath: s3://postgres-v1/
       endpointURL: https://s3.vanillax.me
-      serverName: postgres-v1
+      serverName: &currentCluster postgres-v2
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-secret
@@ -45,18 +45,18 @@ spec:
           name: cloudnative-pg-secret
           key: MINIO_SECRET_KEY
   # # Note: externalClusters is needed when recovering from an existing cnpg cluster 
-  # externalClusters:
-  #   - name: *previous-cluster
-  #     barmanObjectStore:
-  #       wal:
-  #         compression: bzip2
-  #         maxParallel: 8
-  #       destinationPath: s3://postgresql/
-  #       endpointURL: http://s3.turbo.ac
-  #       s3Credentials:
-  #         accessKeyId:
-  #           name: cloudnative-pg-secret
-  #           key: aws-access-key-id
-  #         secretAccessKey:
-  #           name: cloudnative-pg-secret
-  #           key: aws-secret-access-key
+  externalClusters:
+    - name: *previous-cluster
+      barmanObjectStore:
+        wal:
+          compression: bzip2
+          maxParallel: 8
+        destinationPath: s3://postgres-v1/
+        endpointURL: https://s3.vanillax.me
+        s3Credentials:
+          accessKeyId:
+            name: cloudnative-pg-secret
+            key: aws-access-key-id
+          secretAccessKey:
+            name: cloudnative-pg-secret
+            key: aws-secret-access-key
