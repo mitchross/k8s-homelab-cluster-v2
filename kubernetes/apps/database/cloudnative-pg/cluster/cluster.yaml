@@ -15,13 +15,13 @@ spec:
       kube-image-keeper.enix.io/image-caching-policy: ignore
   primaryUpdateStrategy: unsupervised
   storage:
-    size: 40Gi
+    size: 60Gi
     storageClass: local-path
   superuserSecret:
     name: cloudnative-pg-secret
-  bootstrap:
-    recovery:
-      source: &previous-cluster postgres-v1
+  # bootstrap:
+  #   recovery:
+  #     source: &previous-cluster postgres-v1
   postgresql:
     parameters:
       max_connections: "600"
@@ -34,9 +34,9 @@ spec:
       wal:
         compression: bzip2
         maxParallel: 8
-      destinationPath: s3://postgres-v1/
+      destinationPath: s3://postgres-bucket/postgres-v1
       endpointURL: https://s3.vanillax.me
-      serverName: &currentCluster postgres-v2
+      serverName: &currentCluster postgres-v1
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-secret
@@ -45,18 +45,18 @@ spec:
           name: cloudnative-pg-secret
           key: MINIO_SECRET_KEY
   # Note: externalClusters is needed when recovering from an existing cnpg cluster 
-  externalClusters:
-    - name: *previous-cluster
-      barmanObjectStore:
-        wal:
-          compression: bzip2
-          maxParallel: 8
-        destinationPath: s3://postgres-v1/
-        endpointURL: https://s3.vanillax.me
-        s3Credentials:
-          accessKeyId:
-            name: cloudnative-pg-secret
-            key: MINIO_ACCESS_KEY
-          secretAccessKey:
-            name: cloudnative-pg-secret
-            key: MINIO_SECRET_KEY
+  # externalClusters:
+  #   - name: *previous-cluster
+  #     barmanObjectStore:
+  #       wal:
+  #         compression: bzip2
+  #         maxParallel: 8
+  #       destinationPath: s3://postgres-bucket/postgres-v1
+  #       endpointURL: https://s3.vanillax.me
+  #       s3Credentials:
+  #         accessKeyId:
+  #           name: cloudnative-pg-secret
+  #           key: MINIO_ACCESS_KEY
+  #         secretAccessKey:
+  #           name: cloudnative-pg-secret
+  #           key: MINIO_SECRET_KEY
