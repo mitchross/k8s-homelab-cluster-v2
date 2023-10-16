@@ -26,7 +26,7 @@ spec:
 
   values:
     image:
-      repository: ollama
+      repository: ollama/ollama
       tag: 0.1.3
     env:
       TZ: "America/Detroit"
@@ -47,7 +47,7 @@ spec:
             10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
           hajimari.io/enable: "true"
         hosts:
-          - host: &host "ollamafa.${SECRET_DOMAIN}"
+          - host: &host "ollama.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
