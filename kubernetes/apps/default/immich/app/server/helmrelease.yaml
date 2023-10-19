@@ -1,22 +1,23 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: &app immich-server
   namespace: default
 spec:
-  interval: 30m
+  interval: 15m
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 2
+  maxHistory: 3
   install:
+    createNamespace: true
     remediation:
       retries: 3
   upgrade:
@@ -27,65 +28,84 @@ spec:
     keepHistory: false
   dependsOn:
     - name: immich-typesense
-      namespace: default
+      namespace: database
     - name: immich-redis
       namespace: default
   values:
-    initContainers:
-      01-init-db:
-        image: ghcr.io/onedr0p/postgres-init:14.9
-        imagePullPolicy: IfNotPresent
-        envFrom: &envFrom
-          - configMapRef:
-              name: &configMap immich-configmap
-          - secretRef:
-              name: &secret immich-secret
-    controller:
-      strategy: RollingUpdate
-      annotations:
-        configmap.reloader.stakater.com/reload: *configMap
-        secret.reloader.stakater.com/reload: *secret
-    image:
-      repository: ghcr.io/immich-app/immich-server
-      tag: v1.82.1
-    args: ["start-server.sh"]
-    envFrom: *envFrom
+    controllers:
+      main:
+        strategy: RollingUpdate
+        annotations:
+          secret.reloader.stakater.com/reload: &secret immich-secret
+          configmap.reloader.stakater.com/reload: &configmap immich-configmap
+        initContainers:
+          01-init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 14.9
+              pullPolicy: IfNotPresent
+            envFrom:
+              - secretRef:
+                  name: *secret
+        pod:
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: *app
+        containers:
+          main:
+            image:
+              repository: ghcr.io/immich-app/immich-server
+              tag: v1.82.1
+            command: /bin/sh
+            args: ["start-server.sh"]
+            envFrom:
+              - secretRef:
+                  name: *secret
+              - configMapRef:
+                  name: *configmap
+            resources:
+              requests:
+                cpu: 100m
+                memory: 250Mi
+              limits:
+                memory: 1000Mi
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /server-info/ping
+                    port: 3001
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 5
+              readiness: *probes
+              startup:
+                enabled: false
     service:
       main:
-        annotations:
-          io.cilium/lb-ipam-ips: "192.168.1.18"
         ports:
           http:
             port: 3001
-          api:
-            port: 2283
-        type: LoadBalancer
-    podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
-      fsGroupChangePolicy: OnRootMismatch
     persistence:
       library:
         enabled: true
         existingClaim: immich-nfs
-        mountPath: /usr/src/app/upload
+        globalMounts:
+          - path: /usr/src/app/upload
       geocoding-dump:
         enabled: true
         type: emptyDir
-        mountPath: /usr/src/app/.reverse-geocoding-dump
+        globalMounts:
+          - path: /usr/src/app/.reverse-geocoding-dump
       transformers-cache:
         enabled: true
         type: emptyDir
-        mountPath: /usr/src/app/.transformers_cache
-    topologySpreadConstraints:
-      - maxSkew: 1
-        topologyKey: kubernetes.io/hostname
-        whenUnsatisfiable: DoNotSchedule
-        labelSelector:
-          matchLabels:
-            app.kubernetes.io/name: *app
-    resources:
-      requests:
-        cpu: 200m
-        memory: 450Mi
+        globalMounts:
+          - path: /usr/src/app/.transformers_cache
