@@ -27,9 +27,9 @@ spec:
     keepHistory: false
   dependsOn:
     - name: immich-typesense
-      namespace: database
+      namespace: default
     - name: immich-redis
-      namespace: database
+      namespace: default
   values:
     controllers:
       main:
