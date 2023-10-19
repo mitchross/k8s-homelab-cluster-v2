@@ -11,7 +11,7 @@ data:
   NODE_ENV: "production"
   REDIS_HOSTNAME: immich-redis.default.svc.cluster.local
   REDIS_PORT: "6379"
-  TYPESENSE_HOST: immich-typesense.fileserver.svc.cluster.local
+  TYPESENSE_HOST: immich-typesense.default.svc.cluster.local
   TYPESENSE_PORT: "8108"
   TYPESENSE_PROTOCOL: http
   TRANSFORMERS_CACHE: /usr/src/app/.transformers_cache

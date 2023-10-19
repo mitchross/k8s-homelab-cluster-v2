@@ -70,7 +70,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: "public"
+        className: "internal"
         annotations:
           hajimari.io/enable: "true"
           hajimari.io/icon: simple-icons:googlephotos
