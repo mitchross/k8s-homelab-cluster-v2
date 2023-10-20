@@ -1,4 +1,4 @@
-ansible_become_pass: ENC[AES256_GCM,data:dOHUFXkQWGbjQA==,iv:lIgFjLXPsSbzjX2mxVOWo6/j+Wcj9n6veUG7/98jX98=,tag:rMdWTjbRytoBK4ABrfT7xw==,type:str]
+ansible_become_pass: ENC[AES256_GCM,data:YthIw6DCsneeHg==,iv:WicW18OnRJyvSLmpDMbG1XgsLY6qrv0E+JFsxjId4vQ=,tag:RJjl5hhYzvg6uM+/UKt8FA==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -8,14 +8,14 @@ sops:
         - recipient: age1jh4s758pet7jdd8tuwd9ghfsx3ed40e6xcflqy77cm49cvj8u9lqpcnen9
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB5c2d0VkxhbmJKWCtiKzJF
-            Q3BNRWdMcXFodFkySFhJc0Fva2pvNmlKd1RRCnI3SjNCV2liUHJod2xObGRyUWVQ
-            Nks2a1lzakRWUFN1WGVIWDNzZWVWK2cKLS0tIEZ4cnZ6Sk1DYWtobUdUdmRMQ2t2
-            V2c4MHZGWHFuMkpjQzlQTHNKOUMwaDgKNjbdOiDoz6zBUziE5xYH2NAYQ2Ibx3JX
-            kdjh8ibZ6AX/mpFK0DaLphGcagY+hQBKmOPB1mvqDjeCFMPrdegaIg==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBOTVZQNjhLdk5XbWpqZURF
+            N20yREpuYlkvSlUxWDZ0RU8yNDlWOW5zRFNNCmJ4ekgxL3VYb2pCcXNmTW1Tdnp3
+            eFdyV0F6UU5BUE9RUFFCaXNLbkswYjAKLS0tIHNyOVcrWWMwKzlZWHRMNjJTbmFD
+            U3QzdDRrRkR6amdlblEvVFBPMncxTmsKFb4QG7h9vz12lEP7ThOJh+/bA4La96g4
+            FsD1rSzLr09pd5Vemnaw1qELlMFADFS7lsgRcw7AkcWvrtVQ5yFHfQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2023-09-22T20:25:59Z"
-    mac: ENC[AES256_GCM,data:+TYDZh9y+KtDYSAvKXjFQodrmNUecrbFWUEhl7GC5ED9q8u/ygZLWNNshDkRBhFxSSRlXOaOcJ6ACUKt6Hi7up90UC+9Lmb0oDcqQub76026lhd2CyU5MgBvfrSZLL+y6YUotogDkDzZhQC9CTsteO1BjIhvQvI8VsxJF17TfAo=,iv:x/Dcl9/uvMsPMzXO7e9jD3yLYWLoyRDfGIgggLq820U=,tag:HHMILPrz+cgxRwdUMr/iqA==,type:str]
+    lastmodified: "2023-10-20T14:17:11Z"
+    mac: ENC[AES256_GCM,data:awKgcstwaJodHmyJjrdP9JWOSSxcp+wQbJ61hB+/99dHfMnb/5ivbcIbLeagFYh6tS/ab9gyb7DHqZ5Is9HRNx6w1exz3m8+QYyW+OJeZroch6ijgjrQkAczABf8nM8+6sUOvPh3IYE3SoND37VRnW3ri4wvzjoalklO4uRbWO4=,iv:u15f66kBitc1jDPXDc+44saj2jJqfOUlxHx6haZ/Ra8=,tag:JYXwIQ1ohrBknHABZzdZkA==,type:str]
     pgp: []
     unencrypted_suffix: _unencrypted
-    version: 3.7.3
+    version: 3.8.1
