@@ -103,7 +103,7 @@ spec:
           - path: /downloads
       configs:
         enabled: true
-        existingClaim: longhorn
+        storageClass: longhorn
         globalMounts:
           - path: /config
         size: 10Gi
