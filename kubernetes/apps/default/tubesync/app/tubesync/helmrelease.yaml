@@ -1,88 +1,114 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: tubesync
+  name: &app tubesync
   namespace: default
 spec:
-  interval: 30m
+  interval: 15m
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+  maxHistory: 3
   install:
     createNamespace: true
     remediation:
-      retries: 5
+      retries: 3
   upgrade:
+    cleanupOnFail: true
     remediation:
-      retries: 5
+      retries: 3
+  uninstall:
+    keepHistory: false
+  dependsOn:
+    - name: database-cloudnative-pg
+      namespace: database
 
   values:
-    annotations:
+    controllers:
+      main:
+        strategy: RollingUpdate
+        annotations:
           secret.reloader.stakater.com/reload: &secret tubesync-db-secret
-    image:
-      repository: ghcr.io/meeb/tubesync
-      tag: "latest@sha256:aad2722e39ccb3181b5ace2d3f2caa87d0634576d68bbc86cd8a018733291411"
-    env:
-      TZ: "America/Detroit"
-      TUBESYNC_WORKERS: 4
-      PUID: 1000
-      PGID: 1000
-      TUBESYNC_RESET_DOWNLOAD_DIR: False
-
-    initContainers:
-      - name: 01-init-db
-        image:
-          repository: ghcr.io/onedr0p/postgres-init
-          tag: 14.9
-        envFrom:
-          - secretRef:
-              name: *secret
-
-    envFrom:
-      - secretRef:
-          name: *secret
-
-    persistence:
-      config:
-        enabled: true
-        storageClass: longhorn
-        mountPath: /config
-        size: 10Gi
-      downloads:
-        enabled: true
-        existingClaim: youtube-nfs
-        mountPath: /downloads
-
+        env:
+            TZ: "America/Detroit"
+        initContainers:
+          01-init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 14.9
+              pullPolicy: IfNotPresent
+            envFrom:
+              - secretRef:
+                  name: *secret
+        pod:
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: *app
+        containers:
+          main:
+            image:
+              repository: ghcr.io/meeb/tubesync
+              tag: "latest@sha256:aad2722e39ccb3181b5ace2d3f2caa87d0634576d68bbc86cd8a018733291411"
+            envFrom:
+              - secretRef:
+                  name: *secret
+              - configMapRef:
+                  name: *configmap
+            resources:
+              requests:
+                cpu: 100m
+                memory: 250Mi
+              limits:
+                memory: 1000Mi
+              startup:
+                enabled: false
     service:
       main:
         ports:
           http:
             port: 4848
-        type: LoadBalancer
+
+
     ingress:
-      main:
+        main:
+          enabled: true
+          className: "internal"
+          annotations:
+            hajimari.io/enable: "true"
+    
+          hosts:
+            - host: &host "tubesync.${SECRET_DOMAIN}"
+              paths:
+                - path: /
+                  pathType: Prefix
+                  service:
+                    name: main
+                    port: http
+          tls:
+            - secretName: *host
+              hosts:
+                - *host
+
+    persistence:
+      library:
         enabled: true
-        ingressClassName: internal
-        annotations:
-          nginx.ingress.kubernetes.io/whitelist-source-range: |
-            10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
-          hajimari.io/enable: "true"
-        hosts:
-          - host: "tubesync.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-        tls:
-          - hosts:
-              - "tubesync.${SECRET_DOMAIN}"
-    resources:
-      requests:
-        cpu: 250m
-        memory: 350Mi
-      limits:
-        memory: 5000Mi
+        existingClaim: youtube-nfs
+        globalMounts:
+          - path: /downloads
+      configs:
+        enabled: true
+        existingClaim: longhorn
+        globalMounts:
+          - path: /config
+        size: 10Gi
