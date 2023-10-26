@@ -26,9 +26,6 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  dependsOn:
-    - name: database-cloudnative-pg
-      namespace: database
 
   values:
     controllers:
