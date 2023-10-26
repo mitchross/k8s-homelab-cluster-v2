@@ -63,8 +63,6 @@ spec:
             envFrom:
               - secretRef:
                   name: *secret
-              - configMapRef:
-                  name: *configmap
             resources:
               requests:
                 cpu: 100m
