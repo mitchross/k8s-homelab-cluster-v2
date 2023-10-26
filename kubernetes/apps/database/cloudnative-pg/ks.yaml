@@ -1,38 +1,53 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps-cloudnative-pg
+  name: database-cloudnative-pg
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/database/cloudnative-pg/app
-  prune: true
+  path: ./kubernetes/apps/database/cloudnative-pg/cloudnative-pg
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
+  prune: true
   wait: true
   interval: 30m
   retryInterval: 1m
   timeout: 5m
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps-cloudnative-pg-cluster
+  name: database-cloudnative-pg-cluster
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: cluster-apps-cloudnative-pg
-    - name: cluster-apps-local-path-provisioner
-    # - name: cluster-apps-longhorn
   path: ./kubernetes/apps/database/cloudnative-pg/cluster
-  prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
-  wait: true
+  dependsOn:
+    - name: database-cloudnative-pg
+  prune: true
+  wait: false
+  interval: 30m
+  retryInterval: 1m
+  timeout: 15m
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: database-cloudnative-pg-backup
+  namespace: flux-system
+spec:
+  path: ./kubernetes/apps/database/cloudnative-pg/backup
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  prune: true
+  wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m
