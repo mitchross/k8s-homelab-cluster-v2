@@ -10,7 +10,7 @@ resources:
   # - ./libreddit
   # - ./speedtest
   # - ./immich/ks.yaml
- # - ./tubesync/ks.yaml
+  - ./tubesync/ks.yaml
   # - ./scrypted/ks.yaml
   # - ./rancher-demo
   # - ./ollama
