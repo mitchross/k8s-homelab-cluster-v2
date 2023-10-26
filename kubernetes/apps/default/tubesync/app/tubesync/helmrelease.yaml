@@ -1,5 +1,3 @@
-# https://github.com/Tzahi12345/YoutubeDL-Material/blob/master/docker-compose.yml
----
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -15,7 +13,6 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-      interval: 30m
   install:
     createNamespace: true
     remediation:
@@ -27,7 +24,7 @@ spec:
   values:
     image:
       repository: ghcr.io/meeb/tubesync
-      tag: latest@sha256:aad2722e39ccb3181b5ace2d3f2caa87d0634576d68bbc86cd8a018733291411
+      tag: "latest@sha256:aad2722e39ccb3181b5ace2d3f2caa87d0634576d68bbc86cd8a018733291411"
     env:
       TZ: "America/Detroit"
       TUBESYNC_WORKERS: 4
@@ -36,18 +33,17 @@ spec:
       TUBESYNC_RESET_DOWNLOAD_DIR: False
 
     initContainers:
-          01-init-db:
-            image:
-              repository: ghcr.io/onedr0p/postgres-init
-              tag: 14.9
-              pullPolicy: IfNotPresent
-            envFrom:
-              - secretRef:
-                  name: tubesync-db-secret
+      - name: 01-init-db
+        image:
+          repository: ghcr.io/onedr0p/postgres-init
+          tag: 14.9
+        envFrom:
+          - secretRef:
+              name: tubesync-db-secret
 
     envFrom:
       - secretRef:
-          name:  tubesync-db-secret
+          name: tubesync-db-secret
 
     persistence:
       config:
@@ -75,17 +71,16 @@ spec:
             10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
           hajimari.io/enable: "true"
         hosts:
-          - host: &host "tubesync.${SECRET_DOMAIN}"
+          - host: "tubesync.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - *host
+              - "tubesync.${SECRET_DOMAIN}"
     resources:
       requests:
         cpu: 250m
         memory: 350Mi
-
       limits:
         memory: 5000Mi
