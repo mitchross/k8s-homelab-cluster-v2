@@ -40,7 +40,7 @@ spec:
               repository: ghcr.io/onedr0p/postgres-init
               tag: 14.9
               pullPolicy: IfNotPresent
-            envFrom:
+            envFrom: &envFrom
               - secretRef:
                   name: tubesync-db-secret
         pod:
@@ -50,7 +50,7 @@ spec:
               whenUnsatisfiable: DoNotSchedule
               labelSelector:
                 matchLabels:
-                  app.kubernetes.io/name: *app
+                  app.kubernetes.io/name: *envFrom
         containers:
           main:
             image:
