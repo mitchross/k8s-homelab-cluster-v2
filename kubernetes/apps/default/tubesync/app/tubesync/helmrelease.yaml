@@ -70,12 +70,12 @@ spec:
                 memory: 1000Mi
               startup:
                 enabled: false
-      service:
+    service:
           main:
             ports:
               http:
                 port: 4848
-      ingress:
+    ingress:
         main:
           enabled: true
           className: "internal"
@@ -95,7 +95,7 @@ spec:
               hosts:
                 - *host
 
-      persistence:
+    persistence:
         library:
           enabled: true
           existingClaim: youtube-nfs
