@@ -12,7 +12,7 @@ spec:
   instances: 3
   primaryUpdateStrategy: unsupervised
   storage:
-    size: 100Gi
+    size: 50Gi
     storageClass: longhorn
   enableSuperuserAccess: true
   superuserSecret:
