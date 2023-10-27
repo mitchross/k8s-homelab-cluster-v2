@@ -104,6 +104,7 @@ spec:
       configs:
         enabled: true
         storageClass: longhorn
+        accessMode: ReadWriteMany
         globalMounts:
           - path: /config
         size: 10Gi
