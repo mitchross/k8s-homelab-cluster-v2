@@ -41,9 +41,9 @@ spec:
               repository: ghcr.io/onedr0p/postgres-init
               tag: 14.9
               pullPolicy: IfNotPresent
-            envFrom:
-              - secretRef:
-                  name: tubesync-db-secret
+            # envFrom:
+            #   - secretRef:
+            #       name: tubesync-db-secret
         pod:
           topologySpreadConstraints:
             - maxSkew: 1
