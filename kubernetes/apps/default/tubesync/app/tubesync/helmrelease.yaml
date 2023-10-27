@@ -57,6 +57,7 @@ spec:
             image:
               repository: ghcr.io/meeb/tubesync
               tag: "latest@sha256:aad2722e39ccb3181b5ace2d3f2caa87d0634576d68bbc86cd8a018733291411"
+              pullPolicy: IfNotPresent
             envFrom:
               - secretRef:
                   name: *secret
