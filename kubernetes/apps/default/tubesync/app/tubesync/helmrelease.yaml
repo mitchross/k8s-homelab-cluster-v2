@@ -96,16 +96,16 @@ spec:
               hosts:
                 - *host
 
-    persistence:
-      library:
-        enabled: true
-        existingClaim: youtube-nfs
-        globalMounts:
-          - path: /downloads
-      configs:
-        enabled: true
-        storageClass: longhorn
-        accessMode: ReadWriteMany
-        globalMounts:
-          - path: /config
-        size: 10Gi
+    # persistence:
+    #   library:
+    #     enabled: true
+    #     existingClaim: youtube-nfs
+    #     globalMounts:
+    #       - path: /downloads
+    #   configs:
+    #     enabled: true
+    #     storageClass: longhorn
+    #     accessMode: ReadWriteMany
+    #     globalMounts:
+    #       - path: /config
+    #     size: 10Gi
