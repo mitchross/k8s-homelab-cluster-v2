@@ -33,8 +33,7 @@ spec:
         strategy: RollingUpdate
         annotations:
           secret.reloader.stakater.com/reload: &secret tubesync-db-secret
-        env:
-            TZ: "America/Detroit"
+
         # initContainers:
         #   01-init-db:
         #     image:
@@ -58,6 +57,8 @@ spec:
               repository: ghcr.io/meeb/tubesync
               tag: "latest@sha256:aad2722e39ccb3181b5ace2d3f2caa87d0634576d68bbc86cd8a018733291411"
               pullPolicy: IfNotPresent
+            env:
+               TZ: "America/Detroit"
             envFrom:
               - secretRef:
                   name: *secret
@@ -69,14 +70,12 @@ spec:
                 memory: 1000Mi
               startup:
                 enabled: false
-    service:
-      main:
-        ports:
-          http:
-            port: 4848
-
-
-    ingress:
+      service:
+          main:
+            ports:
+              http:
+                port: 4848
+      ingress:
         main:
           enabled: true
           className: "internal"
@@ -96,16 +95,16 @@ spec:
               hosts:
                 - *host
 
-    # persistence:
-    #   library:
-    #     enabled: true
-    #     existingClaim: youtube-nfs
-    #     globalMounts:
-    #       - path: /downloads
-    #   configs:
-    #     enabled: true
-    #     storageClass: longhorn
-    #     accessMode: ReadWriteMany
-    #     globalMounts:
-    #       - path: /config
-    #     size: 10Gi
+      persistence:
+        library:
+          enabled: true
+          existingClaim: youtube-nfs
+          globalMounts:
+            - path: /downloads
+        configs:
+          enabled: true
+          storageClass: longhorn
+          accessMode: ReadWriteMany
+          globalMounts:
+            - path: /config
+          size: 10Gi
