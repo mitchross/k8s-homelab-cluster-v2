@@ -40,9 +40,6 @@ spec:
               repository: ghcr.io/onedr0p/postgres-init
               tag: 14.9
               pullPolicy: always
-              env:
-                  PUID: 1000
-                  PGID: 1000
             envFrom: &envFrom
               - secretRef:
                   name: tubesync-db-secret
