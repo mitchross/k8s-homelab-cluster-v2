@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
@@ -39,18 +38,17 @@ spec:
             image:
               repository: ghcr.io/onedr0p/postgres-init
               tag: 14.9
-              pullPolicy: always
             envFrom: &envFrom
-              - secretRef:
-                  name: tubesync-db-secret
+            - secretRef:
+                name: tubesync-db-secret
         pod:
           topologySpreadConstraints:
-            - maxSkew: 1
-              topologyKey: kubernetes.io/hostname
-              whenUnsatisfiable: DoNotSchedule
-              labelSelector:
-                matchLabels:
-                  app.kubernetes.io/name: *envFrom
+          - maxSkew: 1
+            topologyKey: kubernetes.io/hostname
+            whenUnsatisfiable: DoNotSchedule
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/name: *envFrom
         containers:
           main:
             image:
@@ -58,12 +56,12 @@ spec:
               tag: "latest@sha256:aad2722e39ccb3181b5ace2d3f2caa87d0634576d68bbc86cd8a018733291411"
               pullPolicy: IfNotPresent
             env:
-               TZ: "America/Detroit"
-               PUID: 1000
-               PGID: 1000
+              TZ: "America/Detroit"
+              PUID: 1000
+              PGID: 1000
             envFrom:
-              - secretRef:
-                  name: *secret
+            - secretRef:
+                name: *secret
             resources:
               requests:
                 cpu: 100m
@@ -73,40 +71,40 @@ spec:
               startup:
                 enabled: false
     service:
-          main:
-            ports:
-              http:
-                port: 4848
+      main:
+        ports:
+          http:
+            port: 4848
     ingress:
-        main:
-          enabled: true
-          className: "internal"
-          annotations:
-            hajimari.io/enable: "true"
-    
+      main:
+        enabled: true
+        className: "internal"
+        annotations:
+          hajimari.io/enable: "true"
+
+        hosts:
+        - host: &host "tubesync.${SECRET_DOMAIN}"
+          paths:
+          - path: /
+            pathType: Prefix
+            service:
+              name: main
+              port: http
+        tls:
+        - secretName: *host
           hosts:
-            - host: &host "tubesync.${SECRET_DOMAIN}"
-              paths:
-                - path: /
-                  pathType: Prefix
-                  service:
-                    name: main
-                    port: http
-          tls:
-            - secretName: *host
-              hosts:
-                - *host
+          - *host
 
     persistence:
-        library:
-          enabled: true
-          existingClaim: youtube-nfs
-          globalMounts:
-            - path: /downloads
-        configs:
-          enabled: true
-          storageClass: longhorn
-          accessMode: ReadWriteMany
-          globalMounts:
-            - path: /config
-          size: 10Gi
+      library:
+        enabled: true
+        existingClaim: youtube-nfs
+        globalMounts:
+        - path: /downloads
+      configs:
+        enabled: true
+        storageClass: longhorn
+        accessMode: ReadWriteMany
+        globalMounts:
+        - path: /config
+        size: 10Gi
