@@ -42,14 +42,7 @@ spec:
             envFrom: &envFrom
             - secretRef:
                 name: tubesync-db-secret
-        pod:
-          topologySpreadConstraints:
-          - maxSkew: 1
-            topologyKey: kubernetes.io/hostname
-            whenUnsatisfiable: DoNotSchedule
-            labelSelector:
-              matchLabels:
-                app.kubernetes.io/name: *envFrom
+
         containers:
           main:
             image:
