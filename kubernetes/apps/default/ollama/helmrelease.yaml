@@ -24,11 +24,11 @@ spec:
   values:
     initContainers:
         - name: init
-          image: ollama/ollama:0.1.5
+          image: ollama/ollama:0.1.7
           command: ["ollama", "run", "mistral"]
     image:
       repository: ollama/ollama
-      tag: 0.1.5
+      tag: 0.1.7
     env:
       TZ: "America/Detroit"
     service:
