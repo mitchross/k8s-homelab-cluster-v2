@@ -34,8 +34,8 @@ spec:
         containers:
           main:
             image:
-              repository: ollama/ollama:0.1.5
-              tag: "latest"
+              repository: ollama/ollama
+              tag: latest@sha256:5b64e283ab34229f780d535ba2ed980e7c2b2d924527b75b9aad8bc894d71c7b
               pullPolicy: IfNotPresent
               command: ["ollama", "run", "mistral"]
             env:
