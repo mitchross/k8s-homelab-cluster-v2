@@ -64,7 +64,7 @@ spec:
               - name: POSTGRES_HOST
                 value: postgres-ro.database.svc.cluster.local
               - name: POSTGRES_DB
-                value: "immich,tubesync"
+                value: "tubesync"
               - name: BACKUP_KEEP_DAYS
                 value: "7"
               - name: BACKUP_KEEP_WEEKS
