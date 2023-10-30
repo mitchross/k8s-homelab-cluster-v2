@@ -13,6 +13,6 @@ resources:
   - ./tubesync/ks.yaml
   - ./scrypted/ks.yaml
   - ./rancher-demo
-  - ./ollama
+  #- ./ollama
 
   
