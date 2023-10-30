@@ -51,9 +51,9 @@ spec:
                   name: postgres-backups-secret
             env:
               - name: POSTGRES_HOST
-                value: postgres-ro.dbms
+                value: postgres-ro.database
               - name: POSTGRES_DB
-                value: "immich,lldap,tubesync"
+                value: "immich,tubesync"
               - name: BACKUP_KEEP_DAYS
                 value: "7"
               - name: BACKUP_KEEP_WEEKS
