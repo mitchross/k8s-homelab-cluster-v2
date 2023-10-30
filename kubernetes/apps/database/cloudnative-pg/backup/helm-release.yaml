@@ -50,6 +50,17 @@ spec:
               - secretRef:
                   name: postgres-backups-secret
             env:
+              - name: POSTGRES_USER
+                valueFrom:
+                  secretKeyRef:
+                    name: postgres-backups-secret
+                    key: POSTGRES_USER
+              - name: POSTGRES_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: postgres-backups-secret
+                    key: POSTGRES_PASS
+
               - name: POSTGRES_HOST
                 value: postgres-ro.database.svc.cluster.local
               - name: POSTGRES_DB
