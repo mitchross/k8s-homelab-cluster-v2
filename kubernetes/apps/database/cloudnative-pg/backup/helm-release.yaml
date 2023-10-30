@@ -31,7 +31,7 @@ spec:
       main:
         type: cronjob
         cronjob:
-          schedule: "* * * * *"
+          schedule: "@daily"
           ttlSecondsAfterFinished: 43200
         pod:
           securityContext:
