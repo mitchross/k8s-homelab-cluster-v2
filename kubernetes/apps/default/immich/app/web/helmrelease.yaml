@@ -70,12 +70,14 @@ spec:
     ingress:
       main:
         enabled: true
-        className: "internal"
+        className: "external"
         annotations:
           hajimari.io/enable: "true"
           hajimari.io/icon: simple-icons:googlephotos
           hajimari.io/group: media
           hajimari.io/appName: Immich
+          ingressClassName: external
+
           nginx.ingress.kubernetes.io/configuration-snippet: |-
             rewrite /api/(.*) /$1 break;
             set $forwarded_client_ip "";
