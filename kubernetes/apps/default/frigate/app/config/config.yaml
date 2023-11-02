@@ -27,7 +27,7 @@ go2rtc:
    shed: rtsp://192.168.1.16:8554/shed
    frontdoor: rtsp://192.168.1.16:8554/porch
    driveway: rtsp://192.168.1.16:8554/driveway
-   driveway2: rtsp://192.168.1.16:8554/driveway2
+   garage-driveway: rtsp://192.168.1.16:8554/garage-driveway
    kitchen: rtsp://192.168.1.16:8554/kitchen
    dogcam: rtsp://192.168.1.16:8554/dog-cam-2
    livingroom: rtsp://192.168.1.16:8554/living-room
@@ -176,10 +176,10 @@ cameras:
                 - car
                 - dog
                 - cat
-    driveway2:
+    garage-driveway:
         ffmpeg:
             inputs:
-                - path: rtsp://192.168.1.16:8554/driveway2
+                - path: rtsp://192.168.1.16:8554/garage-driveway
                   roles:
                       - detect
                       - record
