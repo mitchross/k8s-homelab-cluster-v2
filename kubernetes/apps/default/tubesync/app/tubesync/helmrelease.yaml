@@ -53,6 +53,9 @@ spec:
               TZ: "America/Detroit"
               PUID: 1000
               PGID: 1000
+              TUBESYNC_WORKERS: 4
+              TUBESYNC_DEBUG: "true"
+              TUBESYNC_RESET_DOWNLOAD_DIR: "false"
             envFrom:
             - secretRef:
                 name: *secret
