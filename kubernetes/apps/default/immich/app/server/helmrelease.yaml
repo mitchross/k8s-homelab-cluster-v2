@@ -45,8 +45,10 @@ spec:
               tag: 14.9
               pullPolicy: IfNotPresent
             envFrom:
+              - configMapRef: &envFrom
+                  name: &configMap immich-configmap
               - secretRef:
-                  name: *secret
+                  name: &secret immich-secret
         pod:
           topologySpreadConstraints:
             - maxSkew: 1
@@ -61,11 +63,7 @@ spec:
               repository: ghcr.io/immich-app/immich-server
               tag: v1.84.0
             args: ["start-server.sh"]
-            envFrom:
-              - secretRef:
-                  name: *secret
-              - configMapRef:
-                  name: *configmap
+            envFrom: *envFrom
             resources:
               requests:
                 cpu: 100m
@@ -89,9 +87,12 @@ spec:
                 enabled: false
     service:
       main:
+        annotations:
+                io.cilium/lb-ipam-ips: "192.168.1.18"
         ports:
           http:
             port: 3001
+        type: LoadBalancer
     persistence:
       library:
         enabled: true
