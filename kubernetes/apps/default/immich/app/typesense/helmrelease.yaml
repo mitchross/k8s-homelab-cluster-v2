@@ -1,12 +1,12 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: immich-typesense
   namespace: default
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: app-template
@@ -15,9 +15,8 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 2
   install:
-    createNamespace: true
     remediation:
       retries: 3
   upgrade:
@@ -26,33 +25,23 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  dependsOn:
-    - name: immich-redis
-      namespace: default
   values:
     controllers:
       main:
         type: statefulset
-        statefulset:
-          volumeClaimTemplates:
-            - name: config
-              mountPath: /config
-              accessMode: ReadWriteOnce
-              size: 5Gi
-              storageClass: longhorn
         annotations:
+          configmap.reloader.stakater.com/reload: &configMap immich-configmap
           secret.reloader.stakater.com/reload: &secret immich-secret
-          configmap.reloader.stakater.com/reload: &configmap immich-configmap
         containers:
           main:
             image:
               repository: docker.io/typesense/typesense
               tag: 0.25.1
             envFrom:
+              - configMapRef:
+                  name: *configMap
               - secretRef:
                   name: *secret
-              - configMapRef:
-                  name: *configmap
             probes:
               liveness: &probes
                 enabled: true
@@ -60,29 +49,26 @@ spec:
                 spec:
                   httpGet:
                     path: /health
-                    port: &port 8108
+                    port: 8108
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
               startup:
-                enabled: true
-                spec:
-                  httpGet:
-                    path: /health
-                    port: *port
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 60
-              resources:
-                requests:
-                  cpu: 100m
-                  memory: 250Mi
-
+                enabled: false
+            resources:
+              requests:
+                cpu: 100m
+                memory: 250Mi
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: longhorn
     service:
       main:
         ports:
           http:
-            port: *port
+            port: 8108

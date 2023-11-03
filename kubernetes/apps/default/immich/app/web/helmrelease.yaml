@@ -1,12 +1,12 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: &app immich-web
   namespace: default
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: app-template
@@ -15,9 +15,8 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 2
   install:
-    createNamespace: true
     remediation:
       retries: 3
   upgrade:
@@ -34,11 +33,25 @@ spec:
   values:
     controllers:
       main:
+        replicas: 2
         strategy: RollingUpdate
         annotations:
+          configmap.reloader.stakater.com/reload: &configMap immich-configmap
           secret.reloader.stakater.com/reload: &secret immich-secret
-          configmap.reloader.stakater.com/reload: &configmap immich-configmap
-        pod:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/immich-app/immich-web
+              tag: v1.84.0
+            envFrom:
+              - configMapRef:
+                  name: *configMap
+              - secretRef:
+                  name: *secret
+            resources:
+              requests:
+                cpu: 100m
+                memory: 250Mi
           topologySpreadConstraints:
             - maxSkew: 1
               topologyKey: kubernetes.io/hostname
@@ -46,22 +59,6 @@ spec:
               labelSelector:
                 matchLabels:
                   app.kubernetes.io/name: *app
-        containers:
-          main:
-            image:
-              repository: ghcr.io/immich-app/immich-web
-              tag: v1.84.0
-            envFrom:
-              - secretRef:
-                  name: *secret
-              - configMapRef:
-                  name: *configmap
-            resources:
-              requests:
-                cpu: 100m
-                memory: 250Mi
-              limits:
-                memory: 500Mi
     service:
       main:
         ports:
@@ -70,48 +67,31 @@ spec:
     ingress:
       main:
         enabled: true
-        className: "internal"
+        className: internal
         annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: simple-icons:googlephotos
-          hajimari.io/group: media
+          external-dns.home.arpa/enabled: "false"
           hajimari.io/appName: Immich
-          ingressClassName: external
-         
-          nginx.ingress.kubernetes.io/configuration-snippet: |-
+          hajimari.io/icon: heroicons:photo
+          nginx.ingress.kubernetes.io/configuration-snippet: |
             rewrite /api/(.*) /$1 break;
-            set $forwarded_client_ip "";
-              if ($http_x_forwarded_for ~ "^([^,]+)") {
-                set $forwarded_client_ip $1;
-              }
-            set $client_ip $remote_addr;
-            if ($forwarded_client_ip != "") {
-              set $client_ip $forwarded_client_ip;
-            }
           nignx.ingress.kubernetes.io/force-ssl-redirect: "true"
           nginx.ingress.kubernetes.io/proxy-body-size: "0"
-          nginx.ingress.kubernetes.io/upstream-hash-by: "$client_ip"
-
         hosts:
-          - host: &host "photos.${SECRET_DOMAIN}"
+          - host: &host photos.vanillax.me
             paths:
               - path: /
-                pathType: Prefix
                 service:
                   name: main
                   port: http
               - path: /api
-                pathType: Prefix
                 service:
                   name: immich-server
                   port: 3001
         tls:
-          - secretName: *host
-            hosts:
+          - hosts:
               - *host
     persistence:
       library:
-        enabled: true
         existingClaim: immich-nfs
         globalMounts:
           - path: /usr/src/app/upload

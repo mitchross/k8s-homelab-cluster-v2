@@ -1,12 +1,12 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: &app immich-microservices
   namespace: default
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: app-template
@@ -15,7 +15,7 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 2
   install:
     remediation:
       retries: 3
@@ -33,20 +33,11 @@ spec:
   values:
     controllers:
       main:
+        replicas: 2
         strategy: RollingUpdate
         annotations:
+          configmap.reloader.stakater.com/reload: &configMap immich-configmap
           secret.reloader.stakater.com/reload: &secret immich-secret
-          configmap.reloader.stakater.com/reload: &configmap immich-configmap
-        pod:
-          topologySpreadConstraints:
-            - maxSkew: 1
-              topologyKey: kubernetes.io/hostname
-              whenUnsatisfiable: DoNotSchedule
-              labelSelector:
-                matchLabels:
-                  app.kubernetes.io/name: *app
-          nodeSelector:
-            intel.feature.node.kubernetes.io/gpu: "true"
         containers:
           main:
             image:
@@ -54,43 +45,27 @@ spec:
               tag: v1.84.0
             args: ["start-microservices.sh"]
             envFrom:
+              - configMapRef:
+                  name: *configMap
               - secretRef:
                   name: *secret
-              - configMapRef:
-                  name: *configmap
-            # resources:
-            #   requests:
-            #     gpu.intel.com/i915: 1
-            #     cpu: 100m
-            #     memory: 250Mi
-            #   limits:
-            #     gpu.intel.com/i915: 1
-            #     memory: 2500Mi
+            resources:
+              requests:
+                cpu: 100m
+                memory: 250Mi
+
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: *app
     service:
       main:
         enabled: false
     persistence:
       library:
-        enabled: true
         existingClaim: immich-nfs
         globalMounts:
           - path: /usr/src/app/upload
-      geocoding-dump:
-        enabled: true
-        type: emptyDir
-        globalMounts:
-          - path: /usr/src/app/.reverse-geocoding-dump
-      geoname-dump:
-        enabled: true
-        type: emptyDir
-        globalMounts:
-          - path: /usr/src/app/node_modules/local-reverse-geocoder/geonames_dump
-      transformers-cache:
-        enabled: true
-        type: emptyDir
-        globalMounts:
-          - path: /usr/src/app/.transformers_cache
-    nodeSelector:
-            node-role.kubernetes.io/worker: "true"
-            google.feature.node.kubernetes.io/coral: "true"
-            intel.feature.node.kubernetes.io/gpu: "true"
