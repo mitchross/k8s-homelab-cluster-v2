@@ -44,8 +44,8 @@ spec:
               repository: ghcr.io/onedr0p/postgres-init
               tag: 14.9
               pullPolicy: IfNotPresent
-            envFrom:
-              - configMapRef: &envFrom
+            envFrom: &envFrom
+              - configMapRef:
                   name: &configMap immich-configmap
               - secretRef:
                   name: &secret immich-secret
