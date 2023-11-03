@@ -75,8 +75,8 @@ spec:
           external-dns.home.arpa/enabled: "false"
           hajimari.io/appName: Immich
           hajimari.io/icon: heroicons:photo
-          nginx.ingress.kubernetes.io/configuration-snippet: |
-            rewrite /api/(.*) /$1 break;
+          # nginx.ingress.kubernetes.io/configuration-snippet: |
+          #   rewrite /api/(.*) /$1 break;
           nignx.ingress.kubernetes.io/force-ssl-redirect: "true"
           nginx.ingress.kubernetes.io/proxy-body-size: "0"
         hosts:
