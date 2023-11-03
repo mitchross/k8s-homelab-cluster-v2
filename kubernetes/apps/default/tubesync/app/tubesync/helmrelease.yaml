@@ -54,8 +54,8 @@ spec:
               PUID: 1000
               PGID: 1000
               TUBESYNC_WORKERS: 1
-              TUBESYNC_DEBUG: "true"
-              TUBESYNC_RESET_DOWNLOAD_DIR: "false"
+              TUBESYNC_DEBUG: True
+              TUBESYNC_RESET_DOWNLOAD_DIR: False
             envFrom:
             - secretRef:
                 name: *secret
