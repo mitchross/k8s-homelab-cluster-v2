@@ -35,7 +35,7 @@ spec:
           main:
             image:
               repository: ollama/ollama
-              tag: latest@sha256:5b64e283ab34229f780d535ba2ed980e7c2b2d924527b75b9aad8bc894d71c7b
+              tag: latest@sha256:b8cd543c6ec9d246dad35bed73da8b06a7dee7bdf559864de3082519a78d26c4
               pullPolicy: IfNotPresent
               #command: ["ollama", "run", "mistral"]
             env:
