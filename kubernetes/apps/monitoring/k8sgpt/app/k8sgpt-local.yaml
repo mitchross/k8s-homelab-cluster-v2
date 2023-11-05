@@ -10,3 +10,5 @@ spec:
   noCache: false
   version: v0.2.7
   enableAI: true
+dependsOn:
+  - name: k8sgpt-operator
