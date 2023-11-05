@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: k8sgpt-operator
-      version: v0.3.17  
+      version: v0.0.22  # Updated version
       sourceRef:
         kind: HelmRepository
         name: k8sgpt
