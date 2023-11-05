@@ -23,7 +23,7 @@ metadata:
 spec:
   path: ./kubernetes/apps/monitoring/k8sgpt/app
   dependsOn:
-    - name: luster-apps-k8sgpt-crd
+    - name: cluster-apps-k8sgpt-crd
   prune: true
   sourceRef:
     kind: GitRepository
