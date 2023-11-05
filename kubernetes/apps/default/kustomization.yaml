@@ -13,7 +13,7 @@ resources:
   - ./tubesync/ks.yaml
   - ./scrypted/ks.yaml
   - ./rancher-demo
-  #- ./localai/app/ks.yaml
+  - ./localai/app/ks.yaml
   - ./ollama
 
   
