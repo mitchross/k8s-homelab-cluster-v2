@@ -1,0 +1,12 @@
+apiVersion: core.k8sgpt.ai/v1alpha1
+kind: K8sGPT
+metadata:
+  name: k8sgpt-local
+  namespace: default  # Adjusted to match the namespace in your HelmRelease
+spec:
+  backend: localai  
+  model: ggml-gpt4all-j.bin
+  baseUrl: http://local-ai.default.svc.cluster.local:8080/v1  # Adjusted to match the service name and namespace in your HelmRelease
+  noCache: false
+  version: v0.2.7
+  enableAI: true
