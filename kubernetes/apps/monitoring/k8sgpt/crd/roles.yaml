@@ -2,7 +2,6 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: k8sgpt
-  namespace: monitoring
 rules:
 - apiGroups: ["apiextensions.k8s.io"]
   resources: ["*"]
