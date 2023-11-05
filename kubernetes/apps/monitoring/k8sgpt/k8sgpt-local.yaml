@@ -5,7 +5,7 @@ metadata:
   namespace: monitoring  # Adjusted to match the namespace in your HelmRelease
 spec:
   backend: localai  
-  model: ggml-gpt4all-j.bin
+  model: llama-2-7b-chat.ggmlv3.q4_0.bin
   baseUrl: http://local-ai.default.svc.cluster.local:8080/v1  # Adjusted to match the service name and namespace in your HelmRelease
   noCache: false
   version: v0.2.7
