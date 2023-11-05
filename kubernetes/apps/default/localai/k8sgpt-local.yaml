@@ -4,7 +4,7 @@ metadata:
   name: k8sgpt-local
   namespace: default  # Adjusted to match the namespace in your HelmRelease
 spec:
-  backend: local-ai  
+  backend: localai  
   model: ggml-gpt4all-j.bin
   baseUrl: http://local-ai.default.svc.cluster.local:8080/v1  # Adjusted to match the service name and namespace in your HelmRelease
   noCache: false
