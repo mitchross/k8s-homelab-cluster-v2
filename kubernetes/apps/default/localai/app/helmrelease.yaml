@@ -21,7 +21,7 @@ spec:
         threads: 14
         contextSize: 512
         modelsPath: "/models"
-    #fullnameOverride: "localai"
+    fullnameOverride: "localai"
     resources:
       requests:
         cpu: 100m
