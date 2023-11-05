@@ -4,4 +4,4 @@ kind: Kustomization
 namespace: monitoring
 resources:
   - ./helmrelease.yaml
-  - ./k8sgpt-local.yaml
+  #- ./k8sgpt-local.yaml
