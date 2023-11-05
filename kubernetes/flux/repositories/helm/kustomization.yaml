@@ -25,3 +25,4 @@ resources:
   - ./cloudnative-pg.yaml
   - ./ialacol.yaml
   - ./localai.yaml
+  - ./k8sgpt.yaml
