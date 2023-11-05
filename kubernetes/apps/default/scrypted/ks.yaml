@@ -6,7 +6,7 @@ metadata:
   name: cluster-apps-scrypted
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/default/scrypted/app
+  path: ./kubernetes/apps/default/scrypted/appz
   prune: true
   sourceRef:
     kind: GitRepository
