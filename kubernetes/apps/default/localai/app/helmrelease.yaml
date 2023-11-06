@@ -74,7 +74,7 @@ spec:
           accessModes:
             - ReadWriteOnce
           annotations: {}
-          storageClass: ceph-filesystem
+          storageClass: longhorn 
 
     service:
       annotations:
