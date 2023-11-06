@@ -61,10 +61,10 @@ spec:
             10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
           hajimari.io/enable: "false"
         hosts:
-        - host: &host localai.vanillax.me
-          paths:
-          - path: /
-            pathType: Prefix
+          - host: &host localai.vanillax.me
+            paths:
+            - path: /
+              pathType: Prefix
         tls:
         - hosts:
           - *host
