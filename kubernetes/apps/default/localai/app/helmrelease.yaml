@@ -46,6 +46,7 @@ spec:
           annotations: {}
           storageClass: longhorn
     service:
+      main:
         # annotations:
         #             io.cilium/lb-ipam-ips: "192.168.1.21"
         type: LoadBalancer
