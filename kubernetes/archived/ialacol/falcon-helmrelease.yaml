@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: ialacol  # The name of the chart within the repo
-      version: "0.12.0"  # Replace this with your desired version
+      version: "0.13.0"  # Replace this with your desired version
       sourceRef:
         kind: HelmRepository
         name: starchat  # Must match the HelmRepository name
