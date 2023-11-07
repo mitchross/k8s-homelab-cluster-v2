@@ -41,7 +41,7 @@ spec:
         threads: 14
         context_size: 512
         rebuild: true
-        debug: true
+        debug: false
       modelsPath: "/models"
     resources:
       requests:
