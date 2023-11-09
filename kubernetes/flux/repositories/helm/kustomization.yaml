@@ -27,3 +27,4 @@ resources:
   - ./localai.yaml
   - ./k8sgpt.yaml
   - ./nvidia.yaml
+  - ./nvidia-device-plugin.yaml
