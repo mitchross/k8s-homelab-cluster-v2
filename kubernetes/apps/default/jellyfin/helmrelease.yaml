@@ -1,0 +1,115 @@
+
+---
+# yaml-language-server: schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app jellyfin
+  namespace: default
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.0.3
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      interval: 30m
+  maxHistory: 2
+  test:
+    enable: false
+  install:
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+      remediateLastFailure: true
+    cleanupOnFail: true
+  rollback:
+    timeout: 10m
+    recreate: true
+    cleanupOnFail: true
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 15Gi
+              storageClass: longhorn
+              globalMounts:
+                - path: /config
+
+        pod:
+          enableServiceLinks: false
+
+
+
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/jellyfin
+              tag: 10.8.11@sha256:926e2a9f6677a0c7b12feba29f36c954154869318d6a52df72f72ff9c74cf494
+            env:
+              TZ: America/Detroit
+              NVIDIA_VISIBLE_DEVICES: all
+              NVIDIA_DRIVER_CAPABILITIES: compute,video,utility
+            runtimeClassName: nvidia
+            resources:
+              requests:
+                cpu: 100m
+                memory: 9248M
+              limits:
+                memory: 9248M
+
+    service:
+      main:
+        type: LoadBalancer
+        externalTrafficPolicy: Cluster
+        annotations:
+          io.cilium/lb-ipam-ips: 192.168.1.24
+        ports:
+          http:
+            port: &port 8096
+
+    ingress:
+      main:
+        enabled: true
+        className: internal
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/group: "Media"
+          hajimari.io/icon: "filmstrip"
+        hosts:
+          - host: &host "tubesync.${SECRET_DOMAIN}"
+            paths:
+            - path: /
+              pathType: Prefix
+              service:
+                name: main
+                port: http
+        tls:
+        - secretName: *host
+          hosts:
+          - *host
+
+    persistence:
+      media:
+        enabled: true
+        existingClaim: youtube-nfs
+        globalMounts:
+        - path: /media
+      transcode:
+        type: emptyDir
+        globalMounts:
+          - path: /transcode
