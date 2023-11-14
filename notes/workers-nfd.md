@@ -17,7 +17,7 @@ kubectl label node k3s-gpu-worker-pve3-1 node-role.kubernetes.io/worker=true
 
 kubectl label nodes k3s-worker-nuc-1 node.longhorn.io/create-default-disk=true
 kubectl label nodes k3s-worker-pve-1  node.longhorn.io/create-default-disk=true
-kubectl label nodes k3s-worker-pve3-1  node.longhorn.io/create-default-disk=true
+kubectl label nodes k3s-gpu-worker-pve3-1  node.longhorn.io/create-default-disk=true
 kubectl label nodes k3s-worker-nuc-1 node.longhorn.io/storage=true
 kubectl label nodes k3s-worker-pve-1  node.longhorn.io/storage=true
 kubectl label nodes k3s-worker-pve3-1  node.longhorn.io/storage=true
