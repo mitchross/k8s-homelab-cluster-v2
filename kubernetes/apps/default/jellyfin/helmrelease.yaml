@@ -114,6 +114,6 @@ spec:
           - path: /transcode
       media:
         enabled: true
-        existingClaim: youtube-nfs
+        existingClaim: jellyfin-nfs
         globalMounts:
         - path: /media
