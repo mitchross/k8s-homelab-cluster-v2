@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./hajimari/ks.yaml
-  - ./wyze-bridge/ks.yaml
+  #- ./wyze-bridge/ks.yaml
   - ./mqtt
  # - ./frigate/ks.yaml
   - ./libreddit
@@ -14,7 +14,7 @@ resources:
   - ./scrypted/ks.yaml
   - ./rancher-demo
   - ./localai/ks.yaml
- # - ./jellyfin
+  - ./jellyfin
  # - ./ollama
 
   
