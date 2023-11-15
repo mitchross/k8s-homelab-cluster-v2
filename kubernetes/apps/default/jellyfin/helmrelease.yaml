@@ -76,7 +76,7 @@ spec:
             runAsGroup: 1000
             fsGroup: 1000
             fsGroupChangePolicy: OnRootMismatch
-            supplementalGroups: [44, 105, 10000]
+            privileged: true
         statefulset:
           volumeClaimTemplates:
             - name: config
