@@ -68,8 +68,9 @@ spec:
                 memory: 4Gi
         pod:
           enableServiceLinks: false
+          runtimeClass: nvidia
           nodeSelector:
-            intel.feature.node.kubernetes.io/gpu: "true"
+            nvidia.com/gpu.present: "true"
           securityContext:
             runAsUser: 1000
             runAsGroup: 1000
