@@ -45,6 +45,7 @@ spec:
               TZ: America/Detroit
               NVIDIA_VISIBLE_DEVICES: all
               NVIDIA_DRIVER_CAPABILITIES: compute,video,utility
+            runtimeClass: nvidia
             probes:
               liveness: &probes
                 enabled: true
@@ -68,7 +69,6 @@ spec:
                 memory: 4Gi
         pod:
           enableServiceLinks: false
-          runtimeClass: nvidia
           nodeSelector:
             nvidia.com/gpu.present: "true"
           securityContext:
