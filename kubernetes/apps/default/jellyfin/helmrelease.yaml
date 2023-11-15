@@ -98,7 +98,7 @@ spec:
         enabled: true
         className: internal
         hosts:
-          - host: &host "jellyfin.vanillax.me"
+          - host: &host "jellyfin2.vanillax.me"
             paths:
               - path: /
                 service:
