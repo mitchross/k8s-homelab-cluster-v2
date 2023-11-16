@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.0.3
+      version: 2.2.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -25,8 +25,15 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [44, 105, 10000]
+      runtimeClassName: nvidia
     controllers:
       main:
         type: statefulset
@@ -38,46 +45,21 @@ spec:
               repository: ghcr.io/onedr0p/jellyfin
               tag: 10.8.11@sha256:926e2a9f6677a0c7b12feba29f36c954154869318d6a52df72f72ff9c74cf494
             env:
+              TZ: America/Detroit
               DOTNET_SYSTEM_IO_DISABLEFILELOCKING: "true"
               JELLYFIN_FFmpeg__probesize: 50000000
               JELLYFIN_FFmpeg__analyzeduration: 50000000
               JELLYFIN_PublishedServerUrl: &loadBalancerIP 192.168.1.24
-              TZ: America/Detroit
               NVIDIA_VISIBLE_DEVICES: all
               NVIDIA_DRIVER_CAPABILITIES: compute,video,utility
-            runtimeClass: nvidia
-            probes:
-              liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /health
-                    port: &port 8096
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
-              startup:
-                enabled: false
             resources:
               requests:
-                cpu: 100m
-                memory: 512Mi
                 nvidia.com/gpu: 1
+                cpu: 100m
+                memory: 2Gi
               limits:
-                memory: 4Gi
-        pod:
-          enableServiceLinks: false
-          nodeSelector:
-            nvidia.com/gpu.present: "true"
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            fsGroup: 1000
-            fsGroupChangePolicy: OnRootMismatch
-            privileged: true
+                nvidia.com/gpu: 1
+                memory: 10Gi
         statefulset:
           volumeClaimTemplates:
             - name: config

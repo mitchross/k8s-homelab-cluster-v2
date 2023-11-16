@@ -14,8 +14,8 @@ resources:
   - ./scrypted/ks.yaml
   - ./rancher-demo
   - ./localai/ks.yaml
-  #- ./jellyfin
-  - ./plex/ks.yaml
+  - ./jellyfin
+  #- ./plex/ks.yaml
  # - ./ollama
 
   
