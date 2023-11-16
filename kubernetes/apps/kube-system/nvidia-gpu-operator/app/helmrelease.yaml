@@ -28,6 +28,9 @@ spec:
     keepHistory: false
   # https://github.com/NVIDIA/gpu-operator/blob/master/deployments/gpu-operator/values.yaml
   values:
+    operator:
+      cleanupCRD: true
+      upgradeCRD: true
     nfd:
       enabled: false
     driver:
