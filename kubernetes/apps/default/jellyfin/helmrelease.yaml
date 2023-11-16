@@ -75,7 +75,7 @@ spec:
           io.cilium/lb-ipam-ips: *loadBalancerIP
         ports:
           http:
-            port: *port
+            port: 8096
     ingress:
       main:
         enabled: true
