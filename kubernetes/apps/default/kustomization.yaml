@@ -11,7 +11,7 @@ resources:
 #  - ./speedtest
   - ./immich/ks.yaml
   - ./tubesync/ks.yaml
-  - ./scrypted/ks.yaml
+  #- ./scrypted/ks.yaml
   - ./rancher-demo
   - ./localai/ks.yaml
   - ./jellyfin
