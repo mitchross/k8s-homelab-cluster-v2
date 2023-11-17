@@ -1,4 +1,3 @@
----
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -81,6 +80,9 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main  # Specify the service name here
+                  port: http  # Specify the service port here
         tls:
           - hosts:
               - *host
