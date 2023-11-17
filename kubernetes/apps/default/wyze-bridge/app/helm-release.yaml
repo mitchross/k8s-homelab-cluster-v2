@@ -10,8 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
-      interval: 30m
+      version: 2.2.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -25,108 +24,101 @@ spec:
       retries: 10
 
   values:
-    strategy:
-      type: Recreate
-    securityContext:
-      privileged: true
+    defaultPodOptions:
+      securityContext:
+        privileged: true
+    controllers:
+      main:
+        type: deployment
+        strategy:
+          type: Recreate
+        containers:
+          main:
+            image:
+              repository: ghcr.io/mrlt8/docker-wyze-bridge
+              tag: latest-qsv@sha256:f6e7817f36a9c84477ee7a5b78d837bd1d25511169fa95e96c08d1edaf0de9df
+              pullPolicy: IfNotPresent
+            env:
+              - name: RECORD_ALL
+                value: "True"
+              - name: RECORD_LENGTH
+                value: "1000"
+              - name: ROTATE_DOOR
+                value: "True"
+              - name: FRESH_DATA
+                value: "True"
+              - name: TZ
+                value: America/Detroit
+              - name: WB_IP
+                value: "192.168.1.16"
+              - name: ON_DEMAND
+                value: "False"
+              - name: IGNORE_OFFLINE
+                value: "true"
+              - name: FPS_FIX
+                value: "true"
+              - name: ENABLE_BOA
+                value: "true"
+              - name: QUALITY
+                value: "HD60"
+              - name: H264_ENC
+                value: "h264_qsv"
+              - name: NET_MODE
+                value: "P2P"
+            envFrom:
+              - secretRef:
+                  name: wyze-secrets
+            resources:
+              requests:
+                cpu: 10m
+                memory: 250Mi
+              limits:
+                memory: 2500Mi
 
     service:
       main:
+        type: LoadBalancer
         annotations:
           io.cilium/lb-ipam-ips: "192.168.1.16"
         ports:
           http:
-            enabled: true
             port: 5000
           rtmp:
-            enabled: true
             port: 1935
           rstp:
-            enabled: true
             port: 8554
           hls:
-            enabled: true
             port: 8888
           webrtc:
-            enabled: true 
             port: 8889
           webrtcice:
-            enabled: true 
-            port: 8189      
+            port: 8189
 
-        type: LoadBalancer
     ingress:
       main:
         enabled: true
-        ingressClassName: internal
+        className: internal
         annotations:
           hajimari.io/enable: "true"
         hosts:
-        - host: &host wyze.vanillax.me
-          paths:
-          - path: /
-            pathType: Prefix
+          - host: &host wyze.vanillax.me
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
-        - hosts:
-          - *host
-    image:
-      # repository: mitchross09/docker-wyze-bridge
-      # tag: qsv-2.3.5-1
-      repository: ghcr.io/mrlt8/docker-wyze-bridge
-      tag: latest-qsv@sha256:f6e7817f36a9c84477ee7a5b78d837bd1d25511169fa95e96c08d1edaf0de9df
-      imagePullPolicy: IfNotPresent
+          - hosts:
+              - *host
 
-    env:
-
-    # - name: NET_MODE
-    #   value: 'LAN'
-    - name: RECORD_ALL
-      value: "True"
-    - name: RECORD_LENGTH
-      value: "1000"
-    - name: ROTATE_DOOR
-      value: "True"
-    - name: FRESH_DATA
-      value: "True"
-    - name: TZ
-      value: America/Detroit
-    - name: WB_IP
-      value: "192.168.1.16"
-    - name: ON_DEMAND
-      value: "False"
-    - name: IGNORE_OFFLINE
-      value: "true"
-    - name: FPS_FIX
-      value: "true"
-    - name: ENABLE_BOA
-      value: "true"
-    - name: QUALITY
-      value: "HD60"
-    - name: H264_ENC
-      value: "h264_qsv" # Only needed for HW-Accel build
-    - name: NET_MODE
-      value: "P2P"
-    # - name: LIBVA_DRIVER_NAME
-    #   value: iHD
-    # - name: FFMPEG_CMD
-    #   value: "ffmpeg -loglevel verbose -hwaccel qsv -c:v h264_qsv -i - -c:v h264_qsv  -rtsp_transport tcp -f rtsp rtsp://0.0.0.0:8554/{cam_name}"
-    envFrom:
-    - secretRef:
-        name: wyze-secrets
     persistence:
       media:
-        enabled: true
         existingClaim: wyze-nfs
-        mountPath: /record
+        globalMounts:
+          - path: /record
 
     nodeSelector:
       node-role.kubernetes.io/worker: "true"
       google.feature.node.kubernetes.io/coral: "true"
       intel.feature.node.kubernetes.io/gpu: "true"
-
-    resources:
-      requests:
-        cpu: 10m
-        memory: 250Mi
-      limits:
-        memory: 2500Mi
