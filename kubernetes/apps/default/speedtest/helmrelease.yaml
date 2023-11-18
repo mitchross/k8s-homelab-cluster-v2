@@ -1,3 +1,4 @@
+# # yaml-language-server: $schema=https://raw.githubusercontent.com/JJGadgets/flux2-schemas/main/helmrelease-helm-v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -19,46 +20,32 @@ spec:
       retries: 5
   upgrade:
     remediation:
-      retries: 5
+      retries: 10
 
   values:
+
     controllers:
       main:
-        replicas: 2
         type: deployment
-        strategyType: RollingUpdate
+        strategyType: Recreate  # Adjusted the strategy field
         containers:
           main:
             image:
               repository: ghcr.io/linuxserver/librespeed
               tag: 5.2.5
+              pullPolicy: IfNotPresent
             env:
-              - name: TZ
-                value: ${TIMEZONE}
-            probes:
-              liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /settings
-                    port: http
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
-              startup:
-                enabled: false
+              TZ: ${TIMEZONE}
             resources:
               requests:
-                cpu: 5m
-                memory: 50Mi
-              limits:
+                cpu: 10m
                 memory: 250Mi
+              limits:
+                memory: 25Mi
 
     service:
       main:
+        type: LoadBalancer
         ports:
           http:
             port: 80
@@ -66,20 +53,17 @@ spec:
     ingress:
       main:
         enabled: true
-        className: external
+        className: internal
         annotations:
-          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
-          nginx.ingress.kubernetes.io/whitelist-source-range: |
-            10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
-          hajimari.io/enable: "true"
+          hajimari.io/icon: mdi:speedomete
         hosts:
-          - host: &host "speedtest.${SECRET_DOMAIN}"
+          - host: &host speedtest.vanillax.me
             paths:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main  # Specify the service name here
-                  port: http  # Specify the service port here
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host

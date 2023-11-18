@@ -8,7 +8,7 @@ resources:
   - ./mqtt
  # - ./frigate/ks.yaml
   - ./libreddit
-#  - ./speedtest
+  - ./speedtest
   - ./immich/ks.yaml
   - ./tubesync/ks.yaml
   - ./scrypted/ks.yaml
