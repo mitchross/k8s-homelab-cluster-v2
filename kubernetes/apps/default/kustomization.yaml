@@ -7,7 +7,7 @@ resources:
   - ./wyze-bridge/ks.yaml
   - ./mqtt
  # - ./frigate/ks.yaml
-  - ./libreddit
+ # - ./libreddit
   - ./speedtest
   - ./immich/ks.yaml
   - ./tubesync/ks.yaml
