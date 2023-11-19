@@ -1,4 +1,3 @@
----
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -9,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.2.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -21,28 +20,57 @@ spec:
   upgrade:
     remediation:
       retries: 5
+
   values:
-    controller:
-      replicas: 1
-
-    image:
-      repository: ghcr.io/auricom/libreddit
-      tag: 0.30.1@sha256:4106b2aa4d9ce76f16ea9db1aa75ace2e9c80c067f698dad2f92c68c7cd94c30
-
-    env:
-      LIBREDDIT_DEFAULT_SHOW_NSFW: "on"
-      LIBREDDIT_DEFAULT_WIDE: "on"
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+    controllers:
+      main:
+        replicas: 1
+        type: deployment
+        containers:
+          main:
+            image:
+              repository: ghcr.io/auricom/libreddit
+              tag: 0.30.1@sha256:4106b2aa4d9ce76f16ea9db1aa75ace2e9c80c067f698dad2f92c68c7cd94c30
+            env:
+              - name: LIBREDDIT_DEFAULT_SHOW_NSFW
+                value: "on"
+              - name: LIBREDDIT_DEFAULT_WIDE
+                value: "on"
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /settings
+                    port: http
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 5m
+                memory: 50Mi
+              limits:
+                memory: 250Mi
 
     service:
       main:
         ports:
           http:
-            port: &port 8080
+            port: 8080
 
     ingress:
       main:
         enabled: true
-        ingressClassName: external
+        className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
           external-dns.home.arpa/enabled: "true"
@@ -52,29 +80,9 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
-
-    probes:
-      liveness: &probes
-        enabled: true
-        custom: true
-        spec:
-          httpGet:
-            path: /settings
-            port: *port
-          initialDelaySeconds: 0
-          periodSeconds: 10
-          timeoutSeconds: 1
-          failureThreshold: 3
-      readiness: *probes
-      startup:
-        enabled: false
-
-    resources:
-      requests:
-        cpu: 5m
-        memory: 50Mi
-      limits:
-        memory: 250Mi
