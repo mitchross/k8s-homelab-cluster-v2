@@ -10,7 +10,6 @@ spec:
     spec:
       chart: app-template
       version: 2.2.0
-      interval: 30m
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -39,9 +38,13 @@ spec:
               tag: "1.6"
               pullPolicy: IfNotPresent
             ports:
-              http:
+              - name: http
                 containerPort: 1883
-
+                protocol: TCP
+            env:
+              - name: TZ
+                value: "America/New_York"
+    
     service:
       main:
         annotations:
@@ -49,5 +52,4 @@ spec:
         ports:
           http:
             port: 1883
-            targetPort: 1883
         type: LoadBalancer
