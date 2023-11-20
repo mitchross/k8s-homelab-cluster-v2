@@ -53,6 +53,13 @@ spec:
                 name: cache
               - mountPath: /server/volume
                 name: config
+                statefulset:
+        volumeClaimTemplates:
+          - name: config
+            accessMode: ReadWriteOnce
+            size: 1Gi
+            storageClass: longhorn
+
 
     service:
       main:
@@ -89,9 +96,3 @@ spec:
         globalMounts:
           - path: /server/volume
 
-    statefulset:
-      volumeClaimTemplates:
-        - name: config
-          accessMode: ReadWriteOnce
-          size: 1Gi
-          storageClass: longhorn
