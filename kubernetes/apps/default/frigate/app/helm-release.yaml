@@ -66,6 +66,12 @@ spec:
               limits:
                 gpu.intel.com/i915: "1"
                 memory: 8Gi
+        volumeClaimTemplates:
+          - name: config
+            mountPath: /data
+            accessMode: ReadWriteOnce
+            size: 5Gi
+            storageClass: longhorn
         pod:
           affinity:
             podAntiAffinity:
@@ -100,12 +106,6 @@ spec:
         tls:
           - hosts:
               - *host
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /data
-        accessMode: ReadWriteOnce
-        size: 5Gi
-        storageClass: longhorn
     persistence:
       config-file:
         type: configMap
