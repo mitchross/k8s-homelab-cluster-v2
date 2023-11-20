@@ -56,14 +56,14 @@ spec:
       main:
         enabled: true
         endpoints:
-          - port: http
-            scheme: http
-            path: /metrics
-            interval: 1m
-            scrapeTimeout: 10s
-            relabelings:
-              - sourceLabels: [__meta_kubernetes_pod_node_name]
-                targetLabel: node
+        - port: http
+          scheme: http
+          path: /metrics
+          interval: 1m
+          scrapeTimeout: 10s
+          relabelings:
+          - sourceLabels: [__meta_kubernetes_pod_node_name]
+            targetLabel: node
 
     nodeSelector:
       intel.feature.node.kubernetes.io/gpu: "true"
