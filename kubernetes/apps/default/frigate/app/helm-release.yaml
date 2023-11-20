@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.2.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -26,117 +26,117 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: ghcr.io/blakeblackshear/frigate
-      tag: 0.13.0-beta3
-    env:
-      TZ: America/New_York
-      LIBVA_DRIVER_NAME: i965
+    defaultPodOptions:
+      securityContext:
+        privileged: true
 
-    # envFrom:
-    #   - secretRef:
-    #       name: frigate-secret
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: ghcr.io/blakeblackshear/frigate
+              tag: 0.13.0-beta3
+            env:
+              - name: TZ
+                value: America/New_York
+              - name: LIBVA_DRIVER_NAME
+                value: i965
+            volumeMounts:
+              - mountPath: /data
+                name: config
+              - mountPath: /config/config.yml
+                name: config-file
+              - mountPath: /media
+                name: media
+              - mountPath: /dev/shm
+                name: cache
+              - mountPath: /dev/bus/usb
+                name: usb
+            resources:
+              requests:
+                cpu: 10m
+                memory: 250Mi
+                gpu.intel.com/i915: "1"
+              limits:
+                memory: 2500Mi
+                gpu.intel.com/i915: "1"
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/version
+                    port: http
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
+
     service:
       main:
+        type: LoadBalancer
         annotations:
           io.cilium/lb-ipam-ips: "192.168.1.15"
         ports:
           http:
-            port: &port 5000
+            port: 5000
           rtsp:
             enabled: true
             port: 8554
 
-        type: LoadBalancer
-    probes:
-      liveness: &probes
-        enabled: true
-        custom: true
-        spec:
-          httpGet:
-            path: /api/version
-            port: *port
-          initialDelaySeconds: 0
-          periodSeconds: 10
-          timeoutSeconds: 1
-          failureThreshold: 3
-      readiness: *probes
-      startup:
-        enabled: false
-
     ingress:
       main:
         enabled: true
-        ingressClassName: internal
+        className: internal
         annotations:
           nginx.ingress.kubernetes.io/whitelist-source-range: |
             10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
           hajimari.io/enable: "false"
         hosts:
-        - host: &host frigate.vanillax.me
-          paths:
-          - path: /
-            pathType: Prefix
+          - host: &host frigate.vanillax.me
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: http
         tls:
-        - hosts:
-          - *host
-    securityContext:
-      privileged: true
-    volumeClaimTemplates:
-    - name: config
-      mountPath: /data
-      accessMode: ReadWriteOnce
-      size: 5Gi
-      storageClass: longhorn
+          - hosts:
+              - *host
+
     persistence:
       config-file:
-        enabled: true
         type: configMap
         name: frigate-configmap
         subPath: config.yaml
-        mountPath: /config/config.yml
         readOnly: true
+        globalMounts:
+          - path: /config/config.yml
       media:
-        enabled: true
         existingClaim: frigate-nfs
-        mountPath: /media
+        globalMounts:
+          - path: /media
       cache:
-        enabled: true
         type: emptyDir
         medium: Memory
         sizeLimit: 4Gi
-        mountPath: /dev/shm
+        globalMounts:
+          - path: /dev/shm
       usb:
-        enabled: true
         type: hostPath
         hostPath: /dev/bus/usb
         hostPathType: Directory
-        mountPath: /dev/bus/usb
-    # pci:
-    #   enabled: true
-    #   type: hostPath
-    #   hostPath: /dev/apex_0
-    #   hostPathType: CharDevice
-    # pci2:
-    #   enabled: true
-    #   type: hostPath
-    #   hostPath: /dev/apex_1
-    #   hostPathType: CharDevice
+        globalMounts:
+          - path: /dev/bus/usb
 
     nodeSelector:
       node-role.kubernetes.io/worker: "true"
       google.feature.node.kubernetes.io/coral: "true"
       intel.feature.node.kubernetes.io/gpu: "true"
-
-    resources:
-      requests:
-        cpu: 10m
-        memory: 250Mi
-        gpu.intel.com/i915: "1"
-      limits:
-        memory: 2500Mi
-        gpu.intel.com/i915: "1"
