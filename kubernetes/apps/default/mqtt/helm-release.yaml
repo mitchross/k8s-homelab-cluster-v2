@@ -23,10 +23,6 @@ spec:
       retries: 5
 
   values:
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-
     controllers:
       main:
         type: deployment
