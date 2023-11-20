@@ -31,16 +31,18 @@ spec:
   values:
     controllers:
       main:
+        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
           main:
             image:
               repository: ghcr.io/blakeblackshear/frigate
-              tag: 0.13.0-beta3
+              tag: 0.13.0-beta5
             env:
-              TZ: America/New_York
+              TZ: America/Detroit
               LIBVA_DRIVER_NAME: i965
+
             probes:
               liveness: &probes
                 enabled: true
@@ -60,32 +62,27 @@ spec:
               privileged: true
             resources:
               requests:
-                gpu.intel.com/i915: "1"
                 cpu: 1000m
                 memory: 2Gi
+                gpu.intel.com/i915: 1
               limits:
-                gpu.intel.com/i915: "1"
-                memory: 8Gi
-        volumeClaimTemplates:
-          - name: config
-            mountPath: /data
-            accessMode: ReadWriteOnce
-            size: 5Gi
-            storageClass: longhorn
+                memory: 10Gi
+                gpu.intel.com/i915: 1
         pod:
-          affinity:
-            podAntiAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-                - labelSelector:
-                    matchExpressions:
-                      - key: app.kubernetes.io/name
-                        operator: In
-                        values: ["jellyfin"]
-                  topologyKey: kubernetes.io/hostname
           nodeSelector:
             google.feature.node.kubernetes.io/coral: "true"
             intel.feature.node.kubernetes.io/gpu: "true"
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 5Gi
+              storageClass: longhorn
+              globalMounts:
+                - path: /data
     service:
+      type: LoadBalancer
+      externalTrafficPolicy: Local
       main:
         ports:
           http:
@@ -95,6 +92,8 @@ spec:
     ingress:
       main:
         enabled: true
+        annotations:
+          hajimari.io/icon: mdi:cctv
         className: internal
         hosts:
           - host: &host "frigate.vanillax.me"
@@ -118,7 +117,7 @@ spec:
         enabled: true
         type: emptyDir
         medium: Memory
-        sizeLimit: 4Gi
+        sizeLimit: 2Gi
         globalMounts:
           - path: /dev/shm
       usb:
