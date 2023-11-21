@@ -13,10 +13,10 @@ spec:
 
   persistentVolumeReclaimPolicy: Retain
   nfs:
-    server: 192.168.1.80
-    path: /mnt/FastTank/k8s/wyze
-  mountOptions:
-    - nfsvers=4.1
+    server: 192.168.1.8
+    path: /mnt/user/wyze
+
+
 
 ---
 apiVersion: v1
