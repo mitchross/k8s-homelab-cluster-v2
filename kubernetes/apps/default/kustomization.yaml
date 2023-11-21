@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./hajimari/ks.yaml
-  #- ./wyze-bridge/ks.yaml
+  - ./wyze-bridge/ks.yaml
   - ./mqtt
   - ./frigate/ks.yaml
   - ./libreddit
