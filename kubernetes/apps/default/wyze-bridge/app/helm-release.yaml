@@ -23,9 +23,6 @@ spec:
       retries: 10
 
   values:
-    defaultPodOptions:
-      securityContext:
-        privileged: true
     controllers:
       main:
         type: deployment
@@ -40,7 +37,7 @@ spec:
               - name: RECORD_ALL
                 value: "True"
               - name: RECORD_LENGTH
-                value: "1000"
+                value: "500"
               - name: ROTATE_DOOR
                 value: "True"
               - name: FRESH_DATA
@@ -63,9 +60,13 @@ spec:
                 value: "h264_qsv"
               - name: NET_MODE
                 value: "P2P"
+              - name: "LIBVA_DRIVER_NAME"
+                value: "i965"
             envFrom:
               - secretRef:
                   name: wyze-secrets
+            securityContext:
+              privileged: true
             resources:
               requests:
                 cpu: 10m
