@@ -30,9 +30,8 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/mrlt8/docker-wyze-bridge
-              tag: latest-qsv@sha256:f6e7817f36a9c84477ee7a5b78d837bd1d25511169fa95e96c08d1edaf0de9df
-              pullPolicy: IfNotPresent
+              repository: mrlt8/wyze-bridge
+              tag: 2.5.1
             env:
               - name: RECORD_ALL
                 value: "True"
@@ -56,12 +55,12 @@ spec:
                 value: "true"
               - name: QUALITY
                 value: "HD60"
-              - name: H264_ENC
-                value: "h264_qsv"
-              - name: NET_MODE
-                value: "P2P"
-              - name: "LIBVA_DRIVER_NAME"
-                value: "i965"
+              # - name: H264_ENC
+              #   value: "h264_qsv"
+              # - name: NET_MODE
+              #   value: "P2P"
+              # - name: "LIBVA_DRIVER_NAME"
+              #   value: "i965"
             envFrom:
               - secretRef:
                   name: wyze-secrets
