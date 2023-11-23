@@ -6,7 +6,7 @@ resources:
   - ./helm-release.yaml
   - ./nfs-pvc.yaml
   - ./secret.sops.yaml
-  - ./frigate-config.storage.yaml
+  - ./frigate-config-storage.yaml
 configMapGenerator:
   - name: frigate-configmap
     files:
