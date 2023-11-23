@@ -49,12 +49,12 @@ spec:
                 value: "False"
               - name: IGNORE_OFFLINE
                 value: "true"
-              - name: FPS_FIX
-                value: "true"
-              - name: ENABLE_BOA
-                value: "true"
-              - name: QUALITY
-                value: "HD60"
+              # - name: FPS_FIX
+              #   value: "true"
+              # - name: ENABLE_BOA
+              #   value: "true"
+              # - name: QUALITY
+              #   value: "HD60"
               # - name: H264_ENC
               #   value: "h264_qsv"
               # - name: NET_MODE
