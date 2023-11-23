@@ -1,7 +1,10 @@
 ---
-# yaml-language-server: $schema=http://192.168.1.15:5000/api/config/schema.json
+# yaml-language-server: $schema=https://frigate.vanillax.me/api/config/schema.json
 mqtt:
-    host: 192.168.1.17
+  host: mosquitto.default.svc.cluster.local
+  topic_prefix: frigate
+  user: "{FRIGATE_MQTT_USERNAME}"
+  password: "{FRIGATE_MQTT_PASSWORD}"
 
 database:
     path: /data/frigate.db
