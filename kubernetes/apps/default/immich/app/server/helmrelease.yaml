@@ -52,7 +52,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v1.87.0
+              tag: v1.88.2
             args: ["start-server.sh"]
             envFrom: *envFrom
             resources:
@@ -74,6 +74,25 @@ spec:
           http:
             port: 3001
         type: LoadBalancer
+
+    ingress:
+      main:
+        enabled: true
+        primary: true
+        ingressClassName: "internal"
+        annotations:
+          hajimari.io/icon: heroicons:photo
+          hajimari.io/name: Immich
+        hosts:
+          - host: &host photos.vanillax.me
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+
+
     persistence:
       library:
         existingClaim: immich-nfs

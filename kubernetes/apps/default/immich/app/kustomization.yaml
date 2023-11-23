@@ -10,6 +10,5 @@ resources:
   - ./secret.sops.yaml
   - ./server
   - ./nfs-pvc.yaml
-  - ./web
   - ./typesense
   - ./redis
