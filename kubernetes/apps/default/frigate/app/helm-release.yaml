@@ -42,7 +42,9 @@ spec:
             env:
               TZ: America/Detroit
               LIBVA_DRIVER_NAME: i965
-
+            envFrom:
+              - secretRef:
+                  name: frigate-secret
             probes:
               liveness: &probes
                 enabled: true
@@ -69,6 +71,15 @@ spec:
                 memory: 10Gi
                 gpu.intel.com/i915: 1
         pod:
+          affinity:
+            podAntiAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchExpressions:
+                      - key: app.kubernetes.io/name
+                        operator: In
+                        values: ["plex"]
+                  topologyKey: kubernetes.io/hostname
           nodeSelector:
             google.feature.node.kubernetes.io/coral: "true"
             intel.feature.node.kubernetes.io/gpu: "true"
@@ -77,7 +88,7 @@ spec:
             - name: config
               accessMode: ReadWriteOnce
               size: 5Gi
-              storageClass: longhorn
+              storageClass: ceph-block
               globalMounts:
                 - path: /data
     service:
@@ -93,10 +104,11 @@ spec:
       main:
         enabled: true
         annotations:
+          external-dns.alpha.kubernetes.io/target: ingress.donoso.family
           hajimari.io/icon: mdi:cctv
-        className: internal
+        className: nginx
         hosts:
-          - host: &host "frigate.vanillax.me"
+          - host: &host "frigate.donoso.family"
             paths:
               - path: /
                 service:
@@ -128,4 +140,11 @@ spec:
         globalMounts:
           - path: /dev/bus/usb
       media:
-        existingClaim: frigate-nfs
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: 10.2.1.50
+            path: /volume1/frigate
+        mountPath: /media
+        readOnly: false
