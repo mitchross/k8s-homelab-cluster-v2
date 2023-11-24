@@ -38,13 +38,7 @@ spec:
         annotations:
           configmap.reloader.stakater.com/reload: &configMap immich-configmap
           secret.reloader.stakater.com/reload: &secret immich-secret
-        pod:
-          enableServiceLinks: false
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            fsGroup: 1000
-            fsGroupChangePolicy: "OnRootMismatch"
+    
         initContainers:
           init-db:
             image:
