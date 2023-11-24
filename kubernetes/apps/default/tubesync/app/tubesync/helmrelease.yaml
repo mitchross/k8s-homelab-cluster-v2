@@ -57,8 +57,8 @@ spec:
               pullPolicy: IfNotPresent
             env:
               TZ: "America/Detroit"
-              PUID: 568
-              PGID: 568
+              PUID: 1000
+              PGID: 1000
               TUBESYNC_WORKERS: 1
               TUBESYNC_DEBUG: True
               TUBESYNC_RESET_DOWNLOAD_DIR: True
