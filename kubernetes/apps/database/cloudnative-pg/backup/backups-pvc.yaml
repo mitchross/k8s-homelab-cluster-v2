@@ -13,7 +13,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
         server: 192.168.1.133
-        path: /mnt/bigtank/k8s/postgres-backup
+        path: /mnt/largetank/k8s/postgres-backup
   mountOptions:
     - nfsvers=4.2
     - nconnect=8
