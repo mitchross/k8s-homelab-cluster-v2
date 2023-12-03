@@ -13,7 +13,7 @@ This template implements Flux in a way that promotes legibility and ease of use 
 - Automated, reproducible, customizable setup through Ansible templates and playbooks
 - Opinionated implementation of Flux with [strong community support](https://github.com/onedr0p/flux-cluster-template#-support)
 - Encrypted secrets thanks to [SOPS](https://github.com/getsops/sops) and [Age](https://github.com/FiloSottile/age)
-- Web application firewall thanks to [Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps)
+- Web application firewall thanks to [Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/)
 - SSL certificates thanks to [Cloudflare](https://cloudflare.com) and [cert-manager](https://cert-manager.io)
 - HA control plane capability thanks to [kube-vip](https://kube-vip.io)
 - Next-gen networking thanks to [Cilium](https://cilium.io/)
@@ -26,6 +26,7 @@ This template implements Flux in a way that promotes legibility and ease of use 
 
 Before we get started everything below must be taken into consideration, you must...
 
+- [ ] have some experience with 3 of the following: Git/SCM, containers, networking or scripting.
 - [ ] bring a **positive attitude** and be ready to learn and fail a lot. _The more you fail, the more you can learn from._
 - [ ] run the cluster on bare metal machines or VMs within your home network &mdash; **this is NOT designed for cloud environments**.
 - [ ] have Debian 12 freshly installed on 1 or more AMD64/ARM64 bare metal machines or VMs. Each machine will be either a **control node** or a **worker node** in your cluster.
@@ -127,7 +128,9 @@ Before we get started everything below must be taken into consideration, you mus
 
 ## 🚀 Getting Started
 
-Once you have installed Debian on your nodes, there are 6 stages to getting a Flux-managed cluster up and runnning.
+Once you have installed Debian on your nodes, there are six stages to getting a Flux-managed cluster up and runnning.
+
+📍 _For all stages below the commands **MUST** be ran on your personal workstation within your repository directory_
 
 ### 🎉 Stage 1: Create a Git repository
 
@@ -135,9 +138,7 @@ Once you have installed Debian on your nodes, there are 6 stages to getting a Fl
 
 2. Clone **your new repo** to you local workstation and `cd` into it.
 
-📍 _**All commands** during the setup process are run on your **local workstation** within your repository directory_
-
-### 🌱 Stage 2: Set up your local environment
+### 🌱 Stage 2: Setup your local workstation environment
 
 📍 _Let's get the required workstation tools installed and configured._
 
@@ -163,7 +164,7 @@ Once you have installed Debian on your nodes, there are 6 stages to getting a Fl
 
 3. Setup a Python virual env and install Ansible by running the following task command.
 
-    📍 _This commands requires Python 3.8+ to be installed_
+    📍 _This commands requires Python 3.10+ to be installed_
 
     ```sh
     # Platform agnostic
@@ -444,7 +445,7 @@ By default Flux will periodically check your git repository for changes. In orde
 
 To enable Renovate, click the 'Configure' button over at their [Github app page](https://github.com/apps/renovate) and select your repository. Renovate creates a "Dependency Dashboard" as an issue in your repository, giving an overview of the status of all updates. The dashboard has interactive checkboxes that let you do things like advance scheduling or reattempt update PRs you closed without merging.
 
-The base Renovate configuration in your repository can be viewed at [.github/renovate.json5](https://github.com/onedr0p/flux-cluster-template/blob/main/.github/renovate.json5). By default it is scheduled to be active with PRs every weekend, but you can [change the schedule to anything you want](https://docs.renovatebot.com/presets-schedule), or remove it if you want Renovate to open PRs right away. It is also configured to [automerge some updates](https://github.com/onedr0p/flux-cluster-template/blob/main/.github/renovate/autoMerge.json5).
+The base Renovate configuration in your repository can be viewed at [.github/renovate.json5](https://github.com/onedr0p/flux-cluster-template/blob/main/.github/renovate.json5). By default it is scheduled to be active with PRs every weekend, but you can [change the schedule to anything you want](https://docs.renovatebot.com/presets-schedule), or remove it if you want Renovate to open PRs right away.
 
 ## 🐛 Debugging
 
