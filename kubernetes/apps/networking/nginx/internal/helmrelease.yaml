@@ -3,7 +3,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: nginx-internal
-  namespace: networking
+  namespace: &namespace networking
 spec:
   interval: 30m
   chart:
@@ -66,7 +66,7 @@ spec:
         enabled: true
         serviceMonitor:
           enabled: true
-          namespace: networking
+          namespace: *namespace
           namespaceSelector:
             any: true
       extraArgs:
@@ -77,7 +77,8 @@ spec:
           whenUnsatisfiable: DoNotSchedule
           labelSelector:
             matchLabels:
-              app.kubernetes.io/name: nginx-internal
+              app.kubernetes.io/name: ingress-nginx
+              app.kubernetes.io/instance: nginx-internal
               app.kubernetes.io/component: controller
       resources:
         requests:
