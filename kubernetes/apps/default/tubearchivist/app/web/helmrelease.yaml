@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.2.1
+      version: 1.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -35,7 +35,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: docker.io/bbilly1/tubearchivist
-      tag: v0.3.2
+      tag: v0.4.4
     env:
       TZ: America/New_York
       ES_URL: http://tubearchivist-elasticsearch.default.svc.cluster.local:9200
