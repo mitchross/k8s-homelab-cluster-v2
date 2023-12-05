@@ -91,7 +91,7 @@ spec:
           - *host
 
     persistence:
-      library:
+      downloads:
         enabled: true
         existingClaim: youtube-nfs
         globalMounts:
