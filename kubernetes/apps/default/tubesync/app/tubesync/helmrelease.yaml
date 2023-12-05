@@ -63,8 +63,7 @@ spec:
                 memory: 250Mi
               limits:
                 memory: 1000Mi
-              startup:
-                enabled: false
+
     service:
       main:
         ports:
