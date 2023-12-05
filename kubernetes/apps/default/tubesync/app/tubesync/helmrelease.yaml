@@ -97,10 +97,6 @@ spec:
         existingClaim: youtube-nfs
         globalMounts:
         - path: /downloads
-      configs:
+      config:
         enabled: true
-        storageClass: longhorn
-        accessMode: ReadWriteMany
-        globalMounts:
-        - path: /config
-        size: 10Gi
+        existingClaim: tubesync-config

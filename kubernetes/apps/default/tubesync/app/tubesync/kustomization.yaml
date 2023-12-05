@@ -5,6 +5,7 @@ resources:
   - ./secret.sops.yaml
   - ./helmrelease.yaml
   - ./nfs-yt-pvc.yaml
+  - ./tubesync-config.yaml
 
 labels:
   - pairs:
