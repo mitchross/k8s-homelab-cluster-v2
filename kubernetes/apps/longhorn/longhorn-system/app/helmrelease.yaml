@@ -28,4 +28,4 @@ spec:
       concurrentAutomaticEngineUpgradePerNodeLimit: 1
       defaultLonghornStaticStorageClass: longhorn
       orphanAutoDeletion: true
-      backupTarget: "nfs://192.168.1.133:/mnt/bigtank/k8s/longhorn-backup"
+      backupTarget: "nfs://192.168.1.133:/mnt/largetank/k8s/longhorn-backup"
