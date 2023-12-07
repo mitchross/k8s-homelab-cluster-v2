@@ -34,11 +34,11 @@ spec:
           schedule: "@daily"
           ttlSecondsAfterFinished: 43200
         pod:
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            fsGroup: 1000
-            fsGroupChangePolicy: OnRootMismatch
+          # securityContext:
+          #   runAsUser: 1000
+          #   runAsGroup: 1000
+          #   fsGroup: 1000
+          #   fsGroupChangePolicy: OnRootMismatch
           enableServiceLinks: false
         containers:
           main:
