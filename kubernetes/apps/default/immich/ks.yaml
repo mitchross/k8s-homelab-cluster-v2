@@ -8,6 +8,7 @@ metadata:
 spec:
   dependsOn:
     - name: database-cloudnative-pg
+    - name: cluster-apps-longhorn
   path: ./kubernetes/apps/default/immich/app
   prune: true
   sourceRef:

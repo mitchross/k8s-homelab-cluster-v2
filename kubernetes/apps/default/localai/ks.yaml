@@ -6,6 +6,8 @@ metadata:
   name: cluster-apps-localai
   namespace: flux-system
 spec:
+  dependsOn:
+     - name: cluster-apps-longhorn
   path: ./kubernetes/apps/default/localai/app
   prune: true
   sourceRef:
