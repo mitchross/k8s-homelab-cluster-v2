@@ -37,6 +37,7 @@ spec:
     fullnameOverride: "localai"
     deployment:
       image: quay.io/go-skynet/local-ai:latest
+      pullPolicy: IfNotPresent
       env:
         threads: 14
         context_size: 512
