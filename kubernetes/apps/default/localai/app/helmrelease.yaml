@@ -42,13 +42,17 @@ spec:
         context_size: 512
         rebuild: false
         debug: true
+        NVIDIA_VISIBLE_DEVICES: all
+        NVIDIA_DRIVER_CAPABILITIES: all
       modelsPath: "/models"
     resources:
       requests:
         cpu: 200m
-        memory: 6G
+        memory: 1Gi
+        nvidia.com/gpu: 1
       limits:
-        memory: 6G
+        memory: 8Gi
+        nvidia.com/gpu: 1
 
     promptTemplates:
       ggml-gpt4all-j.tmpl: |
