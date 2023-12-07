@@ -16,11 +16,7 @@ spec:
         path: /mnt/largetank/k8s/postgres-backup
   mountOptions:
     - nfsvers=4.2
-    - nconnect=8
-    - hard
-    - noatime
-    - nodiratime
-    - nolock
+
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
