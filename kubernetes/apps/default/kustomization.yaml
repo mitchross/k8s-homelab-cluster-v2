@@ -10,7 +10,6 @@ resources:
   - ./libreddit
   - ./speedtest
   - ./immich/ks.yaml
-  - ./tubesync/ks.yaml
   - ./scrypted/ks.yaml
   - ./localai/ks.yaml
   - ./jellyfin
