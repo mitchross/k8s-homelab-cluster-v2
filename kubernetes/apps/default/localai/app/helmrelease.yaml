@@ -41,7 +41,7 @@ spec:
       env:
         threads: 8
         context_size: 512
-        rebuild: true
+        rebuild: false
         debug: true
         NVIDIA_VISIBLE_DEVICES: all
         NVIDIA_DRIVER_CAPABILITIES: all
