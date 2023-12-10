@@ -168,6 +168,6 @@ spec:
             - *host
     persistence:
       enabled: true
-      storageClassName: local-path
+      storageClassName: longhorn
     testFramework:
       enabled: false
