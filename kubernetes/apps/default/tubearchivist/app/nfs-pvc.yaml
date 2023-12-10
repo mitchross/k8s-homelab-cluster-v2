@@ -25,7 +25,7 @@ metadata:
 spec:
     accessModes:
         - ReadWriteMany
-    storageClassName: frigate-nfs
+    storageClassName: tube-nfs
     resources:
         requests:
             storage: 1Mi
