@@ -40,13 +40,13 @@ spec:
       TZ: America/New_York
       ES_URL: http://tubearchivist-elasticsearch.default.svc.cluster.local:9200
       REDIS_HOST: tubearchivist-redis.default.svc.cluster.local
-      HOST_UID: 568
-      HOST_GID: 568
-      TA_HOST: &host tubearchivist.devbu.io
+      HOST_UID: 1000
+      HOST_GID: 1000
+      TA_HOST: &host tubearchivist.vanillax.me
       TA_USERNAME: admin
     envFrom:
       - secretRef:
-          name: tubearchivist-secret
+          name: tube-secret
     service:
       main:
         ports:
@@ -55,7 +55,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        ingressClassName: internal
         hosts:
           - host: *host
             paths:
@@ -65,9 +65,9 @@ spec:
           - hosts:
               - *host
     podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
       fsGroupChangePolicy: OnRootMismatch
       supplementalGroups: [10000]
     volumeClaimTemplates:
@@ -75,11 +75,11 @@ spec:
         mountPath: /cache
         accessMode: ReadWriteOnce
         size: 1Gi
-        storageClass: ceph-block
+        storageClass: longhorn
     persistence:
       library:
         enabled: true
-        existingClaim: tubearchivist-nfs
+        existingClaim: tube-nfs
         mountPath: /youtube
     resources:
       requests:

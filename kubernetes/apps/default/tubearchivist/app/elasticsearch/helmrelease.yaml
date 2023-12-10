@@ -40,7 +40,7 @@ spec:
       path.repo: /usr/share/elasticsearch/data/snapshot
     envFrom:
       - secretRef:
-          name: tubearchivist-secret
+          name: tube-secret
     service:
       main:
         ports:
@@ -55,7 +55,7 @@ spec:
         mountPath: /usr/share/elasticsearch/data
         accessMode: ReadWriteOnce
         size: 5Gi
-        storageClass: ceph-block
+        storageClass: longhorn
     resources:
       requests:
         cpu: 10m
