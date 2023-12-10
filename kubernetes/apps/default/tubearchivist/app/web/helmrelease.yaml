@@ -65,8 +65,8 @@ spec:
           - hosts:
               - *host
     podSecurityContext:
-      securityContext:
-              privileged: true
+      
+      privileged: true
       runAsUser: 1000
       runAsGroup: 1000
       fsGroup: 1000
