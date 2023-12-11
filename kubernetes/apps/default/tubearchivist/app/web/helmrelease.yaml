@@ -98,7 +98,7 @@ spec:
         server: "192.168.1.133"
         path: /mnt/largetank/k8s/tubesync
         globalMounts:
-          - path: /mnt/storage/music
+          - path: /youtube
       # library:
       #   enabled: true
       #   existingClaim: tube-nfs
