@@ -60,9 +60,12 @@ spec:
                 mountPath: /usr/share/elasticsearch/data
     service:
       main:
+        type: LoadBalancer
+        externalTrafficPolicy: Cluster
         ports:
-           http:
-              port: 9200
+          http:
+            port: 9200
+
     volumeClaimTemplates:
       - name: config
         mountPath: /usr/share/elasticsearch/data
