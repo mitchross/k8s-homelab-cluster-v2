@@ -96,4 +96,5 @@ spec:
 
       library:
         existingClaim: tube-nfs
-        mountPath: /youtube2
+        globalMounts:
+          -path: /youtube2
