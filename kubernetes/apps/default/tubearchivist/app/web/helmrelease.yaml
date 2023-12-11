@@ -80,7 +80,7 @@ spec:
         enabled: true
         className: internal
         hosts:
-          - host: tubearchivist.vanillax.me
+          - host: &host tubearchivist.vanillax.me
             paths:
               - path: /
                 pathType: Prefix
