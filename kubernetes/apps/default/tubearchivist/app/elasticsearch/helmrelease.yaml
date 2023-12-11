@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -10,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.3.0 # Replace with your intended version
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -26,39 +25,47 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: docker.io/bbilly1/tubearchivist-es
-      tag: 8.11.0
-    env:
-      ES_JAVA_OPTS: -Xms512m -Xmx512m
-      xpack.security.enabled: "true"
-      discovery.type: single-node
-      path.repo: /usr/share/elasticsearch/data/snapshot
-    envFrom:
-      - secretRef:
-          name: tube-secret
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 0
+        fsGroup: 0
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: docker.io/bbilly1/tubearchivist-es
+              tag: 8.11.0
+            env:
+              - name: ES_JAVA_OPTS
+                value: -Xms512m -Xmx512m
+              - name: xpack.security.enabled
+                value: "true"
+              - name: discovery.type
+                value: single-node
+              - name: path.repo
+                value: /usr/share/elasticsearch/data/snapshot
+            resources:
+              requests:
+                cpu: 10m
+                memory: 100Mi
+              limits:
+                memory: 1000Mi
+            volumeMounts:
+              - name: config
+                mountPath: /usr/share/elasticsearch/data
     service:
       main:
         ports:
-          http:
+          - name: http
             port: 9200
-    podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 0
-      fsGroup: 0
     volumeClaimTemplates:
       - name: config
         mountPath: /usr/share/elasticsearch/data
         accessMode: ReadWriteOnce
         size: 5Gi
         storageClass: longhorn
-    resources:
-      requests:
-        cpu: 10m
-        memory: 100Mi
-      limits:
-        memory: 1000Mi
