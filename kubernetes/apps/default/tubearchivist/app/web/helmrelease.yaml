@@ -92,9 +92,15 @@ spec:
         existingClaim: tube-config-storage
         globalMounts:
         - path: /cache
-
-      library:
+      downloads:
         enabled: true
-        existingClaim: tube-nfs
+        type: nfs
+        server: "192.168.1.133"
+        path: /mnt/largetank/k8s/tubesync
         globalMounts:
-          -path: /youtube2
+          - path: /mnt/storage/music
+      # library:
+      #   enabled: true
+      #   existingClaim: tube-nfs
+      #   globalMounts:
+      #     -path: /youtube2
