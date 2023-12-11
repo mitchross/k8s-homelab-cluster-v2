@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
@@ -26,10 +25,10 @@ spec:
   uninstall:
     keepHistory: false
   dependsOn:
-    - name: tubearchivist-redis
-      namespace: default
-    - name: tubearchivist-elasticsearch
-      namespace: default
+  - name: tubearchivist-redis
+    namespace: default
+  - name: tubearchivist-elasticsearch
+    namespace: default
   values:
     controllers:
       main:
@@ -41,23 +40,23 @@ spec:
               repository: docker.io/bbilly1/tubearchivist
               tag: v0.4.4
             env:
-              - name: TZ
-                value: America/New_York
-              - name: ES_URL
-                value: http://tubearchivist-elasticsearch.default.svc.cluster.local:9200
-              - name: REDIS_HOST
-                value: tubearchivist-redis.default.svc.cluster.local
-              - name: HOST_UID
-                value: "1000"
-              - name: HOST_GID
-                value: "1000"
-              - name: TA_HOST
-                value: tubearchivist.vanillax.me
-              - name: TA_USERNAME
-                value: admin
+            - name: TZ
+              value: America/New_York
+            - name: ES_URL
+              value: http://tubearchivist-elasticsearch.default.svc.cluster.local:9200
+            - name: REDIS_HOST
+              value: tubearchivist-redis.default.svc.cluster.local
+            - name: HOST_UID
+              value: "1000"
+            - name: HOST_GID
+              value: "1000"
+            - name: TA_HOST
+              value: tubearchivist.vanillax.me
+            - name: TA_USERNAME
+              value: admin
             envFrom:
-              - secretRef:
-                  name: tube-secret
+            - secretRef:
+                name: tube-secret
             securityContext:
               privileged: true
             resources:
@@ -78,23 +77,24 @@ spec:
         enabled: true
         className: internal
         hosts:
-          - host: &host "tubearchivist.vanillax.me"
-            paths:
-              - path: /
-                service:
-                  name: main
-                  port: http
+        - host: &host "tubearchivist.vanillax.me"
+          paths:
+          - path: /
+            service:
+              name: main
+              port: http
         tls:
-          - hosts:
-              - *host
+        - hosts:
+          - *host
     persistence:
       config:
         enabled: true
         existingClaim: tube-config-storage
         globalMounts:
-          - path: /cache
+        - path: /cache
 
       library:
+        enabled: true
         existingClaim: tube-nfs
         globalMounts:
           -path: /youtube2
