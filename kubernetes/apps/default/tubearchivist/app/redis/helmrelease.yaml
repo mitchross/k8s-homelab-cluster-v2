@@ -33,8 +33,10 @@ spec:
         containers:
           main:
             image:
-              repository: docker.io/redislabs/rejson
-              tag: 99.99.98
+              repository: public.ecr.aws/docker/library/redis
+              tag: 7.2.3
+            env:
+              REDIS_REPLICATION_MODE: master
             resources:
               requests:
                 cpu: 10m
