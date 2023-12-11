@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -10,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.3.0 # Replace with your intended version
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -29,35 +28,53 @@ spec:
     - name: tubearchivist-redis
     - name: tubearchivist-elasticsearch
   values:
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: docker.io/bbilly1/tubearchivist
-      tag: v0.4.4
-    env:
-      TZ: America/New_York
-      ES_URL: http://tubearchivist-elasticsearch.default.svc.cluster.local:9200
-      REDIS_HOST: tubearchivist-redis.default.svc.cluster.local
-      HOST_UID: 1000
-      HOST_GID: 1000
-      TA_HOST: &host tubearchivist.vanillax.me
-      TA_USERNAME: admin
-    envFrom:
-      - secretRef:
-          name: tube-secret
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: docker.io/bbilly1/tubearchivist
+              tag: v0.4.4
+            env:
+              - name: TZ
+                value: America/New_York
+              - name: ES_URL
+                value: http://tubearchivist-elasticsearch.default.svc.cluster.local:9200
+              - name: REDIS_HOST
+                value: tubearchivist-redis.default.svc.cluster.local
+              - name: HOST_UID
+                value: "1000"
+              - name: HOST_GID
+                value: "1000"
+              - name: TA_HOST
+                value: tubearchivist.vanillax.me
+              - name: TA_USERNAME
+                value: admin
+            resources:
+              requests:
+                cpu: 100m
+                memory: 250Mi
+              limits:
+                memory: 2000Mi
+            volumeMounts:
+              - name: config
+                mountPath: /cache
+              - name: library
+                mountPath: /youtube
     service:
       main:
         ports:
-          http:
+          - name: http
             port: 8000
     ingress:
       main:
         enabled: true
         ingressClassName: internal
         hosts:
-          - host: *host
+          - host: tubearchivist.vanillax.me
             paths:
               - path: /
                 pathType: Prefix
@@ -65,28 +82,14 @@ spec:
           - hosts:
               - *host
     podSecurityContext:
-      
-      privileged: true
       runAsUser: 0
-      # runAsUser: 1000
-      # runAsGroup: 1000
-      # fsGroup: 1000
-      # fsGroupChangePolicy: OnRootMismatch
-      # supplementalGroups: [10000]
+      privileged: true
     volumeClaimTemplates:
       - name: config
         mountPath: /cache
         accessMode: ReadWriteOnce
         size: 1Gi
         storageClass: longhorn
-    persistence:
-      library:
-        enabled: true
-        existingClaim: tube-nfs
+      - name: library
         mountPath: /youtube
-    resources:
-      requests:
-        cpu: 100m
-        memory: 250Mi
-      limits:
-        memory: 2000Mi
+        existingClaim: tube-nfs
