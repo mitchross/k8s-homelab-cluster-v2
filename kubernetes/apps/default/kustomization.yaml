@@ -15,6 +15,6 @@ resources:
   - ./jellyfin
   #- ./plex/ks.yaml
   - ./ollama
-  #- ./tubearchivist/ks.yaml
+  - ./tubearchivist/ks.yaml
 
   
