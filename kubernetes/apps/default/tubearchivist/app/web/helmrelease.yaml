@@ -46,6 +46,8 @@ spec:
               value: http://tubearchivist-elasticsearch.default.svc.cluster.local:9200
             - name: REDIS_HOST
               value: tubearchivist-redis.default.svc.cluster.local
+            - name: REDIS_PORT
+              value: 6379
             - name: HOST_UID
               value: "1000"
             - name: HOST_GID
