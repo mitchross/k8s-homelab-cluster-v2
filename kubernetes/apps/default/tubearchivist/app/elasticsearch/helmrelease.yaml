@@ -61,8 +61,8 @@ spec:
     service:
       main:
         ports:
-          - name: http
-            port: 9200
+           http:
+              port: 9200
     volumeClaimTemplates:
       - name: config
         mountPath: /usr/share/elasticsearch/data
