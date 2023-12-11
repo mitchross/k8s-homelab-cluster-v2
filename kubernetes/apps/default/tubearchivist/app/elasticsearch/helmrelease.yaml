@@ -45,6 +45,9 @@ spec:
                 value: single-node
               - name: path.repo
                 value: /usr/share/elasticsearch/data/snapshot
+            envFrom:
+              - secretRef:
+                  name: tube-secret
             resources:
               requests:
                 cpu: 10m
