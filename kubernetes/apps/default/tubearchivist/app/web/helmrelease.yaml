@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -25,16 +27,12 @@ spec:
     keepHistory: false
   dependsOn:
     - name: tubearchivist-redis
+      namespace: default
     - name: tubearchivist-elasticsearch
+      namespace: default
   values:
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 0
-        privileged: true
-
     controllers:
       main:
-        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -57,46 +55,59 @@ spec:
                 value: tubearchivist.vanillax.me
               - name: TA_USERNAME
                 value: admin
+            envFrom:
+              - secretRef:
+                  name: tube-secret
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/version
+                    port: &port 5000
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
+            securityContext:
+              privileged: true
             resources:
               requests:
-                cpu: 100m
-                memory: 250Mi
+                cpu: 1000m
+                memory: 2Gi
               limits:
-                memory: 2000Mi
-            volumeMounts:
-              - name: config
-                mountPath: /cache
-              - name: library
-                mountPath: /youtube
-
+                memory: 8Gi
     service:
       main:
         ports:
-          - name: http
+          http:
             port: 8000
-
+          rtsp:
+            port: 8554
     ingress:
       main:
         enabled: true
         className: internal
         hosts:
-          - host: &host tubearchivist.vanillax.me
+          - host: &host "tubearchivist.vanillax.me"
             paths:
               - path: /
-                pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
+    persistence:
+      config:
+        enabled: true
+        existingClaim: tube-config-storage
+        globalMounts:
+          - path: /cache
 
-    statefulset:
-      volumeClaimTemplates:
-        - name: config
-          accessMode: ReadWriteOnce
-          size: 1Gi
-          storageClass: longhorn
-          globalMounts:
-            - path: /cache
-        - name: library
-          existingClaim: tube-nfs
-          globalMounts:
-            - path: /youtube
+      library:
+        existingClaim: tube-nfs

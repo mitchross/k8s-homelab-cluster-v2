@@ -9,3 +9,4 @@ resources:
   - ./elasticsearch
   - ./redis
   - ./web
+  - ./tube-config-pvc.yaml
