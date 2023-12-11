@@ -6,11 +6,13 @@ metadata:
   namespace: default
 data:
   DB_PORT: "5432"
+  TZ: America/Detroit
   ENABLE_MAPBOX: "false"
   LOG_LEVEL: verbose
   DISABLE_REVERSE_GEOCODING: "true"
   REDIS_HOSTNAME: immich-redis.default.svc.cluster.local
   REDIS_PORT: "6379"
+  NODE_ENV: production
   TYPESENSE_HOST: immich-typesense.default.svc.cluster.local
   TYPESENSE_PORT: "8108"
   TYPESENSE_PROTOCOL: http
