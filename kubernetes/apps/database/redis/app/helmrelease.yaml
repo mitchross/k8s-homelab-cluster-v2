@@ -1,50 +1,48 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: redis
+  namespace: database
 spec:
-  interval: 30m
-  timeout: 15m
+  interval: 15m
+  upgrade:
+    disableWait: true
+    force: true
   chart:
     spec:
       chart: redis
-      version: 18.4.0
+      version: 18.0.0
       sourceRef:
         kind: HelmRepository
-        name: bitnami
+        name: bitnami-charts
         namespace: flux-system
-  maxHistory: 2
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
-  uninstall:
-    keepHistory: false
   values:
+    global:
+      storageClass: longhorn
     auth:
       enabled: false
       sentinel: false
     master:
-      persistence:
-        enabled: false
+      nodeSelector:
+        kubernetes.io/arch: amd64
     replica:
-      persistence:
-        enabled: false
+      nodeSelector:
+        kubernetes.io/arch: amd64
     sentinel:
       enabled: true
       masterSet: redis-master
       getMasterTimeout: 10
       startupProbe:
         failureThreshold: 2
-      persistence:
-        enabled: false
+      resources:
+        limits:
+          cpu: 800m
+          memory: 800Mi
+        requests:
+          cpu: 20m
+          memory: 30Mi
     metrics:
       enabled: true
       serviceMonitor:
         enabled: true
-        interval: 1m
