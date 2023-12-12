@@ -4,41 +4,35 @@ kind: HelmRelease
 metadata:
   name: redis
   namespace: database
-spec:
-  interval: 15m
+  interval: 5m
   chart:
     spec:
+      # renovate: registryUrl=https://charts.bitnami.com/bitnami
       chart: redis
-      version: 18.0.0
+      version: 17.3.5
       sourceRef:
         kind: HelmRepository
         name: bitnami
         namespace: flux-system
+      interval: 5m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   values:
-    global:
-      storageClass: longhorn
+    architecture: standalone
     auth:
       enabled: false
-      sentinel: false
+      sentinal: false
     master:
-      nodeSelector:
-        kubernetes.io/arch: amd64
-    replica:
-      nodeSelector:
-        kubernetes.io/arch: amd64
-    sentinel:
+      persistence:
+        size: 5Gi
+        existingClaim: longhorn
+    sentinal:
       enabled: true
       masterSet: redis-master
-      getMasterTimeout: 10
-      startupProbe:
-        failureThreshold: 2
-      resources:
-        limits:
-          cpu: 800m
-          memory: 800Mi
-        requests:
-          cpu: 20m
-          memory: 30Mi
     metrics:
       enabled: true
       serviceMonitor:
