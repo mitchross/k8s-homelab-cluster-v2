@@ -9,6 +9,5 @@ resources:
   - ./machine-learning
   - ./secret.sops.yaml
   - ./server
-  - ./nfs-pvc.yaml
+  #- ./nfs-pvc.yaml
   - ./typesense
-  - ./redis
