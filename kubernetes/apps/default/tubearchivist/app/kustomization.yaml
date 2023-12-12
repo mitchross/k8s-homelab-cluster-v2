@@ -7,6 +7,5 @@ resources:
   - ./secret.sops.yaml
  # - ./nfs-pvc.yaml
   - ./elasticsearch
-  - ./redis
   - ./web
   - ./tube-config-pvc.yaml
