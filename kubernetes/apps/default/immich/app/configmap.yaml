@@ -10,7 +10,7 @@ data:
   ENABLE_MAPBOX: "false"
   LOG_LEVEL: verbose
   DISABLE_REVERSE_GEOCODING: "true"
-  REDIS_HOSTNAME: ioredis://eyJkYiI6MTUsInNlbnRpbmVscyI6W3siaG9zdCI6InJlZGlzLW5vZGUtMC5yZWRpcy1oZWFkbGVzcy5kYXRhYmFzZS5zdmMuY2x1c3Rlci5sb2NhbCIsInBvcnQiOjI2Mzc5fSx7Imhvc3QiOiJyZWRpcy1ub2RlLTEucmVkaXMtaGVhZGxlc3MuZGF0YWJhc2Uuc3ZjLmNsdXN0ZXIubG9jYWwiLCJwb3J0IjoyNjM3OX0seyJob3N0IjoicmVkaXMtbm9kZS0yLnJlZGlzLWhlYWRsZXNzLmRhdGFiYXNlLnN2Yy5jbHVzdGVyLmxvY2FsIiwicG9ydCI6MjYzNzl9XSwibmFtZSI6InJlZGlzLW1hc3RlciJ9
+  REDIS_HOSTNAME: "redis+sentinel://redis-headless.database.svc.cluster.local:26379/?db=3&mastername=redis-master"
   REDIS_PORT: "6379"
   NODE_ENV: production
   TYPESENSE_HOST: immich-typesense.default.svc.cluster.local
