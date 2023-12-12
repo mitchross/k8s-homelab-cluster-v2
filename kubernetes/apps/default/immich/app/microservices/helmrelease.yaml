@@ -66,6 +66,9 @@ spec:
         enabled: false
     persistence:
       library:
-        existingClaim: immich-nfs
+        enabled: true
+        type: nfs
+        server: "192.168.1.133"
+        path: /mnt/largetank/k8s/immich
         globalMounts:
           - path: /usr/src/app/upload

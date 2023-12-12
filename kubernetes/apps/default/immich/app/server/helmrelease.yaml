@@ -28,8 +28,8 @@ spec:
   dependsOn:
     - name: immich-typesense
       namespace: default
-    - name: immich-redis
-      namespace: default
+    - name: redis
+      namespace: database
   values:
     controllers:
       main:
@@ -114,6 +114,9 @@ spec:
 
     persistence:
       library:
-        existingClaim: immich-nfs
-        globalmounts:
+        enabled: true
+        type: nfs
+        server: "192.168.1.133"
+        path: /mnt/largetank/k8s/immich
+        globalMounts:
           - path: /usr/src/app/upload
