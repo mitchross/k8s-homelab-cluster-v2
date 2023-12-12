@@ -1,39 +1,51 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: redis
   namespace: database
-  interval: 5m
+spec:
+  interval: 30m
+  timeout: 15m
   chart:
     spec:
-      # renovate: registryUrl=https://charts.bitnami.com/bitnami
       chart: redis
-      version: 17.3.5
+      version: 18.5.0
       sourceRef:
         kind: HelmRepository
         name: bitnami
         namespace: flux-system
-      interval: 5m
+  maxHistory: 2
   install:
     remediation:
       retries: 3
   upgrade:
+    cleanupOnFail: true
     remediation:
       retries: 3
+  uninstall:
+    keepHistory: false
   values:
-    architecture: standalone
     auth:
       enabled: false
-      sentinal: false
+      sentinel: false
     master:
       persistence:
-        size: 5Gi
-        existingClaim: longhorn
-    sentinal:
+        enabled: false
+    replica:
+      persistence:
+        enabled: false
+    sentinel:
       enabled: true
       masterSet: redis-master
+      getMasterTimeout: 10
+      startupProbe:
+        failureThreshold: 2
+      persistence:
+        enabled: false
     metrics:
       enabled: true
       serviceMonitor:
         enabled: true
+        interval: 1m
