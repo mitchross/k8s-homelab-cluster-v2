@@ -10,7 +10,7 @@ data:
   ENABLE_MAPBOX: "false"
   LOG_LEVEL: verbose
   DISABLE_REVERSE_GEOCODING: "true"
-  REDIS_HOSTNAME: "redis-headless.database.svc.cluster.local"
+  REDIS_HOSTNAME: "redis.database.svc.cluster.local"
   REDIS_PORT: "6379"
   NODE_ENV: production
   TYPESENSE_HOST: immich-typesense.default.svc.cluster.local
