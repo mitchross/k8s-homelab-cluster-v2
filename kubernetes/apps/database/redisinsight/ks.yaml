@@ -6,6 +6,7 @@ metadata:
   name: default-redisinsight
   namespace: flux-system
 spec:
+  targetNamespace: database
   path: ./kubernetes/apps/database/redisinsight/app
   prune: true
   sourceRef:
