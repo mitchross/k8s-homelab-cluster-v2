@@ -45,7 +45,7 @@ spec:
             - name: ES_URL
               value: http://tubearchivist-elasticsearch.default.svc.cluster.local:9200
             - name: REDIS_HOST
-              value: "redis+sentinel://redis-headless.database.svc.cluster.local:26379/?db=3&mastername=redis-master"
+              value: "redis-headless.database.svc.cluster.local"
             - name: REDIS_PORT
               value: "26379"         
             - name: HOST_UID
