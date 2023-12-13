@@ -6,8 +6,8 @@ metadata:
   name: default-redisinsight
   namespace: flux-system
 spec:
+  path: ./kubernetes/apps/default/redis/redisinsight/app
   prune: true
-  path: ./kubernetes/apps/database/redisinsight/app
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
