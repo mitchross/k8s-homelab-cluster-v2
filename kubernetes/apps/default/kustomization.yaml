@@ -9,12 +9,12 @@ resources:
   - ./frigate/ks.yaml
   - ./libreddit
   - ./speedtest
-  - ./immich/ks.yaml
+ # - ./immich/ks.yaml
   - ./scrypted/ks.yaml
   - ./localai/ks.yaml
   - ./jellyfin
   #- ./plex/ks.yaml
   - ./ollama
-  - ./tubearchivist/ks.yaml
+ # - ./tubearchivist/ks.yaml
 
   
