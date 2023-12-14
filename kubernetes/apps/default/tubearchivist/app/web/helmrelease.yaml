@@ -91,7 +91,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: tube-config-storage
+        existingClaim: tube-config-nfs
         globalMounts:
         - path: /cache
       downloads:
