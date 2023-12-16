@@ -76,6 +76,7 @@ spec:
                     storageClass: longhorn
                     globalMounts:
                       - path: /cache
+
     service:
       main:
         ports:
@@ -102,4 +103,4 @@ spec:
         enabled: true
         existingClaim: tube-nfs
         globalMounts:
-          -path: /youtube
+          - path: /youtube
