@@ -100,7 +100,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "interal"
+        ingressClassName: internal
         annotations:
           hajimari.io/enable: "true"
           hajimari.io/icon: simple-icons:googlephotos
@@ -108,7 +108,7 @@ spec:
           hajimari.io/appName: Immich
 
         hosts:
-          - host: &host "photos.${SECRET_DOMAIN}"
+          - host: &host "photos.vanillax.me"
             paths:
               - path: /
                 pathType: Prefix
@@ -116,8 +116,7 @@ spec:
                   name: main
                   port: http
         tls:
-          - secretName: *host
-            hosts:
+          - hosts:
               - *host
     persistence:
       library:
