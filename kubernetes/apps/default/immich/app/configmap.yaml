@@ -9,7 +9,7 @@ data:
   TZ: America/Detroit
   ENABLE_MAPBOX: "false"
   LOG_LEVEL: verbose
-  REDIS_HOSTNAME: "redis.database.svc.cluster.local"
+  REDIS_HOSTNAME: "redis-master.database.svc.cluster.local"
   REDIS_PORT: "6379"
   NODE_ENV: production
   IMMICH_WEB_URL: http://immich-web.default.svc.cluster.local:3000
