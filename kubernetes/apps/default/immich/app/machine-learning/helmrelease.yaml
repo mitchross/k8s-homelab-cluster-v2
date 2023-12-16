@@ -87,7 +87,7 @@ spec:
             port: *port
     persistence:
       library:
-        existingClaim: immich-media
+        existingClaim: immich-nfs
         globalMounts:
           - path: *mediaLocation
       cache:
