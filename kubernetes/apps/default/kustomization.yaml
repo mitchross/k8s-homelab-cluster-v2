@@ -11,7 +11,7 @@ resources:
   - ./speedtest
  # - ./immich/ks.yaml
   #- ./scrypted/ks.yaml
-  - ./localai/ks.yaml
+  #- ./localai/ks.yaml
   - ./jellyfin/ks.yaml
   #- ./plex/ks.yaml
   - ./ollama
