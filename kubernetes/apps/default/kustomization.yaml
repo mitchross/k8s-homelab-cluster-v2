@@ -12,7 +12,7 @@ resources:
  # - ./immich/ks.yaml
   #- ./scrypted/ks.yaml
   - ./localai/ks.yaml
-  - ./jellyfin
+  - ./jellyfin/ks.yaml
   #- ./plex/ks.yaml
   - ./ollama
  # - ./tubearchivist/ks.yaml
