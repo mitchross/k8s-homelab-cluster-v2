@@ -15,5 +15,5 @@ spec:
     name: home-kubernetes
   dependsOn:
     - name: cluster-apps-longhorn
-      namespace: longhorn-system
+
 
