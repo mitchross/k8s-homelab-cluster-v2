@@ -5,8 +5,6 @@ kind: Kustomization
 namespace: default
 resources:
   - ./secret.sops.yaml
- # - ./nfs-pvc.yaml
+  - ./nfs-pvc.yaml
   - ./elasticsearch
   - ./web
-  - ./tube-config-pvc.yaml
-  - ./redis

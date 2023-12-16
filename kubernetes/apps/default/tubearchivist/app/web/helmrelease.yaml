@@ -45,7 +45,7 @@ spec:
             - name: ES_URL
               value: http://tubearchivist-elasticsearch.default.svc.cluster.local:9200
             - name: REDIS_HOST
-              value: "tubearchivist-redis.default.svc.cluster.local"
+              value: "redis-master.database.svc.cluster.local"
             - name: REDIS_PORT
               value: "6379"         
             - name: HOST_UID
@@ -67,6 +67,14 @@ spec:
                 memory: 2Gi
               limits:
                 memory: 8Gi
+            statefulset:
+                volumeClaimTemplates:
+                  - name: config
+                    accessMode: ReadWriteMany
+                    size: 20Gi
+                    storageClass: longhorn
+                    globalMounts:
+                      - path: /cache
     service:
       main:
         ports:
@@ -89,20 +97,8 @@ spec:
         - hosts:
           - *host
     persistence:
-      config:
-        enabled: true
-        existingClaim: tube-config-nfs
-        globalMounts:
-        - path: /cache
       downloads:
         enabled: true
-        type: nfs
-        server: "192.168.1.133"
-        path: /mnt/largetank/k8s/tubesync
+        existingClaim: tube-nfs
         globalMounts:
-          - path: /youtube
-      # library:
-      #   enabled: true
-      #   existingClaim: tube-nfs
-      #   globalMounts:
-      #     -path: /youtube2
+          -path: /youtube
