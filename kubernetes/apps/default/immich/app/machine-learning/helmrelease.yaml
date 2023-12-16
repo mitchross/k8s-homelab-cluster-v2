@@ -1,23 +1,23 @@
 ---
-# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ishioni/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: &app immich-machine-learning
   namespace: default
 spec:
-  interval: 30m
-  timeout: 15m
+  interval: 15m
   chart:
     spec:
       chart: app-template
-      version: 2.3.0
+      version: 2.4.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 2
+  maxHistory: 3
   install:
+    createNamespace: true
     remediation:
       retries: 3
   upgrade:
@@ -28,43 +28,19 @@ spec:
     keepHistory: false
   dependsOn:
     - name: immich-server
-      namespace: default
-    - name: redis
-      namespace: database
   values:
     controllers:
       main:
-        replicas: 1
-        strategy: Recreate
+        strategy: RollingUpdate
         annotations:
-          configmap.reloader.stakater.com/reload: &configMap immich-configmap
-          secret.reloader.stakater.com/reload: &secret immich-secret
-        containers:
-          main:
-            image:
-              repository: ghcr.io/immich-app/immich-machine-learning
-              tag: v1.91.0
-            envFrom:
-              - configMapRef:
-                  name: *configMap
-              - secretRef:
-                  name: *secret
-            probes:
-              startup:
-                custom: true
-                spec:
-                  initialDelaySeconds: 30
-                  periodSeconds: 10
-                  timeoutSeconds: 5
-                  failureThreshold: 30
-                  successThreshold: 1
-                  tcpSocket:
-                    port: 3003
-            resources:
-              requests:
-                cpu: 100m
-                memory: 250Mi
+          configmap.reloader.stakater.com/reload: &configmap immich-configmap
         pod:
+          enableServiceLinks: false
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
           topologySpreadConstraints:
             - maxSkew: 1
               topologyKey: kubernetes.io/hostname
@@ -72,17 +48,49 @@ spec:
               labelSelector:
                 matchLabels:
                   app.kubernetes.io/name: *app
-
+        containers:
+          main:
+            image:
+              repository: ghcr.io/immich-app/immich-machine-learning
+              tag: v1.91.1
+            env:
+              IMMICH_MEDIA_LOCATION: &mediaLocation /usr/src/app/upload
+              MACHINE_LEARNING_HOST: 0.0.0.0
+              MACHINE_LEARNING_PORT: &port 3003
+              MACHINE_LEARNING_CACHE_FOLDER: /cache
+              TRANSFORMERS_CACHE: /cache
+            resources:
+              requests:
+                cpu: 100m
+                memory: 250Mi
+              limits:
+                memory: 4000Mi
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 5
+              readiness: *probes
+              startup:
+                enabled: false
     service:
       main:
         ports:
           http:
-            port: 3003
+            port: *port
     persistence:
       library:
-        existingClaim: immich-nfs
+        existingClaim: immich-media
         globalMounts:
-          - path: /usr/src/app/upload
-      # this is necessary for the downloads to complete
+          - path: *mediaLocation
       cache:
         existingClaim: immich-machine-learning-cache
+        globalMounts:
+          - path: /cache
