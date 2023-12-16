@@ -1,25 +1,32 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/postgresql.cnpg.io/cluster_v1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ishioni/CRDs-catalog/main/postgresql.cnpg.io/cluster_v1.json
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
   name: postgres
   namespace: database
-  annotations:
-    kyverno.io/ignore: "true"
 spec:
-  imageName: ghcr.io/cloudnative-pg/postgresql:16.0-8
   instances: 3
+  imageName: ghcr.io/bo0tzz/cnpgvecto.rs:16.1-v0.1.10
+  enableSuperuserAccess: true
   primaryUpdateStrategy: unsupervised
   storage:
     size: 50Gi
     storageClass: longhorn
-  enableSuperuserAccess: true
-  superuserSecret:
-    name: postgres-superuser-secret
   postgresql:
+    shared_preload_libraries: ["vectors.so"]
     parameters:
       max_connections: "300"
-      shared_buffers: 512MB
+      work_mem: 64MB
+      shared_buffers: 128MB
+  superuserSecret:
+    name: postgres-superuser-secret
   monitoring:
     enablePodMonitor: true
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 300Mi
+    limits:
+      memory: 1Gi

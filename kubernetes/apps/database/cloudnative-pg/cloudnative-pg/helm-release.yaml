@@ -1,5 +1,5 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ishioni/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
@@ -29,6 +29,13 @@ spec:
   values:
     crds:
       create: true
+    replicaCount: 2
     config:
       data:
         INHERITED_ANNOTATIONS: kyverno.io/ignore
+    resources:
+      requests:
+        cpu: 15m
+        memory: 150Mi
+      limits:
+        memory: 200Mi
