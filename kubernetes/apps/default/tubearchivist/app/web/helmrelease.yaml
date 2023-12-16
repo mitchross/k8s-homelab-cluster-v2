@@ -32,11 +32,10 @@ spec:
   values:
     controllers:
       main:
+        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
-            type: statefulset
             image:
               repository: docker.io/bbilly1/tubearchivist
               tag: v0.4.4
