@@ -35,6 +35,14 @@ spec:
         type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
+        statefulset:
+                volumeClaimTemplates:
+                  - name: config
+                    accessMode: ReadWriteMany
+                    size: 20Gi
+                    storageClass: longhorn
+                    globalMounts:
+                      - path: /cache
         containers:
             image:
               repository: docker.io/bbilly1/tubearchivist
@@ -67,14 +75,7 @@ spec:
                 memory: 2Gi
               limits:
                 memory: 8Gi
-            # statefulset:
-            #     volumeClaimTemplates:
-            #       - name: config
-            #         accessMode: ReadWriteMany
-            #         size: 20Gi
-            #         storageClass: longhorn
-            #         globalMounts:
-            #           - path: /cache
+
 
     service:
       main:
