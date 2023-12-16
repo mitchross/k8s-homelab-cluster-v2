@@ -20,7 +20,7 @@ spec:
     # Overriding the image
     image:
       repository: "redis/redis-stack-server"
-      tag: "6.2.6-v3"
+      tag: "7.2.0-v3"
     #enable rejson
     commonConfiguration: |-
         # Enable AOF https://redis.io/topics/persistence#append-only-file
