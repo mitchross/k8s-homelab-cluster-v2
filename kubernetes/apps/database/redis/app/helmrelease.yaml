@@ -1,41 +1,47 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: &app redis
+  name: redis
   namespace: database
 spec:
-  interval: 30m
+  interval: 5m
   chart:
     spec:
+      # renovate: registryUrl=https://charts.bitnami.com/bitnami
       chart: redis
       version: 18.5.0
       sourceRef:
         kind: HelmRepository
-        name: bitnami
+        name: bitnami-charts
         namespace: flux-system
-  install:
-    createNamespace: true
-    remediation:
-      retries: 5
-  upgrade:
-    remediation:
-      retries: 5
+      interval: 5m
   values:
-    global:
-      # imageRegistry: public.ecr.aws
-      storageClass: longhorn
-    useHostnames: false
+    architecture: standalone
     auth:
       enabled: false
-      sentinel: false
-    sentinel:
+      sentinal: true
+    master:
+      persistence:
+        size: 20Gi
+        existingClaim: redis-config-v1
+    sentinal:
       enabled: true
       masterSet: redis-master
-      getMasterTimeout: 10
-      startupProbe:
-        failureThreshold: 2
+    # Bitnami hasn't added ARM support yet
+    affinity: |
+      nodeAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 60
+            preference:
+              matchExpressions:
+                - key: kubernetes.io/arch
+                  operator: In
+                  values:
+                    - amd64
+                    - i386
+                    - i686
+                    - x86
     metrics:
       enabled: true
       serviceMonitor:
