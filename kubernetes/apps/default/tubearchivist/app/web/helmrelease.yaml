@@ -36,45 +36,45 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         statefulset:
-                volumeClaimTemplates:
-                  - name: config
-                    accessMode: ReadWriteMany
-                    size: 20Gi
-                    storageClass: longhorn
-                    globalMounts:
-                      - path: /cache
+          volumeClaimTemplates:
+          - name: config
+            accessMode: ReadWriteMany
+            size: 20Gi
+            storageClass: longhorn
+            globalMounts:
+            - path: /cache
         containers:
-            image:
-              repository: docker.io/bbilly1/tubearchivist
-              tag: v0.4.4
-            env:
-            - name: TZ
-              value: America/New_York
-            - name: ES_URL
-              value: http://tubearchivist-elasticsearch.default.svc.cluster.local:9200
-            - name: REDIS_HOST
-              value: "redis-master.database.svc.cluster.local"
-            - name: REDIS_PORT
-              value: "6379"         
-            - name: HOST_UID
-              value: "1000"
-            - name: HOST_GID
-              value: "1000"
-            - name: TA_HOST
-              value: tubearchivist.vanillax.me
-            - name: TA_USERNAME
-              value: admin
-            envFrom:
-            - secretRef:
-                name: tube-secret
-            securityContext:
-              privileged: true
-            resources:
-              requests:
-                cpu: 1000m
-                memory: 2Gi
-              limits:
-                memory: 8Gi
+          image:
+            repository: docker.io/bbilly1/tubearchivist
+            tag: v0.4.4
+          env:
+          - name: TZ
+            value: America/New_York
+          - name: ES_URL
+            value: http://tubearchivist-elasticsearch.default.svc.cluster.local:9200
+          - name: REDIS_HOST
+            value: "redis-master.database.svc.cluster.local"
+          - name: REDIS_PORT
+            value: "6379"
+          - name: HOST_UID
+            value: "1000"
+          - name: HOST_GID
+            value: "1000"
+          - name: TA_HOST
+            value: tubearchivist.vanillax.me
+          - name: TA_USERNAME
+            value: admin
+          envFrom:
+          - secretRef:
+              name: tube-secret
+          securityContext:
+            privileged: true
+          resources:
+            requests:
+              cpu: 1000m
+              memory: 2Gi
+            limits:
+              memory: 8Gi
 
 
     service:
@@ -103,4 +103,4 @@ spec:
         enabled: true
         existingClaim: tube-nfs
         globalMounts:
-          - path: /youtube
+        - path: /youtube
