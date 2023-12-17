@@ -6,7 +6,7 @@ namespace: default
 resources:
   - ./configmap.yaml
   - ./microservices
- # - ./machine-learning
+  - ./machine-learning
   - ./secret.sops.yaml
   - ./server
   - ./nfs-pvc.yaml
