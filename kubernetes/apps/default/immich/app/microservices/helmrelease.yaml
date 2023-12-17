@@ -55,7 +55,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v1.91.3
+              tag: v1.91.2
             args: ["start-microservices.sh"]
             envFrom:
               - secretRef:
@@ -67,7 +67,6 @@ spec:
                 cpu: 100m
                 memory: 250Mi
               limits:
-              
                 memory: 2500Mi
     service:
       main:
