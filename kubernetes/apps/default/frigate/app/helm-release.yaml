@@ -79,7 +79,7 @@ spec:
                     matchExpressions:
                       - key: app.kubernetes.io/name
                         operator: In
-                        values: ["plex"]
+                        values: ["jellyfin"]
                   topologyKey: kubernetes.io/hostname
           nodeSelector:
             google.feature.node.kubernetes.io/coral: "true"
