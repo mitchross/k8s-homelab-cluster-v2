@@ -39,7 +39,7 @@ spec:
           volumeClaimTemplates:
           - name: config
             accessMode: ReadWriteMany
-            size: 20Gi
+            size: 80Gi
             storageClass: longhorn
             globalMounts:
             - path: /cache
