@@ -133,4 +133,8 @@ spec:
         globalMounts:
           - path: /dev/bus/usb
       media:
-        existingClaim: frigate-nfs
+        type: nfs
+        server: 192.168.1.133
+        path: /mnt/largetank/k8s/frigate
+        globalMounts:
+          - path: /media

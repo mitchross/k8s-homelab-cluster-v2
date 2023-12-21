@@ -4,7 +4,6 @@ kind: Kustomization
 namespace: default
 resources:
   - ./helm-release.yaml
-  - ./nfs-pvc.yaml
   - ./secret.sops.yaml
   - ./frigate-db-storage.yaml
 configMapGenerator:
