@@ -4,17 +4,17 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./hajimari/ks.yaml
-  - ./wyze-bridge/ks.yaml
-  - ./mosquitto/ks.yaml
-  #- ./frigate/ks.yaml
-  - ./libreddit
-  - ./speedtest
-  - ./immich/ks.yaml
-  #- ./scrypted/ks.yaml
-  #- ./localai/ks.yaml
-  - ./jellyfin/ks.yaml
-  #- ./plex/ks.yaml
-  - ./ollama/ks.yaml
-  - ./tubearchivist/ks.yaml
+  # - ./wyze-bridge/ks.yaml
+  # - ./mosquitto/ks.yaml
+  # #- ./frigate/ks.yaml
+  # - ./libreddit
+  # - ./speedtest
+  # - ./immich/ks.yaml
+  # #- ./scrypted/ks.yaml
+  # #- ./localai/ks.yaml
+  # - ./jellyfin/ks.yaml
+  # #- ./plex/ks.yaml
+  # - ./ollama/ks.yaml
+  # - ./tubearchivist/ks.yaml
 
   

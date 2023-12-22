@@ -5,6 +5,10 @@ metadata:
   name: ollama
   namespace: flux-system
 spec:
+  dependsOn:
+        - name: cluster-apps-nvidia-gpu-operator
+        - name: cluster-apps-node-feature-discovery-rules
+
   interval: 10m
   path: "./kubernetes/apps/default/ollama/backend"
   prune: true
