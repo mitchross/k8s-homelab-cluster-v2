@@ -14,7 +14,7 @@ resources:
   #- ./localai/ks.yaml
   - ./jellyfin/ks.yaml
   #- ./plex/ks.yaml
-  - ./ollama
+  - ./ollama/ks.yaml
   - ./tubearchivist/ks.yaml
 
   
