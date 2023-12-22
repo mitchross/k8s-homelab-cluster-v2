@@ -10,7 +10,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-cluster
+    name: home-kubernetes
   wait: true
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
