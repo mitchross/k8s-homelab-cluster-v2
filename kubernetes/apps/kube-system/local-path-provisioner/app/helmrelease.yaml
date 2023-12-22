@@ -23,6 +23,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    image:
+      repository: docker.io/rancher/local-path-provisioner
+      tag: v0.0.26
     helperImage:
       repository: public.ecr.aws/docker/library/busybox
       tag: latest

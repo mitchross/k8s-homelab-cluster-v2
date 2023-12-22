@@ -20,6 +20,8 @@ k3s_server:
   disable-cloud-controller: true
   disable-kube-proxy: true            # Cilium uses eBPF
   write-kubeconfig-mode: "644"
+  pause-image: registry.k8s.io/pause:3.9
+  secrets-encryption: true
   cluster-cidr: "{{ cluster_cidr }}"
   service-cidr: "{{ service_cidr }}"
   etcd-expose-metrics: true           # Required to monitor etcd with kube-prometheus-stack

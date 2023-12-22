@@ -115,7 +115,7 @@ data:
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: longhorn
+              storageClassName: local-path
               resources:
                 requests:
                   storage: 10Gi

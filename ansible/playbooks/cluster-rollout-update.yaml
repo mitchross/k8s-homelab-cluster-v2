@@ -1,7 +1,7 @@
 ---
 # https://github.com/kevincoakley/ansible-role-k8s-rolling-update
 - name: Cluster rollout update
-  hosts: all
+  hosts: kubernetes
   become: true
   gather_facts: true
   any_errors_fatal: true
@@ -34,6 +34,7 @@
 
         - name: Drain
           kubernetes.core.k8s_drain:
+            name: "{{ inventory_hostname }}"
             kubeconfig: /etc/rancher/k3s/k3s.yaml
             state: drain
             delete_options:
@@ -42,11 +43,8 @@
               terminate_grace_period: 600
               wait_timeout: 900
             pod_selectors:
-             # Rook Ceph
-             - app!=rook-ceph-osd
-             # Longhorn
-             - app!=csi-attacher
-             - app!=csi-provisioner
+              # Rook Ceph
+              - app!=rook-ceph-osd
           delegate_to: "{{ groups['master'][0] }}"
 
         - name: Update
