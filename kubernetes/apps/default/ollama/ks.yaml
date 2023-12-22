@@ -24,7 +24,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-cluster
+    name: home-kubernetes
   wait: true
   dependsOn:
     - name: ollama
