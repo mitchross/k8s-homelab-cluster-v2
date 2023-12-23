@@ -12,13 +12,13 @@ spec:
   primaryUpdateStrategy: unsupervised
   storage:
     size: 50Gi
-    storageClass: longhorn
+    storageClass: local-path
   postgresql:
     shared_preload_libraries: ["vectors.so"]
     parameters:
-      max_connections: "300"
-      work_mem: 64MB
-      shared_buffers: 128MB
+      max_connections: "600"
+      work_mem: 128MB
+      shared_buffers: 512MB
   superuserSecret:
     name: postgres-superuser-secret
   monitoring:
