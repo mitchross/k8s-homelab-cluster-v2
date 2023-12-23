@@ -40,7 +40,7 @@ spec:
           - name: config
             accessMode: ReadWriteMany
             size: 80Gi
-            storageClass: longhorn
+            storageClass: local-path
             globalMounts:
             - path: /cache
         containers:
