@@ -4,7 +4,7 @@ metadata:
   name: immich-machine-learning-cache
   namespace: default
 spec:
-  accessModes: ["ReadWriteMany"]
+  accessModes: ["ReadWriteOnce"]
   resources:
     requests:
       storage: 10Gi

@@ -38,8 +38,8 @@ spec:
         statefulset:
           volumeClaimTemplates:
           - name: config
-            accessMode: ReadWriteMany
-            size: 80Gi
+            accessMode: ReadWriteOnce
+            size: 50Gi
             storageClass: local-path
             globalMounts:
             - path: /cache
