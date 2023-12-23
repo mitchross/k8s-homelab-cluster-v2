@@ -7,11 +7,11 @@ spec:
   interval: 30m
   chart:
     spec:
-      chart: ialacol  # The name of the chart within the repo
-      version: "0.13.0"  # Replace this with your desired version
+      chart: ialacol # The name of the chart within the repo
+      version: "0.13.0" # Replace this with your desired version
       sourceRef:
         kind: HelmRepository
-        name: starchat  # Must match the HelmRepository name
+        name: starchat # Must match the HelmRepository name
         namespace: flux-system
   install:
     createNamespace: true
@@ -33,8 +33,8 @@ spec:
       persistence:
         size: "25Gi"
         accessModes:
-          - "ReadWriteOnce"
-        storageClassName: longhorn
+        - "ReadWriteOnce"
+        storageClassName: local-path
     # service:
     #   type: "ClusterIP"
     #   port: 8000

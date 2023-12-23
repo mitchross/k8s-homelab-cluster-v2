@@ -1,26 +1,25 @@
----
 # yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-    name: cluster-apps-frigate
-    namespace: flux-system
+  name: cluster-apps-frigate
+  namespace: flux-system
 spec:
-    dependsOn:
-        - name: cluster-apps-intel-device-plugin-gpu
-        - name: cluster-apps-node-feature-discovery-rules
-        - name: cluster-apps-longhorn
+  dependsOn:
+  - name: cluster-apps-intel-device-plugin-gpu
+  - name: cluster-apps-node-feature-discovery-rules
+  - name: local-path-provisioner
 
-    path: ./kubernetes/apps/default/frigate/app
-    prune: true
-    sourceRef:
-        kind: GitRepository
-        name: home-kubernetes
-    healthChecks:
-        - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-          kind: HelmRelease
-          name: frigate
-          namespace: default
-    interval: 30m
-    retryInterval: 1m
-    timeout: 3m
+  path: ./kubernetes/apps/default/frigate/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  healthChecks:
+  - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+    kind: HelmRelease
+    name: frigate
+    namespace: default
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m

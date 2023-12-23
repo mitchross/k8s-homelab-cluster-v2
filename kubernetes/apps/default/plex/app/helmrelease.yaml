@@ -59,7 +59,7 @@ spec:
             - name: config
               accessMode: ReadWriteOnce
               size: 100Gi
-              storageClass: longhorn
+              storageClass: local-path
               globalMounts:
                 - path: /config
     service:

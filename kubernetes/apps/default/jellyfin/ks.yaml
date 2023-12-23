@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -14,8 +13,8 @@ spec:
     kind: GitRepository
     name: home-kubernetes
   dependsOn:
-        - name: cluster-apps-nvidia-gpu-operator
-        - name: cluster-apps-node-feature-discovery-rules
-        - name: cluster-apps-longhorn
+  - name: cluster-apps-nvidia-gpu-operator
+  - name: cluster-apps-node-feature-discovery-rules
+  - name: local-path-provisioner
 
 
