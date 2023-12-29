@@ -55,7 +55,7 @@ spec:
                     path: /api/version
                     port: &port 5000
                   initialDelaySeconds: 0
-                  periodSeconds: 10
+                  periodSeconds: 20
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
