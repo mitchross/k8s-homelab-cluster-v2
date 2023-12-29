@@ -12,9 +12,15 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: 192.168.1.133
-    path: /mnt/largetank/k8s/immich
+    path: /mnt/generaltank/k8s/immich
   mountOptions: 
-     - nfsvers=4.1
+      - nfsvers=4
+      - tcp
+      - intr
+      - hard
+      - noatime
+      - nodiratime
+      - nolock
 
 ---
 apiVersion: v1

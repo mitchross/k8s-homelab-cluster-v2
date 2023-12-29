@@ -12,9 +12,15 @@ spec:
     persistentVolumeReclaimPolicy: Retain
     nfs:
         server: 192.168.1.133
-        path: /mnt/largetank/k8s/tubesync
+        path: /mnt/generaltank/k8s/youtube
     mountOptions:
-     - nfsvers=4.1
+        - nfsvers=4
+        - tcp
+        - intr
+        - hard
+        - noatime
+        - nodiratime
+        - nolock
 
 ---
 apiVersion: v1
