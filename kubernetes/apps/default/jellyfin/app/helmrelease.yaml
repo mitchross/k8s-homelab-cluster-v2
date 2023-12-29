@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
@@ -62,12 +61,12 @@ spec:
                 memory: 10Gi
         statefulset:
           volumeClaimTemplates:
-            - name: config
-              accessMode: ReadWriteOnce
-              size: 50Gi
-              storageClass: local-path
-              globalMounts:
-                - path: /config
+          - name: config
+            accessMode: ReadWriteOnce
+            size: 50Gi
+            storageClass: local-hostpath
+            globalMounts:
+            - path: /config
     service:
       main:
         type: LoadBalancer
@@ -81,20 +80,20 @@ spec:
         enabled: true
         className: internal
         hosts:
-          - host: &host "jellyfin.vanillax.me"
-            paths:
-              - path: /
-                service:
-                  name: main
-                  port: http
+        - host: &host "jellyfin.vanillax.me"
+          paths:
+          - path: /
+            service:
+              name: main
+              port: http
         tls:
-          - hosts:
-              - *host
+        - hosts:
+          - *host
     persistence:
       transcode:
         type: emptyDir
         globalMounts:
-          - path: /transcode
+        - path: /transcode
       media:
         enabled: true
         existingClaim: jellyfin-nfs

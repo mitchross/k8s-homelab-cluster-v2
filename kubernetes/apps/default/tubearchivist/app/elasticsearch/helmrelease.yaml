@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
@@ -34,12 +33,12 @@ spec:
           reloader.stakater.com/auto: "true"
         statefulset:
           volumeClaimTemplates:
-            - name: config
-              accessMode: ReadWriteOnce
-              size: 50Gi
-              storageClass: local-path
-              globalMounts:
-                - path: /usr/share/elasticsearch/data
+          - name: config
+            accessMode: ReadWriteOnce
+            size: 50Gi
+            storageClass: local-hostpath
+            globalMounts:
+            - path: /usr/share/elasticsearch/data
         pod:
           securityContext:
             runAsUser: 1000
@@ -58,8 +57,8 @@ spec:
               ES_JAVA_OPTS: "-Xms512m -Xmx512m"
               path.repo: "/usr/share/elasticsearch/data/snapshot"
             envFrom:
-              - secretRef:
-                  name: tube-secret
+            - secretRef:
+                name: tube-secret
 
     service:
       main:

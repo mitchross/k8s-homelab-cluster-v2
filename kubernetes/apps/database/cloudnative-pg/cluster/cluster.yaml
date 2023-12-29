@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ishioni/CRDs-catalog/main/postgresql.cnpg.io/cluster_v1.json
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
@@ -12,7 +11,7 @@ spec:
   primaryUpdateStrategy: unsupervised
   storage:
     size: 50Gi
-    storageClass: local-path
+    storageClass: local-hostpath
   postgresql:
     shared_preload_libraries: ["vectors.so"]
     parameters:
