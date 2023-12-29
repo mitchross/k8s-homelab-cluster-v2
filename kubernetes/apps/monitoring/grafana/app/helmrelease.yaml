@@ -112,7 +112,7 @@ spec:
           url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/cluster.json
           datasource: Prometheus
         flux-control-plane:
-          url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/cluster.json
+          url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/control-plane.json
           datasource: Prometheus
       kubernetes:
         kubernetes-api-server:
@@ -168,6 +168,6 @@ spec:
             - *host
     persistence:
       enabled: true
-      storageClassName: local-path
+      storageClassName: local-hostpath
     testFramework:
       enabled: false
