@@ -13,8 +13,8 @@ spec:
 
   persistentVolumeReclaimPolicy: Retain
   nfs:
-    server: 192.168.1.8
-    path: /mnt/user/wyze
+    server: 192.168.1.133
+    path: /mnt/generaltank/k8s/wyze
 
 
 
