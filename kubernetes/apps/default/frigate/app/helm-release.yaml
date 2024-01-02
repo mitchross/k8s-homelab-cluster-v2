@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
@@ -26,10 +25,10 @@ spec:
   uninstall:
     keepHistory: false
   dependsOn:
-    - name: intel-device-plugin-gpu
-      namespace: kube-system
-    - name: mosquitto
-      namespace: default
+  - name: intel-device-plugin-gpu
+    namespace: kube-system
+  - name: mosquitto
+    namespace: default
   values:
     controllers:
       main:
@@ -44,8 +43,8 @@ spec:
               TZ: America/New_York
               LIBVA_DRIVER_NAME: i965
             envFrom:
-              - secretRef:
-                  name: frigate-secret
+            - secretRef:
+                name: frigate-secret
             probes:
               liveness: &probes
                 enabled: true
@@ -75,12 +74,12 @@ spec:
           affinity:
             podAntiAffinity:
               requiredDuringSchedulingIgnoredDuringExecution:
-                - labelSelector:
-                    matchExpressions:
-                      - key: app.kubernetes.io/name
-                        operator: In
-                        values: ["jellyfin"]
-                  topologyKey: kubernetes.io/hostname
+              - labelSelector:
+                  matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values: ["jellyfin"]
+                topologyKey: kubernetes.io/hostname
           nodeSelector:
             google.feature.node.kubernetes.io/coral: "true"
             intel.feature.node.kubernetes.io/gpu: "true"
@@ -96,45 +95,45 @@ spec:
         enabled: true
         className: internal
         hosts:
-          - host: &host "frigate.vanillax.me"
-            paths:
-              - path: /
-                service:
-                  name: main
-                  port: http
+        - host: &host "frigate.vanillax.me"
+          paths:
+          - path: /
+            service:
+              name: main
+              port: http
         tls:
-          - hosts:
-              - *host
+        - hosts:
+          - *host
     persistence:
       config:
         enabled: true
         existingClaim: frigate-db-storage
         globalMounts:
-          - path: /data
+        - path: /data
       config-file:
         type: configMap
         name: frigate-configmap
         globalMounts:
-          - path: /config/config.yaml
-            subPath: config.yaml
-            readOnly: true
+        - path: /config/config.yaml
+          subPath: config.yaml
+          readOnly: true
       cache:
         enabled: true
         type: emptyDir
         medium: Memory
         sizeLimit: 6Gi
         globalMounts:
-          - path: /dev/shm
+        - path: /dev/shm
       usb:
         enabled: true
         type: hostPath
         hostPath: /dev/bus/usb
         hostPathType: Directory
         globalMounts:
-          - path: /dev/bus/usb
+        - path: /dev/bus/usb
       media:
         type: nfs
         server: 192.168.1.133
         path: /mnt/generaltank/k8s/frigate
         globalMounts:
-          - path: /media
+        - path: /media

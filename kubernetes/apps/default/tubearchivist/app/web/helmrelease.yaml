@@ -39,7 +39,7 @@ spec:
           volumeClaimTemplates:
           - name: config
             accessMode: ReadWriteOnce
-            size: 50Gi
+            size: 30Gi
             storageClass: local-hostpath
             globalMounts:
             - path: /cache
