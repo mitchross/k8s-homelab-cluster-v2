@@ -1,4 +1,5 @@
-# yaml-language-server: $schema=https://kubernetes-schemas.thesteamedcrab.com/helmrelease_v2beta1.json
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
@@ -87,16 +88,16 @@ spec:
         annotations: {}
         size: 100Gi
         accessModes: ReadWriteMany
-        storageClass: local-hostpath
+        storageClass: localai-storage
         globalMount: /models
 
-      output:
-        enabled: true
-        annotations: {}
-        storageClass: local-hostpath
-        accessModes: ReadWriteMany
-        size: 5Gi
-        globalMount: /tmp/generated
+      # output:
+      #   enabled: true
+      #   annotations: {}
+      #   storageClass: local-hostpath
+      #   accessModes: ReadWriteMany
+      #   size: 5Gi
+      #   globalMount: /tmp/generated
 
     service:
       annotations:
