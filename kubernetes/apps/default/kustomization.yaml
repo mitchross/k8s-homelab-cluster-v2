@@ -11,6 +11,7 @@ resources:
 - ./immich/ks.yaml
 - ./scrypted/ks.yaml
 - ./localai/ks.yaml
+- ./chatbot-ui/ks.yaml
 - ./jellyfin/ks.yaml
 #- ./plex/ks.yaml
 - ./ollama/ks.yaml
