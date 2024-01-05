@@ -81,23 +81,9 @@ spec:
         pvc:
           annotations: {}
           enabled: true
+          storageClass: localai-storage
 
-    persistence:
-      models:
-        enabled: true
-        annotations: {}
-        size: 100Gi
-        accessModes: ReadWriteMany
-        storageClass: localai-storage
-        globalMount: /models
 
-      # output:
-      #   enabled: true
-      #   annotations: {}
-      #   storageClass: local-hostpath
-      #   accessModes: ReadWriteMany
-      #   size: 5Gi
-      #   globalMount: /tmp/generated
 
     service:
       annotations:
