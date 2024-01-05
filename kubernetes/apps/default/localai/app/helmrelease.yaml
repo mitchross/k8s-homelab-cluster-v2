@@ -81,7 +81,8 @@ spec:
         pvc:
           annotations: {}
           enabled: true
-          storageClass: localai-storage
+          storageClass: local-hostpath
+          size: 100Gi
 
 
 
