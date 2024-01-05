@@ -10,7 +10,7 @@ resources:
 - ./speedtest
 - ./immich/ks.yaml
 - ./scrypted/ks.yaml
-#- ./localai/ks.yaml
+- ./localai/ks.yaml
 # - ./chatbot-ui/ks.yaml
 - ./jellyfin/ks.yaml
 #- ./plex/ks.yaml
