@@ -20,7 +20,7 @@ spec:
       shared_buffers: 512MB
   superuserSecret:
     name: cloudnative-pg-secret
-   # Note: Bootstrap is needed when recovering from an existing cnpg cluster
+    # Note: Bootstrap is needed when recovering from an existing cnpg cluster
   # bootstrap:
   #   recovery:
   #     source: &previousCluster postgres16-v1
@@ -46,7 +46,7 @@ spec:
         compression: bzip2
         maxParallel: 8
       destinationPath: s3://cloudnative-pg/
-      endpointURL: http://192.168.1.133:9000/
+      endpointURL: https://truenas.vanillax.me:9000/
       serverName: &currentCluster postgres16-v2
       s3Credentials:
         accessKeyId:
