@@ -1,12 +1,11 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ishioni/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: cloudnative-pg
-  namespace: database
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: cloudnative-pg
@@ -15,9 +14,7 @@ spec:
         kind: HelmRepository
         name: cloudnative-pg
         namespace: flux-system
-  maxHistory: 3
   install:
-    createNamespace: true
     remediation:
       retries: 3
   upgrade:
@@ -26,16 +23,12 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  dependsOn:
+    - name: local-path-provisioner
+      namespace: storage
   values:
     crds:
       create: true
-    replicaCount: 2
     config:
       data:
         INHERITED_ANNOTATIONS: kyverno.io/ignore
-    resources:
-      requests:
-        cpu: 15m
-        memory: 150Mi
-      limits:
-        memory: 6Gi

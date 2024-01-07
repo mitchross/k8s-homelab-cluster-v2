@@ -19,7 +19,7 @@ spec:
       max_slot_wal_keep_size: 10GB
       shared_buffers: 512MB
   superuserSecret:
-    name: postgres-superuser-secret
+    name: cloudnative-pg-secret
    # Note: Bootstrap is needed when recovering from an existing cnpg cluster
   bootstrap:
     recovery:
@@ -50,10 +50,10 @@ spec:
       serverName: &currentCluster postgres16-v2
       s3Credentials:
         accessKeyId:
-          name: postgres-superuser-secret
+          name: cloudnative-pg-secret
           key: aws-access-key-id
         secretAccessKey:
-          name: postgres-superuser-secret
+          name: cloudnative-pg-secret
           key: aws-secret-access-key
   # Note: externalClusters is needed when recovering from an existing cnpg cluster
   externalClusters:
@@ -66,8 +66,8 @@ spec:
         endpointURL: http://192.168.1.133:9000
         s3Credentials:
           accessKeyId:
-            name: postgres-superuser-secret
+            name: cloudnative-pg-secret
             key: aws-access-key-id
           secretAccessKey:
-            name: postgres-superuser-secret
+            name: cloudnative-pg-secret
             key: aws-secret-access-key
