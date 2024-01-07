@@ -21,9 +21,9 @@ spec:
   superuserSecret:
     name: postgres-superuser-secret
    # Note: Bootstrap is needed when recovering from an existing cnpg cluster
-  bootstrap:
-    recovery:
-      source: &previousCluster postgres16-v1
+  # bootstrap:
+  #   recovery:
+  #     source: &previousCluster postgres16-v1
   resources:
     requests:
       cpu: 500m
@@ -50,10 +50,10 @@ spec:
       serverName: &currentCluster postgres16-v2
       s3Credentials:
         accessKeyId:
-          name: cloudnative-pg-secret
+          name: postgres-superuser-secret
           key: aws-access-key-id
         secretAccessKey:
-          name: cloudnative-pg-secret
+          name: postgres-superuser-secret
           key: aws-secret-access-key
   # Note: externalClusters is needed when recovering from an existing cnpg cluster
   externalClusters:
@@ -66,8 +66,8 @@ spec:
         endpointURL: https://192.168.1.133:9000
         s3Credentials:
           accessKeyId:
-            name: cloudnative-pg-secret
+            name: postgres-superuser-secret
             key: aws-access-key-id
           secretAccessKey:
-            name: cloudnative-pg-secret
+            name: postgres-superuser-secret
             key: aws-secret-access-key
