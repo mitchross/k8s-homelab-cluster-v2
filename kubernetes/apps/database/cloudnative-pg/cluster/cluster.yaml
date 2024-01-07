@@ -20,6 +20,10 @@ spec:
       shared_buffers: 512MB
   superuserSecret:
     name: postgres-superuser-secret
+  # Note: Bootstrap is needed when recovering from an existing cnpg cluster
+  # bootstrap:
+  #   recovery:
+  #     source: &previousCluster postgres-v2
   monitoring:
     enablePodMonitor: true
 
@@ -29,3 +33,38 @@ spec:
       memory: 4Gi
     limits:
       memory: 12Gi
+
+  backup:
+    retentionPolicy: 30d
+    barmanObjectStore:
+      wal:
+        compression: bzip2
+        maxParallel: 8
+      destinationPath:  &destinationPath s3://postgresql/
+      endpointURL: &endpointURL https://192.168.1.133:9000
+      serverName: &currentCluster postgres-v16
+      s3Credentials:
+        accessKeyId:
+          name:  &accessKeyname postgres-minio-secret
+          key: &accessKeykey aws-access-key-id
+        secretAccessKey:
+          name:  &&secretAccessKeyname  postgres-minio-secret
+          key: &secretAccessKey aws-secret-access-key
+  # #Note: externalClusters is needed when recovering from an existing cnpg cluster
+  # externalClusters:
+  #   - name: *previousCluster
+  #     barmanObjectStore:
+  #       wal:
+  #         compression: bzip2
+  #         maxParallel: 8
+  #       data:
+  #         compression: bzip2
+  #       destinationPath: *destinationPath
+  #       endpointURL: *endpointURL
+  #       s3Credentials:
+  #         accessKeyId:
+  #           name: *accessKeyname
+  #           key: *accessKeykey
+  #         secretAccessKey:
+  #           name: *secretAccessKeyname
+  #           key: *secretAccessKey
