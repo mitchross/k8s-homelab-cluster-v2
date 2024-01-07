@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
 - ./cluster.yaml
 #- ./scheduledbackup.yaml
-- ./secret.sops.yaml
+

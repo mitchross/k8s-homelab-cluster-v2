@@ -2,7 +2,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: postgres
+  name: postgres16
   namespace: database
 spec:
   instances: 4
@@ -16,55 +16,58 @@ spec:
     shared_preload_libraries: ["vectors.so"]
     parameters:
       max_connections: "600"
-      work_mem: 128MB
+      max_slot_wal_keep_size: 10GB
       shared_buffers: 512MB
   superuserSecret:
     name: postgres-superuser-secret
-  # Note: Bootstrap is needed when recovering from an existing cnpg cluster
-  # bootstrap:
-  #   recovery:
-  #     source: &previousCluster postgres-v2
-  monitoring:
-    enablePodMonitor: true
-
+   # Note: Bootstrap is needed when recovering from an existing cnpg cluster
+  bootstrap:
+    recovery:
+      source: &previousCluster postgres16-v1
   resources:
     requests:
-      cpu: 400m
-      memory: 4Gi
+      cpu: 500m
     limits:
-      memory: 12Gi
-
+      memory: 6Gi
+  monitoring:
+    enablePodMonitor: true
+    # podMonitorMetricRelabelings:
+    #   - sourceLabels: ["cluster"]
+    #     targetLabel: cnpg_cluster
+    #     action: replace
+    #   - regex: cluster
+    #     action: labeldrop
   backup:
     retentionPolicy: 30d
     barmanObjectStore:
+      data:
+        compression: bzip2
       wal:
         compression: bzip2
         maxParallel: 8
-      destinationPath:  &destinationPath s3://postgresql/
-      endpointURL: &endpointURL https://192.168.1.133:9000
-      serverName: &currentCluster postgres-v16
+      destinationPath: s3://cloudnative-pg/
+      endpointURL: https://192.168.1.133:9000
+      serverName: &currentCluster postgres16-v2
       s3Credentials:
         accessKeyId:
-          name:  &accessKeyname postgres-minio-secret
-          key: &accessKeykey aws-access-key-id
+          name: cloudnative-pg-secret
+          key: aws-access-key-id
         secretAccessKey:
-          name:  &secretAccessKeyname  postgres-minio-secret
-          key: &secretAccessKey aws-secret-access-key
-  # #Note: externalClusters is needed when recovering from an existing cnpg cluster
-  # externalClusters:
-  #   - name: *previousCluster
-  #     barmanObjectStore:
-  #       wal:
-  #         compression: bzip2
-  #         maxParallel: 8
-  #       data:
-  #         compression: bzip2
-  #       destinationPath: *destinationPath
-  #       endpointURL: *endpointURL
-  #       s3Credentials:
-  #         accessKeyId:
-  #           name: *accessKeyname
-  #           key: *accessKeykey
-  #         secretAccessKey:
-  #           name: *secretAccessKeyname
-  #           key: *secretAccessKey
+          name: cloudnative-pg-secret
+          key: aws-secret-access-key
+  # Note: externalClusters is needed when recovering from an existing cnpg cluster
+  externalClusters:
+    - name: *previousCluster
+      barmanObjectStore:
+        wal:
+          compression: bzip2
+          maxParallel: 8
+        destinationPath: s3://cloudnative-pg/
+        endpointURL: https://192.168.1.133:9000
+        s3Credentials:
+          accessKeyId:
+            name: cloudnative-pg-secret
+            key: aws-access-key-id
+          secretAccessKey:
+            name: cloudnative-pg-secret
+            key: aws-secret-access-key
