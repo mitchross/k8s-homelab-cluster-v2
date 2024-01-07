@@ -17,9 +17,6 @@ kubernetes:
         k3s-worker-nuc-1:
           ansible_user: vanillax
           ansible_host: 192.168.1.202
-        k3s-worker-pve-1:
-          ansible_user: vanillax
-          ansible_host: 192.168.1.203
         k3s-gpu-worker-pve3-1:
           ansible_user: vanillax
           ansible_host: 192.168.1.205
