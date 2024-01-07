@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-  - name: database-cloudnative-pg-cluster
+  - name: cloudnative-pg-cluster
   - name: database-redis
   - name: cluster-apps-node-feature-discovery-rules
   - name: local-path-provisioner
