@@ -48,7 +48,7 @@ spec:
           name:  &accessKeyname postgres-minio-secret
           key: &accessKeykey aws-access-key-id
         secretAccessKey:
-          name:  &&secretAccessKeyname  postgres-minio-secret
+          name:  &secretAccessKeyname  postgres-minio-secret
           key: &secretAccessKey aws-secret-access-key
   # #Note: externalClusters is needed when recovering from an existing cnpg cluster
   # externalClusters:
