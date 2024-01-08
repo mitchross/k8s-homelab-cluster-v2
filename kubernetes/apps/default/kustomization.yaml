@@ -8,7 +8,7 @@ resources:
 - ./frigate/ks.yaml
 - ./libreddit
 - ./speedtest
-- ./immich/ks.yaml
+#- ./immich/ks.yaml
 - ./scrypted/ks.yaml
 - ./localai/ks.yaml
 # - ./chatbot-ui/ks.yaml
