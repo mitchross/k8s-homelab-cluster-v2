@@ -1,8 +1,9 @@
+---
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
-  name: flink-operator-repo
-  namespace: flux-system  
+  name: flink-operator
+  namespace: flux-system
 spec:
-  interval: 1h
-  url: https://downloads.apache.org/flink/flink-kubernetes-operator-1.6.1/
+  interval: 1m
+  url: https://downloads.apache.org/flink/flink-kubernetes-operator-1.7.0/
