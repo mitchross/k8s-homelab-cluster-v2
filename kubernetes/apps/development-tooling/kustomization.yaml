@@ -5,4 +5,4 @@ resources:
 # Pre Flux-Kustomizations
 - ./namespace.yaml
 # Flux-Kustomizations
-#- ./apache-flink/ks.yaml
+- ./apache-flink/ks.yaml
