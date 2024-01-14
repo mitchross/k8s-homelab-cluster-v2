@@ -15,8 +15,8 @@ spec:
             name: advanced-ingress-rest
             port:
               number: 8081
-          path: /default/advanced-ingress(/|$)(.*)
-          pathType: ImplementationSpecific
+        path: /default/advanced-ingress(/|$)(.*)
+        pathType: ImplementationSpecific
   tls:
   - hosts:
     - *host
