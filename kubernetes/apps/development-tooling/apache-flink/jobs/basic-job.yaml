@@ -27,6 +27,13 @@ spec:
   flinkConfiguration:
     taskmanager.numberOfTaskSlots: "2"
   serviceAccount: flink
+
+  ingress:
+    template: "flink.k8s.io/{{namespace}}/{{name}}(/|$)(.*)"
+    className: "nginx"
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: "/$2"
+
   jobManager:
     resource:
       memory: "2048m"

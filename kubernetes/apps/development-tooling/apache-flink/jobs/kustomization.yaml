@@ -5,4 +5,4 @@ kind: Kustomization
 namespace: development-tooling
 resources:
   - ./basic-job.yaml
-  - ./service.yaml
+  #- ./service.yaml
