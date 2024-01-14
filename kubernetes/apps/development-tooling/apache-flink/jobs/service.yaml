@@ -2,6 +2,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: apache-flink-service
+  annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   ingressClassName: internal
   rules:
@@ -13,8 +15,8 @@ spec:
             name: advanced-ingress-rest
             port:
               number: 8081
-        path: /
-        pathType: Prefix
+          path: /default/advanced-ingress(/|$)(.*)
+          pathType: ImplementationSpecific
   tls:
   - hosts:
     - *host
