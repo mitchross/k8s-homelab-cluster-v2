@@ -1,4 +1,4 @@
-#jinja2: trim_blocks: True, lstrip_blocks: True
+#% if bootstrap_distribution == 'k3s' %#
 ---
 # https://docs.k3s.io/helm
 apiVersion: helm.cattle.io/v1
@@ -19,7 +19,7 @@ spec:
     k8sAppLabelOverride: kube-dns
     service:
       name: kube-dns
-      clusterIP: "{% raw %}{{ coredns_addr }}{% endraw %}"
+      clusterIP: "{{ coredns_addr }}"
     serviceAccount:
       create: true
     deployment:
@@ -76,3 +76,4 @@ spec:
         labelSelector:
           matchLabels:
             app.kubernetes.io/instance: coredns
+#% endif %#

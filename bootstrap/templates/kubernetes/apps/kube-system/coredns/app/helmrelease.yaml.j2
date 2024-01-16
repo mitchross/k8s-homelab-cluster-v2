@@ -1,4 +1,4 @@
-#jinja2: trim_blocks: True, lstrip_blocks: True
+#% if bootstrap_distribution == "k3s" %#
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
@@ -87,3 +87,4 @@ spec:
         labelSelector:
           matchLabels:
             app.kubernetes.io/instance: coredns
+#% endif %#
