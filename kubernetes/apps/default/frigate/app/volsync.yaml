@@ -8,7 +8,7 @@ metadata:
 spec:
   sourcePVC: frigate-db-storage
   trigger:
-    schedule: "0 7 * * *"
+    schedule: "*/30 * * * *"
   restic:
     copyMethod: Clone
     pruneIntervalDays: 14
