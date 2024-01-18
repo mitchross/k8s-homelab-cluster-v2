@@ -12,7 +12,7 @@ spec:
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 14
-    repository: frigate-restic-secret
+    repository: frigate-secret
     cacheCapacity: 2Gi
     volumeSnapshotClassName: local-hostpath
     storageClassName: local-hostpath
