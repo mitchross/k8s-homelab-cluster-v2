@@ -4,9 +4,9 @@ apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
   name: frigate
-  namespace: home
+  namespace: default
 spec:
-  sourcePVC: frigate-data
+  sourcePVC: frigate-db-storage
   trigger:
     schedule: "0 7 * * *"
   restic:
