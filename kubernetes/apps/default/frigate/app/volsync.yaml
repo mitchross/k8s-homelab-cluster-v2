@@ -15,6 +15,7 @@ spec:
     repository: frigate-secret
     cacheCapacity: 2Gi
     storageClassName: local-hostpath
+    volumeSnapshotClassName: local-hostpath
     moverSecurityContext:
       runAsUser: 1000
       runAsGroup: 1000
