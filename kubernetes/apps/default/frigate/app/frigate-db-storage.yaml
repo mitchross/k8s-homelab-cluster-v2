@@ -4,7 +4,7 @@ metadata:
   name: frigate-db-storage
   namespace: default
 spec:
-  accessModes: ["ReadWriteMany"]
+  accessModes: ["ReadWriteOnce"]
   resources:
     requests:
       storage: 10Gi
