@@ -53,6 +53,11 @@ spec:
         reclaimPolicy: Delete
         volumeBindingMode: WaitForFirstConsumer
         allowVolumeExpansion: true
+    volumeSnapshotClasses:
+      - name: local-hostpath
+        deletionPolicy: Delete
+        parameters:
+          dummy: {}
     driver:
       config:
         driver: local-hostpath
