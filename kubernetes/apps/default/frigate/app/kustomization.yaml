@@ -6,7 +6,6 @@ resources:
 - ./secret.sops.yaml
 - ./frigate-db-storage.yaml
 - ./volsync.yaml
-#- ./volsyncsecret.sops.yaml
 configMapGenerator:
 - name: frigate-configmap
   files:
