@@ -9,7 +9,7 @@ spec:
   trigger:
     schedule: "*/1 * * * *"
   restic:
-    copyMethod: Snapshot
+    copyMethod: clone
     pruneIntervalDays: 14
     repository: frigate-secret
     cacheCapacity: 2Gi
