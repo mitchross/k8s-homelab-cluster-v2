@@ -27,6 +27,8 @@ spec:
     keepHistory: false
   values:
     controller:
+      args:
+          enableDistributedSnapshotting: true
       serviceMonitor:
         create: true
     webhook:
