@@ -50,7 +50,7 @@ spec:
     storageClasses:
       - name: local-hostpath
         defaultClass: false
-        reclaimPolicy: Delete
+        reclaimPolicy: Retain
         volumeBindingMode: WaitForFirstConsumer
         allowVolumeExpansion: true
     volumeSnapshotClasses:

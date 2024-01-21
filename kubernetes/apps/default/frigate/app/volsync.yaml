@@ -13,6 +13,7 @@ spec:
     pruneIntervalDays: 14
     repository: frigate-secret
     cacheCapacity: 2Gi
+    accessModes: ["ReadWriteOnce"]
     storageClassName: local-hostpath
     volumeSnapshotClassName: local-hostpath
     moverSecurityContext:
