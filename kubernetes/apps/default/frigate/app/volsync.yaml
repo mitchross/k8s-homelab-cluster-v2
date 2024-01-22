@@ -3,7 +3,7 @@
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
-  name: frigate-rsrc
+  name: frigate
 spec:
   sourcePVC: frigate-db-storage
   trigger:
