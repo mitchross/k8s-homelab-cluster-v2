@@ -2,34 +2,49 @@
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
 version: "3"
 
+vars:
+  ARCHFILE: "{{.ROOT_DIR}}/.taskfiles/Workstation/Archfile"
+  BREWFILE: "{{.ROOT_DIR}}/.taskfiles/Workstation/Brewfile"
+
 tasks:
+
+  direnv:
+    desc: Run direnv hooks
+    cmd: direnv allow .
+    status:
+      - "[[ $(direnv status --json | jq '.state.foundRC.allowed') == 0 ]]"
+      - "[[ $(direnv status --json | jq '.state.loadedRC.allowed') == 0 ]]"
+
+  venv:
+    desc: Set up virtual environment
+    cmds:
+      - "{{.PYTHON_BIN}} -m venv {{.ROOT_DIR}}/.venv"
+      - .venv/bin/python3 -m pip install --upgrade pip setuptools wheel
+      - .venv/bin/python3 -m pip install --upgrade --requirement "{{.PIP_REQUIREMENTS_FILE}}"
+    sources:
+      - "{{.PIP_REQUIREMENTS_FILE}}"
+    generates:
+      - "{{.ROOT_DIR}}/.venv/pyvenv.cfg"
+    preconditions:
+      - { msg: "Missing Pip requirements file", sh: "test -f {{.PIP_REQUIREMENTS_FILE}}" }
 
   brew:
     desc: Install workstation dependencies with Brew
-    cmd: brew bundle --file {{.ROOT_DIR}}/.taskfiles/Workstation/Brewfile
+    cmd: brew bundle --file {{.BREWFILE}}
     preconditions:
-      - sh: command -v brew
-        msg: |
-          Homebrew is not installed. Using MacOS, Linux or WSL?
-          Head over to https://brew.sh to get up and running.
-      - { msg: "Brewfile not found", sh: "test -f {{.ROOT_DIR}}/.taskfiles/Workstation/Brewfile" }
+      - { msg: "Missing Homebrew", sh: "command -v brew" }
+      - { msg: "Missing Brewfile", sh: "test -f {{.BREWFILE}}" }
 
   paru:
     desc: Install workstation dependencies with Paru
-    cmd: paru -Syu --needed --noconfirm --noprogressbar $(cat {{.ROOT_DIR}}/.taskfiles/Workstation/Archfile | xargs)
+    cmd: paru -Syu --needed --noconfirm --noprogressbar $(cat {{.ARCHFILE}} | xargs)
     preconditions:
-      - sh: command -v paru
-        msg: |
-          Paru is not installed. Using ArchLinux?
-          Head over to https://github.com/Morganamilo/paru to get up and running.
-      - { msg: "Archfile not found", sh: "test -f {{.ROOT_DIR}}/.taskfiles/Workstation/Archfile" }
+      - { msg: "Missing Paru", sh: "command -v paru" }
+      - { msg: "Missing Archfile", sh: "test -f {{.ARCHFILE}}" }
 
   yay:
     desc: Install workstation dependencies with Yay
-    cmd: yay -Syu --needed --noconfirm --noprogressbar $(cat {{.ROOT_DIR}}/.taskfiles/Workstation/Archfile | xargs)
+    cmd: yay -Syu --needed --noconfirm --noprogressbar $(cat {{.ARCHFILE}} | xargs)
     preconditions:
-      - sh: command -v yay
-        msg: |
-          Yay is not installed. Using ArchLinux?
-          Head over to https://github.com/Jguer/yay to get up and running.
-      - { msg: "Archfile not found", sh: "test -f {{.ROOT_DIR}}/.taskfiles/Workstation/Archfile" }
+      - { msg: "Missing Yay", sh: "command -v yay" }
+      - { msg: "Missing Archfile", sh: "test -f {{.ARCHFILE}}" }

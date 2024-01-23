@@ -1,4 +1,4 @@
-#% if volsync.enabled | default(false) %#
+#% if addon_volsync.enabled %#
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
@@ -14,7 +14,6 @@ spec:
         kind: HelmRepository
         name: piraeus
         namespace: flux-system
-  maxHistory: 2
   install:
     crds: CreateReplace
     remediation:
@@ -28,6 +27,17 @@ spec:
     keepHistory: false
   values:
     controller:
+      #% if bootstrap_distribution in ['k0s', 'k3s'] and addon_longhorn.enabled %#
+      volumeSnapshotClasses:
+        - name: longhorn-snapclass
+          annotations:
+            snapshot.storage.kubernetes.io/is-default-class: "true"
+          driver: driver.longhorn.io
+          deletionPolicy: Delete
+          # Ref: https://github.com/longhorn/longhorn/issues/2534#issuecomment-1010508714
+          parameters:
+            type: snap
+      #% endif %#
       serviceMonitor:
         create: true
     webhook:

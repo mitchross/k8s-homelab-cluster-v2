@@ -1,3 +1,4 @@
+#% if bootstrap_distribution in ['k3s'] %#
 ---
 - name: Prepare System
   hosts: kubernetes
@@ -15,7 +16,7 @@
       block:
         - name: Locale | Set timezone
           community.general.timezone:
-            name: "{{ timezone | default('Etc/UTC') }}"
+            name: "#{ bootstrap_timezone }#"
 
     - name: Packages
       block:
@@ -32,7 +33,7 @@
         - name: User Configuration | SSH keys
           ansible.posix.authorized_key:
             user: "{{ ansible_user }}"
-            key: "https://github.com/{{ github_username }}.keys"
+            key: "https://github.com/#{ bootstrap_github_username }#.keys"
         - name: User Configuration | Silence login
           ansible.builtin.file:
             dest: "{{ '/home/' + ansible_user if ansible_user != 'root' else '/root' }}/.hushlogin"
@@ -61,6 +62,7 @@
               ff02::2 ip6-allrouters
             dest: /etc/hosts
             mode: preserve
+        #% if bootstrap_advanced_flags.update_resolv_conf|default(true) %#
         # https://github.com/onedr0p/flux-cluster-template/discussions/635
         - name: Network Configuration | Remove immutable flag from /etc/resolv.conf
           ansible.builtin.file:
@@ -78,7 +80,8 @@
             dest: /etc/resolv.conf
             content: |
               search .
-              nameserver 1.1.1.1
+              nameserver #{ bootstrap_dns_server }#
+        #% endif %#
 
     - name: System Configuration
       notify: Reboot
@@ -130,3 +133,4 @@
       ansible.builtin.reboot:
         msg: Rebooting nodes
         reboot_timeout: 3600
+#% endif %#

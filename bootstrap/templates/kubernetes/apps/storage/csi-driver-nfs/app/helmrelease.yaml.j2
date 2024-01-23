@@ -1,4 +1,4 @@
-#% if csi_driver_nfs.enabled | default(false) %#
+#% if addon_csi_driver_nfs.enabled %#
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
@@ -14,7 +14,6 @@ spec:
         kind: HelmRepository
         name: csi-driver-nfs
         namespace: flux-system
-  maxHistory: 2
   install:
     remediation:
       retries: 3
@@ -27,4 +26,7 @@ spec:
   values:
     externalSnapshotter:
       enabled: false
+    #% if bootstrap_distribution in ['k0s'] %#
+    kubeletDir: /var/lib/k0s/kubelet
+    #% endif %#
 #% endif %#

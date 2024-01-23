@@ -13,7 +13,6 @@ spec:
         kind: HelmRepository
         name: openebs
         namespace: flux-system
-  maxHistory: 2
   install:
     remediation:
       retries: 3
@@ -29,5 +28,4 @@ spec:
         enabled: true
         name: openebs-hostpath
         isDefaultClass: false
-        basePath: "{% bootstrap_local_storage_path %}"
-
+        basePath: "#{ bootstrap_advanced_flags.local_storage_path|default('/var/openebs/local', true) }#"

@@ -14,7 +14,6 @@ spec:
         kind: HelmRepository
         name: ingress-nginx
         namespace: flux-system
-  maxHistory: 2
   install:
     remediation:
       retries: 3
@@ -31,7 +30,7 @@ spec:
       service:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "internal.${SECRET_DOMAIN}"
-          io.cilium/lb-ipam-ips: "{% bootstrap_internal_ingress_addr %}"
+          io.cilium/lb-ipam-ips: "#{ bootstrap_internal_ingress_addr }#"
         externalTrafficPolicy: Cluster
       ingressClassResource:
         name: internal
@@ -69,7 +68,7 @@ spec:
           namespaceSelector:
             any: true
       extraArgs:
-        #% if bootstrap_acme_production_enabled | default(false) %#
+        #% if bootstrap_acme_production_enabled %#
         default-ssl-certificate: "network/${SECRET_DOMAIN/./-}-production-tls"
         #% else %#
         default-ssl-certificate: "network/${SECRET_DOMAIN/./-}-staging-tls"

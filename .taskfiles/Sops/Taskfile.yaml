@@ -2,33 +2,37 @@
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
 version: "3"
 
+vars:
+  SOPS_CONFIG_FILE: "{{.ROOT_DIR}}/.sops.yaml"
+
 tasks:
 
   age-keygen:
     desc: Initialize Age Key for Sops
-    cmd: age-keygen --output {{.ROOT_DIR}}/age.key
+    cmd: age-keygen --output {{.SOPS_AGE_FILE}}
     status:
-      - test -f "{{.ROOT_DIR}}/age.key"
+      - test -f "{{.SOPS_AGE_FILE}}"
 
   encrypt:
-    desc: Encrypt a secret
-    summary: |
-      Args:
-        file: Path to file to encrypt (required)
-    cmd: sops --encrypt --in-place {{.file}}
-    vars:
-      claim: '{{ or .file (fail "Argument (file) is required") }}'
-    preconditions:
-      - { msg: "Sops config not found", sh: "test -f {{.ROOT_DIR}}/.sops.yaml" }
-      - { msg: "Age key not found",     sh: "test -f {{.ROOT_DIR}}/age.key" }
-
-  encrypt:all:
-    desc: Encrypt all Kubernetes SOPS secrets
+    desc: Encrypt all Kubernetes SOPS secrets that are not already encrypted
     cmds:
       - for: { var: file }
-        task: encrypt
+        task: .encrypt-file
         vars:
-          file: '{{.ITEM}}'
+          file: "{{.ITEM}}"
     vars:
       file:
-        sh: find {{.KUBERNETES_DIR}} -type f -name "*.sops.*"
+        sh: find "{{.KUBERNETES_DIR}}" -type f -name "*.sops.*" -exec grep -L "ENC\[AES256_GCM" {} \;
+
+  .encrypt-file:
+    internal: true
+    cmd: sops --encrypt --in-place {{.file}}
+    requires:
+      vars: ["file"]
+    preconditions:
+      - { msg: "Missing Sops config file", sh: "test -f {{.SOPS_CONFIG_FILE}}" }
+      - { msg: "Missing Sops Age key file", sh: "test -f {{.SOPS_AGE_FILE}}" }
+
+  .reset:
+    internal: true
+    cmd: rm -rf {{.SOPS_CONFIG_FILE}}

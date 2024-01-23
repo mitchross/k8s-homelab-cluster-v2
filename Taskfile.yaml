@@ -3,12 +3,20 @@
 version: "3"
 
 vars:
-  BOOTSTRAP_DIR: "{{.ROOT_DIR}}/bootstrap"
+  # Directories
   ANSIBLE_DIR: "{{.ROOT_DIR}}/ansible"
+  BOOTSTRAP_DIR: "{{.ROOT_DIR}}/bootstrap"
   KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
-
-env:
-  KUBECONFIG: "{{.ROOT_DIR}}/kubeconfig"
+  PRIVATE_DIR: "{{.ROOT_DIR}}/.private"
+  # Files
+  BOOTSTRAP_ADDONS_FILE: "{{.BOOTSTRAP_DIR}}/vars/addons.yaml"
+  BOOTSTRAP_CONFIG_FILE: "{{.BOOTSTRAP_DIR}}/vars/config.yaml"
+  KUBECONFIG_FILE: "{{.ROOT_DIR}}/kubeconfig"
+  MAKEJINJA_CONFIG_FILE: "{{.ROOT_DIR}}/makejinja.toml"
+  PIP_REQUIREMENTS_FILE: "{{.ROOT_DIR}}/requirements.txt"
+  SOPS_AGE_FILE: "{{.ROOT_DIR}}/age.key"
+  # Binaries
+  PYTHON_BIN: python3
 
 includes:
   ansible: .taskfiles/Ansible/Taskfile.yaml
@@ -17,7 +25,10 @@ includes:
     taskfile: .taskfiles/Kubernetes/Taskfile.yaml
   flux: .taskfiles/Flux/Taskfile.yaml
   k0s: .taskfiles/K0s/Taskfile.yaml
-  repo: .taskfiles/Repo/Taskfile.yaml
+  repository:
+    aliases: ["repo"]
+    taskfile: .taskfiles/Repository/Taskfile.yaml
+  talos: .taskfiles/Talos/Taskfile.yaml
   sops: .taskfiles/Sops/Taskfile.yaml
   workstation: .taskfiles/Workstation/Taskfile.yaml
 
@@ -28,52 +39,41 @@ tasks:
   init:
     desc: Initialize configuration files
     cmds:
-      - cp -n {{.BOOTSTRAP_DIR}}/vars/addons.sample.yaml {{.BOOTSTRAP_DIR}}/vars/addons.yaml
-      - cp -n {{.BOOTSTRAP_DIR}}/vars/config.sample.yaml {{.BOOTSTRAP_DIR}}/vars/config.yaml
-      - cmd: echo "=== Configuration files copied ==="
+      - mkdir -p {{.PRIVATE_DIR}}
+      - cp -n {{.BOOTSTRAP_ADDONS_FILE | replace ".yaml" ".sample.yaml"}} {{.BOOTSTRAP_ADDONS_FILE}}
+      - cp -n {{.BOOTSTRAP_CONFIG_FILE | replace ".yaml" ".sample.yaml"}} {{.BOOTSTRAP_CONFIG_FILE}}
+      - cmd: echo === Configuration files copied ===
         silent: true
-      - cmd: echo "Proceed with updating the configuration files..."
+      - cmd: echo Proceed with updating the configuration files...
         silent: true
-      - cmd: echo "{{.BOOTSTRAP_DIR}}/vars/config.yaml"
+      - cmd: echo {{.BOOTSTRAP_CONFIG_FILE}}
         silent: true
-      - cmd: echo "{{.BOOTSTRAP_DIR}}/vars/addons.yaml"
+      - cmd: echo {{.BOOTSTRAP_ADDONS_FILE}}
         silent: true
     status:
-      - test -f "{{.BOOTSTRAP_DIR}}/vars/addons.yaml"
-      - test -f "{{.BOOTSTRAP_DIR}}/vars/config.yaml"
+      - test -f "{{.BOOTSTRAP_ADDONS_FILE}}"
+      - test -f "{{.BOOTSTRAP_CONFIG_FILE}}"
 
-  # TODO: Only prompt when generated directories exist
-  # https://github.com/go-task/task/issues/1330
   configure:
-    desc: Configure repository from Ansible vars
+    desc: Configure repository from bootstrap vars
     prompt: Any conflicting config in the root kubernetes and ansible directories will be overwritten... continue?
+    deps: ["workstation:direnv", "workstation:venv", "sops:age-keygen", "init"]
     cmds:
-      - task: .pre-validate
       - task: .template
-      - task: .post-validate
-
-  .pre-validate:
-    internal: true
-    cmd: ./.venv/bin/ansible-playbook {{.BOOTSTRAP_DIR}}/validate.yaml
-    env:
-      ANSIBLE_DISPLAY_SKIPPED_HOSTS: "false"
-    preconditions:
-      - { msg: "addons file not found", sh: "test -f {{.BOOTSTRAP_DIR}}/vars/addons.yaml" }
-      - { msg: "config file not found", sh: "test -f {{.BOOTSTRAP_DIR}}/vars/config.yaml" }
+      - task: sops:encrypt
+      - task: .validate
 
   .template:
     internal: true
-    cmds:
-      - ./.venv/bin/makejinja
-      - task: sops:encrypt:all
+    cmd: ./.venv/bin/makejinja
     preconditions:
-      - { msg: "bootstrap addons file not found", sh: "test -f {{.BOOTSTRAP_DIR}}/vars/addons.yaml" }
-      - { msg: "bootstrap config file not found", sh: "test -f {{.BOOTSTRAP_DIR}}/vars/config.yaml" }
-      - { msg: "makejinja loader file not found", sh: "test -f {{.BOOTSTRAP_DIR}}/scripts/loader.py" }
-      - { msg: "makejinja config file not found", sh: "test -f {{.ROOT_DIR}}/makejinja.toml" }
+      - { msg: "Missing virtual environment", sh: "test -d {{.ROOT_DIR}}/.venv" }
+      - { msg: "Missing Makejinja config file", sh: "test -f {{.MAKEJINJA_CONFIG_FILE}}" }
+      - { msg: "Missing Makejinja plugin file", sh: "test -f {{.BOOTSTRAP_DIR}}/scripts/plugin.py" }
+      - { msg: "Missing bootstrap addons file", sh: "test -f {{.BOOTSTRAP_ADDONS_FILE}}" }
+      - { msg: "Missing bootstrap config file", sh: "test -f {{.BOOTSTRAP_CONFIG_FILE}}" }
 
-  .post-validate:
+  .validate:
     internal: true
-    cmd: ./.github/scripts/kubeconform.sh {{.KUBERNETES_DIR}}
-    preconditions:
-      - { msg: "kubeconform file not found", sh: "test -f ./.github/scripts/kubeconform.sh" }
+    cmds:
+      - task: kubernetes:kubeconform

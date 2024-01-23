@@ -1,33 +1,45 @@
 ---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
 version: "3"
 
 env:
   DISABLE_TELEMETRY: "true"
   DISABLE_UPGRADE_CHECK: "true"
 
+vars:
+  K0S_CONFIG_FILE: "{{.KUBERNETES_DIR}}/k0s/k0sctl.yaml"
+
 tasks:
 
-  kubeconfig:
-    desc: Gets k0s cluster kubeconfig
-    cmds:
-      - k0sctl kubeconfig --config {{.ROOT_DIR}}/k0s-config.yaml > kubeconfig
-    preconditions:
-      - { msg: "k0s-config.yaml not found", sh: "test -f {{.ROOT_DIR}}/k0s-config.yaml" }
-
   apply:
-    desc: Apply k0s cluster k0s-config.yaml
+    desc: Apply k0s cluster config
+    dir: "{{.KUBERNETES_DIR}}/k0s" # Needed for uploading files in k0sctl.yaml
     cmds:
-      - k0sctl apply --config {{.ROOT_DIR}}/k0s-config.yaml
+      - k0sctl apply --config {{.K0S_CONFIG_FILE}}
       - task: kubeconfig
     preconditions:
-      - { msg: "k0s-config.yaml not found", sh: "test -f {{.ROOT_DIR}}/k0s-config.yaml" }
+      - { msg: "Missing K0s config file", sh: "test -f {{.K0S_CONFIG_FILE}}" }
 
-  reset:
-    desc: Resets the k0s cluster
+  nuke:
+    desc: Nuke the k0s cluster
+    deps: [":ansible:deps"]
     cmds:
-      - k0sctl reset --config {{.ROOT_DIR}}/k0s-config.yaml
-      - task: :ansible:run
-        vars:
-          playbook: cluster-nuke
+      - k0sctl reset --config {{.K0S_CONFIG_FILE}}
     preconditions:
-      - { msg: "k0s-config.yaml not found", sh: "test -f {{.ROOT_DIR}}/k0s-config.yaml" }
+      - { msg: "Missing K0s config file", sh: "test -f {{.K0S_CONFIG_FILE}}" }
+
+  kubeconfig:
+    desc: Gets k0s kubeconfig
+    prompt: This will overwrite the existing kubeconfig... continue?
+    cmds:
+      - k0sctl kubeconfig --config {{.K0S_CONFIG_FILE}} > {{.KUBECONFIG_FILE}}
+      - sed -i {{if eq OS "darwin"}}''{{end}} 's|https://.+:6443|https://{{.kube_api_addr}}:6443|g' {{.KUBECONFIG_FILE}}
+    vars:
+      kube_api_addr:
+        sh: "yq '.bootstrap_kube_api_addr' {{.BOOTSTRAP_CONFIG_FILE}}"
+    preconditions:
+      - { msg: "Missing K0s config file", sh: "test -f {{.K0S_CONFIG_FILE}}" }
+
+  .reset:
+    internal: true
+    cmd: rm -rf {{.K0S_CONFIG_FILE}}

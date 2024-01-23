@@ -1,4 +1,4 @@
-#% if grafana.enabled | default(false) %#
+#% if addon_grafana.enabled %#
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
@@ -9,12 +9,11 @@ spec:
   chart:
     spec:
       chart: grafana
-      version: 7.2.3
+      version: 7.2.4
       sourceRef:
         kind: HelmRepository
         name: grafana
         namespace: flux-system
-  maxHistory: 2
   install:
     remediation:
       retries: 3
@@ -160,7 +159,7 @@ spec:
     ingress:
       enabled: true
       ingressClassName: internal
-      #% if homepage.enabled | default(false) %#
+      #% if addon_homepage.enabled %#
       annotations:
         gethomepage.dev/enabled: "true"
         gethomepage.dev/icon: grafana.png

@@ -1,4 +1,4 @@
-#% if homepage.enabled | default(false) %#
+#% if addon_homepage.enabled %#
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
@@ -9,13 +9,12 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.4.0
+      version: 2.5.0
       interval: 30m
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 2
   install:
     createNamespace: true
     remediation:
@@ -35,7 +34,7 @@ spec:
           main:
             image:
               repository: ghcr.io/gethomepage/homepage
-              tag: v0.8.4
+              tag: v0.8.6
             env:
               TZ: "${TIMEZONE}"
             envFrom:
