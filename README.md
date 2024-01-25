@@ -41,7 +41,7 @@ If you are new to Flux and GitOps it is important to understand that **all chang
 
 Hopefully some of this peeked your interests!
 
-If you are marching forward, now is a good time to choose whether you will deploy a Kubernetes cluster with [k0s](https://github.com/k0sproject/k0s), [k3s](https://k3s.io) or [Talos](https://github.com/siderolabs/talos). Talos and k0s support was recently added so I would advise using k3s until those have been tested more however feel free to use Talos or k0s and report ant issues that you find. Keep the one you decide in mind as you continue along, some steps may vary on what you choose.
+If you are marching forward, now is a good time to choose whether you will deploy a Kubernetes cluster with [k0s](https://github.com/k0sproject/k0s), [k3s](https://k3s.io) or [Talos](https://github.com/siderolabs/talos). Talos and k0s support was recently added so I would advise using k3s until those have been tested more however feel free to use Talos or k0s and report any issues that you find. Keep the one you decide in mind as you continue along, some steps may vary on what you choose.
 
 ### System requirements
 
@@ -158,17 +158,25 @@ Once you have installed Talos or Debian on your nodes, there are six stages to g
 
 3. Continue on to 🌱 [**Stage 2**](#-stage-2-setup-your-local-workstation-environment)
 
-### 🌱 Stage 2: Setup your local workstation environment
+### 🌱 Stage 2: Setup your local workstation
+
+You have two different options for setting up your local workstation. First one is using a `devcontainer` which requires you to have Docker and VSCode installed. This method is the fastest to get going because all the required CLI tools are provided for you in my `devcontainer` image. This image is built weekly and should always have the most up-to-date packages and tools. The second method is setting up the CLI tools directly on your workstation.
+
+#### devcontainer method
+
+1. Start Docker and open your repository in VSCode. There will be a pop-up asking you to use the `devcontainer`, click the button to start using it.
+
+2. Continue on to 🔧 [**Stage 3**](#-stage-3-do-bootstrap-configuration)
+
+#### Non-devcontainer method
 
 1. Install the most recent version of [task](https://taskfile.dev/), see the [installation docs](https://taskfile.dev/installation/) for other supported platforms.
-
-    📍 _If using **ArchLinux** the `task` command is `go-task` in your shell_
 
     ```sh
     # Homebrew
     brew install go-task
-    # or, Arch / yay
-    yay -S go-task
+    # or, Arch
+    pacman -S --noconfirm go-task && ln -sf /usr/bin/go-task /usr/local/bin/task
     ```
 
 2. Install the most recent version of [direnv](https://direnv.net/), see the [installation docs](https://direnv.net/docs/installation.html) for other supported platforms.
@@ -176,23 +184,21 @@ Once you have installed Talos or Debian on your nodes, there are six stages to g
     ```sh
     # Homebrew
     brew install direnv
-    # or, Arch / yay
-    yay -S direnv
+    # or, Arch
+    pacman -S --noconfirm direnv
     ```
 
     📍 _After `direnv` is installed be sure to **[hook it into your preferred shell](https://direnv.net/docs/hook.html)** and then run `task workstation:direnv`_
 
-3. Install **required** CLI tools: [age](https://github.com/FiloSottile/age), [cloudflared](https://github.com/cloudflare/cloudflared), [flux](https://toolkit.fluxcd.io/), [kubeconform](https://github.com/yannh/kubeconform), [kubectl](https://kubectl.docs.kubernetes.io/installation/), [kustomize](https://kubectl.docs.kubernetes.io/installation/), [sops](https://github.com/getsops/sops).
+3. Install the additional **required** CLI tools
 
-   📍 _[k0sctl](https://github.com/k0sproject/k0sctl) is required for k0s. [talosctl](https://www.talos.dev/latest/learn-more/talosctl/) and [talhelper](https://github.com/budimanjojo/talhelper) is required for Talos._
-
-   📍 _Not using Homebrew or ArchLinux? Make sure to look up how to install the latest version of each of these CLI tools and install them._
+   📍 _**Not using Homebrew or ArchLinux?** Make sure to look up how to install the **latest** version of the CLI tools listed in the [Brewfile](.taskfiles/Workstation/Brewfile)/[Archfile](.taskfiles/Workstation/Archfile) and install them._
 
     ```sh
     # Homebrew
     task workstation:brew
-    # or, Arch / yay
-    go-task workstation:yay
+    # or, Arch with yay/paru
+    go-task workstation:arch
     ```
 
 4. Setup a Python virual environment by running the following task command.

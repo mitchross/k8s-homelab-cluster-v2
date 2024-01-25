@@ -1,4 +1,3 @@
-#% if bootstrap_distribution in ['k0s'] %#
 ---
 apiVersion: k0sctl.k0sproject.io/v1beta1
 kind: Cluster
@@ -44,7 +43,7 @@ spec:
     #% endif %#
   k0s:
     # renovate: datasource=github-releases depName=k0sproject/k0s
-    version: "v1.28.5+k0s.0"
+    version: "v1.28.6+k0s.0"
     dynamicConfig: false
     config:
       spec:
@@ -98,4 +97,3 @@ spec:
                   #% filter indent(width=18, first=True) %#
                   #% include 'partials/cilium-values-init.partial.yaml.j2' %#
                   #% endfilter %#
-#% endif %#

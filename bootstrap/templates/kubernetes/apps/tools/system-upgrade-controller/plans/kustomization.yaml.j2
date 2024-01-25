@@ -1,8 +1,9 @@
-#% if bootstrap_distribution in ['k3s'] and addon_system_upgrade_controller.enabled %#
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./server.yaml
-  - ./agent.yaml
-#% endif %#
+  #% if bootstrap_distribution in ['k3s'] %#
+  - ./k3s.yaml
+  #% elif bootstrap_distribution in ['talos'] %#
+  - ./talos.yaml
+  #% endif %#

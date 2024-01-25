@@ -7,7 +7,7 @@ metadata:
 spec:
   interval: 30m
   ref:
-    branch: main
+    branch: "main"
   url: "https://github.com/mitchross/k8s-homelab-cluster-v2.git"
   ignore: |
     # exclude all

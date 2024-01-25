@@ -28,9 +28,8 @@ spec:
             severity: warning
           annotations:
             description: >
-              The domain that this cert covers will be unavailable after
-              {{ $value | humanizeDuration }}. Clients using endpoints that this cert
-              protects will start to fail in {{ $value | humanizeDuration }}.
+              The domain that this cert covers will be unavailable after {{ $value | humanizeDuration }}.
+              Clients using endpoints that this cert protects will start to fail in {{ $value | humanizeDuration }}.
             runbook_url: https://gitlab.com/uneeq-oss/cert-manager-mixin/-/blob/master/RUNBOOK.md#certmanagercertexpirysoon
             summary: |
               The cert {{ $labels.name }} is {{ $value | humanizeDuration }} from expiry, it should have renewed over a week ago.

@@ -15,7 +15,7 @@
       block:
         - name: Locale | Set timezone
           community.general.timezone:
-            name: "{{ timezone | default('Etc/UTC') }}"
+            name: "Etc/UTC"
 
     - name: Packages
       block:
@@ -32,7 +32,7 @@
         - name: User Configuration | SSH keys
           ansible.posix.authorized_key:
             user: "{{ ansible_user }}"
-            key: "https://github.com/{{ github_username }}.keys"
+            key: "https://github.com/mitchross.keys"
         - name: User Configuration | Silence login
           ansible.builtin.file:
             dest: "{{ '/home/' + ansible_user if ansible_user != 'root' else '/root' }}/.hushlogin"
@@ -54,6 +54,7 @@
             content: |
               127.0.0.1 localhost
               127.0.1.1 {{ inventory_hostname }}
+
               # The following lines are desirable for IPv6 capable hosts
               ::1     localhost ip6-localhost ip6-loopback
               ff02::1 ip6-allnodes
