@@ -25,3 +25,13 @@ resources:
   - ./stakater.yaml
   - ./weave-gitops.yaml
   - ./xenitab.yaml
+
+  - ./apache-flink.yaml
+  - ./cloudnative-pg.yaml
+  - ./deliveryhero-charts.yaml
+  - ./ialacol.yaml
+  - ./node-feature-discovery.yaml
+  - ./nvidia-operator.yaml
+  - ./nvidia-device-plugin.yaml
+  - ./stiforr.yaml
+  - ./tube.yaml
