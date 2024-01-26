@@ -6,6 +6,8 @@ metadata:
   namespace: flux-system
 spec:
   path: ./kubernetes/apps/default/mosquitto/app
+  targetNamespace: default
+
   prune: true
   sourceRef:
     kind: GitRepository
