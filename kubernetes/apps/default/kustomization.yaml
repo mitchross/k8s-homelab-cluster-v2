@@ -16,5 +16,5 @@ resources:
 # - ./chatbot-ui/ks.yaml
 - ./jellyfin/ks.yaml
 #- ./plex/ks.yaml
-#- ./ollama/ks.yaml
+- ./ollama/ks.yaml
 - ./tubearchivist/ks.yaml
