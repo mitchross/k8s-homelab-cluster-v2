@@ -33,6 +33,12 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
+          pod:
+            securityContext:
+              runAsUser: 1000
+              runAsGroup: 1000
+              fsGroup: 1000
+              fsGroupChangePolicy: "OnRootMismatch"
           main:
             image:
               repository: ghcr.io/gabe565/stable-diffusion/webui
