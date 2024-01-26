@@ -9,8 +9,7 @@ spec:
   - name: cloudnative-pg-cluster
   - name: database-redis
   - name: cluster-apps-node-feature-discovery-rules
-  - name: local-path-provisioner
-  - name: local-path-provisioner
+  - name: longhorn
   path: ./kubernetes/apps/default/immich/app
   prune: true
   sourceRef:

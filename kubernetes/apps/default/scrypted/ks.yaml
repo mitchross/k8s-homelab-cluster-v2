@@ -7,7 +7,7 @@ metadata:
 spec:
   dependsOn:
   - name: cluster-apps-node-feature-discovery-rules
-  - name: local-path-provisioner
+  - name: longhorn
   path: ./kubernetes/apps/default/scrypted/app
   prune: true
   sourceRef:

@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-  - name: local-path-provisioner
+  - name: longhorn
   path: ./kubernetes/apps/default/localai/app
   prune: true
   sourceRef:
