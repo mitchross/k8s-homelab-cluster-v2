@@ -11,7 +11,7 @@ spec:
   primaryUpdateStrategy: unsupervised
   storage:
     size: 50Gi
-    storageClass: local-hostpath
+    storageClass: openebs-hostpath
   postgresql:
     shared_preload_libraries: ["vectors.so"]
     parameters:
