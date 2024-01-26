@@ -36,15 +36,7 @@ spec:
         annotations:
           secret.reloader.stakater.com/reload: &secret immich-secret
           configmap.reloader.stakater.com/reload: &configmap immich-configmap
-        initContainers:
-          01-init-db:
-            image:
-              repository: ghcr.io/onedr0p/postgres-init
-              tag: 16.1
-              pullPolicy: IfNotPresent
-            envFrom:
-              - secretRef:
-                  name: *secret
+
         pod:
           enableServiceLinks: false
           securityContext:
