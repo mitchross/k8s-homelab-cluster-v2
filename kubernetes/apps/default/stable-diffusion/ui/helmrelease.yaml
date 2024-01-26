@@ -28,19 +28,17 @@ spec:
   values:
     defaultPodOptions:
       runtimeClassName: nvidia
+      securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+          fsGroup: 1000
+          fsGroupChangePolicy: OnRootMismatch
+
     controllers:
       main:
         annotations:
           reloader.stakater.com/auto: "true"
-        securityContext:
-              privileged: true
-        containers:
-          pod:
-            securityContext:
-              runAsUser: 1000
-              runAsGroup: 1000
-              fsGroup: 1000
-              fsGroupChangePolicy: "OnRootMismatch"
+
           main:
             image:
               repository: ghcr.io/gabe565/stable-diffusion/webui
