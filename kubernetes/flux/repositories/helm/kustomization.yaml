@@ -26,6 +26,7 @@ resources:
   - ./weave-gitops.yaml
   - ./xenitab.yaml
 
+  - ./intel.yaml
   - ./apache-flink.yaml
   - ./cloudnative-pg.yaml
   - ./deliveryhero-charts.yaml
