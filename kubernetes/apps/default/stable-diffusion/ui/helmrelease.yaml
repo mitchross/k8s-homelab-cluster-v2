@@ -1,0 +1,100 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: ollama
+  namespace: default
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.3.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+
+  values:
+    defaultPodOptions:
+      runtimeClassName: nvidia
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: ghcr.io/gabe565/stable-diffusion/webui
+              tag: 1.7.0
+              pullPolicy: Always
+            args:
+              - --medvram-sdxl
+              - --xformers
+            env:
+              IIB_ACCESS_CONTROL_ALLOWED_PATHS: /app/outputs
+              TZ: America/Detroit
+              NVIDIA_VISIBLE_DEVICES: all
+              NVIDIA_DRIVER_CAPABILITIES: all
+
+            resources:
+              requests:
+                cpu: 200m
+                memory: 1Gi
+                nvidia.com/gpu: 1
+              limits:
+                memory: 16Gi
+                nvidia.com/gpu: 1
+              startup:
+                enabled: false
+
+    persistence:
+      data:
+        enabled: true
+        storageClass: longhorn
+        accessMode: ReadWriteOnce
+        size: 64Gi
+        retain: true
+        globalMounts:
+          - path: /data
+          - path: /app/repositories
+            subPath: repositories
+      outputs:
+        enabled: true
+        storageClass: longhorn
+        accessMode: ReadWriteMany
+        size: 16Gi
+        retain: true
+        globalMounts:
+
+          - path: /app/outputs
+    service:
+      main:
+        ports:
+          http:
+            port: 7860
+    ingress:
+      main:
+        enabled: true
+        className: internal
+        hosts:
+          - host: &host stablediffusion.vanillax.me
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: http
+        tls:
+          - hosts:
+              - *host

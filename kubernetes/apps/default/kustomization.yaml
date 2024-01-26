@@ -17,3 +17,4 @@ resources:
 #- ./plex/ks.yaml
 - ./ollama/ks.yaml
 - ./tubearchivist/ks.yaml
+- ./stable-diffusion/ks.yaml
