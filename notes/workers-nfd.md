@@ -9,7 +9,7 @@ kubectl label --overwrite node k3s-worker-nuc-1 node.longhorn.io/create-default-
 
 kubectl label node k3s-gpu-worker-pve3-1 node-role.kubernetes.io/worker=true
 kubectl label --overwrite node k3s-worker-nuc-1 node.longhorn.io/create-default-disk="true"
-
+kubectl label --overwrite node k3s-gpu-worker-pve3-1 node.longhorn.io/create-default-disk="true"
 
 kubectl label node k3s-worker-dell-1 node-role.kubernetes.io/worker=true
 kubectl label --overwrite node k3s-worker-dell-1 node.longhorn.io/create-default-disk="true"
