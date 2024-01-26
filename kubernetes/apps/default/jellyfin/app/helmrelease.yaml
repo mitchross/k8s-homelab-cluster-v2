@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.3.0
+      version: 2.5.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -32,7 +32,7 @@ spec:
         fsGroup: 568
         fsGroupChangePolicy: OnRootMismatch
         supplementalGroups: [44, 105, 10000]
-      #runtimeClassName: nvidia
+        #runtimeClassName: nvidia
     controllers:
       main:
         type: statefulset
@@ -49,15 +49,15 @@ spec:
               JELLYFIN_FFmpeg__probesize: 50000000
               JELLYFIN_FFmpeg__analyzeduration: 50000000
               JELLYFIN_PublishedServerUrl: &loadBalancerIP 192.168.1.24
-           #   NVIDIA_VISIBLE_DEVICES: all
-           #   NVIDIA_DRIVER_CAPABILITIES: compute,video,utility
+              #   NVIDIA_VISIBLE_DEVICES: all
+              #   NVIDIA_DRIVER_CAPABILITIES: compute,video,utility
             resources:
               requests:
-            #    nvidia.com/gpu: 1
+                #    nvidia.com/gpu: 1
                 cpu: 100m
                 memory: 2Gi
               limits:
-           #     nvidia.com/gpu: 1
+                #     nvidia.com/gpu: 1
                 memory: 10Gi
         statefulset:
           volumeClaimTemplates:
