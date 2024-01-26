@@ -5,5 +5,5 @@ resources:
 - ./cilium/ks.yaml
 - ./metrics-server/ks.yaml
 - ./intel-device-plugin/ks.yaml
-- ./node-feature-discovery/ks.yaml
-- ./nvidia-gpu-operator/ks.yaml
+#- ./node-feature-discovery/ks.yaml
+#- ./nvidia-gpu-operator/ks.yaml
