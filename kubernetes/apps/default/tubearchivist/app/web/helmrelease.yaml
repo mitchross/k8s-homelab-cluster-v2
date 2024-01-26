@@ -1,0 +1,107 @@
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: tubearchivist-web
+  namespace: default
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.3.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  dependsOn:
+  - name: redis
+    namespace: database
+  - name: tubearchivist-elasticsearch
+    namespace: default
+  values:
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        statefulset:
+          volumeClaimTemplates:
+          - name: config
+            accessMode: ReadWriteOnce
+            size: 30Gi
+            storageClass: longhorn
+            globalMounts:
+            - path: /cache
+        containers:
+          main:
+            image:
+              repository: docker.io/bbilly1/tubearchivist
+              tag: v0.4.5
+            env:
+            - name: TZ
+              value: America/New_York
+            - name: ES_URL
+              value: http://tubearchivist-elasticsearch.default.svc.cluster.local:9200
+            - name: REDIS_HOST
+              value: "redis-master.database.svc.cluster.local"
+            - name: REDIS_PORT
+              value: "6379"
+            - name: HOST_UID
+              value: "1000"
+            - name: HOST_GID
+              value: "1000"
+            - name: TA_HOST
+              value: tubearchivist.vanillax.me
+            - name: TA_USERNAME
+              value: admin
+            envFrom:
+            - secretRef:
+                name: tube-secret
+            securityContext:
+              privileged: true
+            resources:
+              requests:
+                cpu: 1000m
+                memory: 2Gi
+              limits:
+                memory: 8Gi
+
+
+    service:
+      main:
+        ports:
+          http:
+            port: 8000
+          rtsp:
+            port: 8554
+    ingress:
+      main:
+        enabled: true
+        className: internal
+        hosts:
+        - host: &host "tubearchivist.vanillax.me"
+          paths:
+          - path: /
+            service:
+              name: main
+              port: http
+        tls:
+        - hosts:
+          - *host
+    persistence:
+      downloads:
+        enabled: true
+        existingClaim: tube-nfs
+        globalMounts:
+        - path: /youtube

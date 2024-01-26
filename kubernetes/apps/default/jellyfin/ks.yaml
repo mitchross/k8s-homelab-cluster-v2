@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-apps-jellyfin
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./kubernetes/apps/default/jellyfin/app
+  prune: true
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  dependsOn:
+  - name: cluster-apps-nvidia-gpu-operator
+  - name: cluster-apps-node-feature-discovery-rules
+  - name: local-path-provisioner
+
+

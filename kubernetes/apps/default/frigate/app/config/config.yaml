@@ -1,0 +1,295 @@
+---
+# yaml-language-server: $schema=https://frigate.vanillax.me/api/config/schema.json
+mqtt:
+  host: mosquitto.default.svc.cluster.local
+  topic_prefix: frigate
+  user: "{FRIGATE_MQTT_USERNAME}"
+  password: "{FRIGATE_MQTT_PASSWORD}"
+
+database:
+    path: /data/frigate.db
+
+detectors:
+    # coral1:
+    #   type: edgetpu
+    #   device: pci:0
+    # # coral2:
+    # #   type: edgetpu
+    # #   device: pci:2
+    coral:
+        type: edgetpu
+        device: usb
+
+ffmpeg:
+    hwaccel_args: preset-intel-qsv-h264
+
+go2rtc:
+  streams:
+   garage: rtsp://192.168.1.16:8554/garage
+   deck: rtsp://192.168.1.16:8554/deck
+   shed: rtsp://192.168.1.16:8554/shed
+   frontdoor: rtsp://192.168.1.16:8554/porch
+   driveway: rtsp://192.168.1.16:8554/driveway
+   garage-driveway: rtsp://192.168.1.16:8554/garage-driveway
+   kitchen: rtsp://192.168.1.16:8554/kitchen
+   dogcam: rtsp://192.168.1.16:8554/dog-cam-2
+   livingroom: rtsp://192.168.1.16:8554/living-room
+
+cameras:
+    garage:
+        ffmpeg:
+            inputs:
+                - path: rtsp://192.168.1.16:8554/garage
+                  roles:
+                      - detect
+                      - record
+
+        snapshots:
+            bounding_box: true
+        detect:
+            width: 1280
+            height: 720
+            fps: 5
+        record:
+            enabled: true
+            retain:
+                days: 15
+                mode: motion
+            events:
+                retain:
+                    default: 15
+                    mode: active_objects
+        objects:
+            track:
+                - person
+                - car
+                - dog
+                - cat
+    deck:
+        ffmpeg:
+            inputs:
+                - path: rtsp://192.168.1.16:8554/deck
+                  roles:
+                      - detect
+                      - record
+
+        snapshots:
+            bounding_box: true
+        detect:
+            width: 1280
+            height: 720
+            fps: 15
+        record:
+            enabled: true
+            retain:
+                days: 15
+                mode: motion
+            events:
+                retain:
+                    default: 15
+                    mode: active_objects
+        objects:
+            track:
+                - person
+                - car
+                - dog
+                - cat
+    shed:
+        ffmpeg:
+            inputs:
+                - path: rtsp://192.168.1.16:8554/shed
+                  roles:
+                      - detect
+                      - record
+        snapshots:
+            bounding_box: true
+        detect:
+            width: 1280
+            height: 720
+            fps: 5
+        record:
+            enabled: true
+            retain:
+                days: 15
+                mode: motion
+            events:
+                retain:
+                    default: 15
+                    mode: active_objects
+        objects:
+            track:
+                - person
+                - car
+                - dog
+                - cat
+
+    frontdoor:
+        ffmpeg:
+            inputs:
+                - path: rtsp://192.168.1.16:8554/porch
+                  roles:
+                      - detect
+                      - record
+        snapshots:
+            bounding_box: true
+        detect:
+            width: 1296
+            height: 1728
+            fps: 5
+        record:
+            enabled: true
+            retain:
+                days: 15
+                mode: motion
+            events:
+                retain:
+                    default: 15
+                    mode: active_objects
+        objects:
+            track:
+                - person
+                - car
+                - dog
+                - cat
+    driveway:
+        ffmpeg:
+            inputs:
+                - path: rtsp://192.168.1.16:8554/driveway
+                  roles:
+                      - detect
+                      - record
+        snapshots:
+            bounding_box: true
+        detect:
+            width: 1296
+            height: 1728
+            fps: 5
+        record:
+            enabled: true
+            retain:
+                days: 15
+                mode: motion
+            events:
+                retain:
+                    default: 15
+                    mode: active_objects
+        objects:
+            track:
+                - person
+                - car
+                - dog
+                - cat
+    garage-driveway:
+        ffmpeg:
+            inputs:
+                - path: rtsp://192.168.1.16:8554/garage-driveway
+                  roles:
+                      - detect
+                      - record
+        snapshots:
+            bounding_box: true
+        detect:
+            width: 1280
+            height: 720
+            fps: 5
+        record:
+            enabled: true
+            retain:
+                days: 15
+                mode: motion
+            events:
+                retain:
+                    default: 15
+                    mode: active_objects
+        objects:
+            track:
+                - person
+                - car
+                - dog
+                - cat
+
+    kitchen:
+        ffmpeg:
+            inputs:
+                - path: rtsp://192.168.1.16:8554/kitchen
+                  roles:
+                      - detect
+                      - record
+        snapshots:
+            bounding_box: true
+        detect:
+            width: 1280
+            height: 720
+            fps: 5
+        record:
+            enabled: true
+            retain:
+                days: 15
+                mode: motion
+            events:
+                retain:
+                    default: 15
+                    mode: active_objects
+        objects:
+            track:
+                - person
+                - car
+                - dog
+                - cat
+    dogcam:
+        ffmpeg:
+            inputs:
+                - path: rtsp://192.168.1.16:8554/dog-cam-2
+                  roles:
+                      - detect
+                      - record
+        snapshots:
+            bounding_box: true
+        detect:
+            width: 1280
+            height: 720
+            fps: 5
+        record:
+            enabled: true
+            retain:
+                days: 15
+                mode: motion
+            events:
+                retain:
+                    default: 15
+                    mode: active_objects
+        objects:
+            track:
+                - person
+                - car
+                - dog
+                - cat
+    livingroom:
+        ffmpeg:
+            inputs:
+                - path: rtsp://192.168.1.16:8554/living-room
+                  roles:
+                      - detect
+                      - record
+
+        snapshots:
+            bounding_box: true
+        detect:
+            width: 1280
+            height: 720
+            fps: 5
+        record:
+            enabled: true
+            retain:
+                days: 15
+                mode: motion
+            events:
+                retain:
+                    default: 15
+                    mode: active_objects
+        objects:
+            track:
+                - person
+                - car
+                - dog
+                - cat
