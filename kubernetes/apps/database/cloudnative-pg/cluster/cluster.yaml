@@ -6,7 +6,7 @@ metadata:
   namespace: database
 spec:
   instances: 4
-  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16
+  imageName: ghcr.io/bo0tzz/cnpgvecto.rs:16-v0.1.11
   enableSuperuserAccess: true
   primaryUpdateStrategy: unsupervised
   storage:
