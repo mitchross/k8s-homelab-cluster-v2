@@ -6,8 +6,8 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-  - name: local-path-provisioner
-  targetNamespace: default
+  - name: longhorn
+  targetNamespace: longhorn-system
   path: ./kubernetes/apps/default/mosquitto/app
   prune: true
   sourceRef:
