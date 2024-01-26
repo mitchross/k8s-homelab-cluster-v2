@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
@@ -58,8 +57,7 @@ spec:
       main:
         type: LoadBalancer
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: mosquitto.vanillax.me
-          io.cilium/lb-ipam-ips: 192.168.1.17
+          io.cilium/lb-ipam-ips: "192.168.1.17"
         ports:
           http:
             port: 1883
@@ -68,23 +66,23 @@ spec:
         enabled: true
         existingClaim: mosquitto
         globalMounts:
-          - path: /data
+        - path: /data
       config-file:
         type: configMap
         name: mosquitto-configmap # overriden by kustomizeconfig
         advancedMounts:
           main:
             main:
-              - path: /mosquitto/config/mosquitto.conf
-                subPath: mosquitto.conf
+            - path: /mosquitto/config/mosquitto.conf
+              subPath: mosquitto.conf
       secret-file:
         type: secret
         name: mosquitto-secret
         advancedMounts:
           main:
             init-config:
-              - path: /tmp/secret
+            - path: /tmp/secret
       external-config:
         type: emptyDir
         globalMounts:
-          - path: /mosquitto/external_config
+        - path: /mosquitto/external_config
