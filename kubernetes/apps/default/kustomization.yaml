@@ -11,10 +11,13 @@ resources:
 - ./speedtest
 - ./immich/ks.yaml
 - ./scrypted/ks.yaml
-#- ./localai/ks.yaml
-# - ./chatbot-ui/ks.yaml
 - ./jellyfin/ks.yaml
 #- ./plex/ks.yaml
-- ./ollama/ks.yaml
+
 - ./tubearchivist/ks.yaml
+
+# AI can only use 1 gpu at a time right now
 - ./stable-diffusion/ks.yaml
+#- ./localai/ks.yaml
+# - ./chatbot-ui/ks.yaml
+#- ./ollama/ks.yaml
