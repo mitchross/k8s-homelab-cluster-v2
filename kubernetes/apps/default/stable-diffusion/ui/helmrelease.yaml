@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ishioni/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
@@ -30,10 +29,10 @@ spec:
     defaultPodOptions:
       runtimeClassName: nvidia
       securityContext:
-          runAsUser: 1000
-          runAsGroup: 1000
-          fsGroup: 1000
-          fsGroupChangePolicy: OnRootMismatch
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
 
     controllers:
       main:
@@ -46,8 +45,8 @@ spec:
               tag: 1.7.0
               pullPolicy: IfNotPresent
             args:
-              - --medvram-sdxl
-              - --xformers
+            - --medvram-sdxl
+            - --xformers
             env:
               IIB_ACCESS_CONTROL_ALLOWED_PATHS: /app/outputs
               TZ: America/Detroit
@@ -73,18 +72,18 @@ spec:
         size: 64Gi
         retain: true
         globalMounts:
-          - path: /data
-          - path: /app/repositories
-            subPath: repositories
+        - path: /data
+        - path: /app/repositories
+          subPath: repositories
       outputs:
         enabled: true
-        storageClass: longhorn
-        accessMode: ReadWriteMany
+        storageClass: openebs-hostpath
+        accessMode: ReadWriteOnce
         size: 16Gi
         retain: true
         globalMounts:
 
-          - path: /app/outputs
+        - path: /app/outputs
     service:
       main:
         ports:
@@ -95,12 +94,12 @@ spec:
         enabled: true
         className: internal
         hosts:
-          - host: &host stablediffusion.vanillax.me
-            paths:
-              - path: /
-                service:
-                  name: main
-                  port: http
+        - host: &host stablediffusion.vanillax.me
+          paths:
+          - path: /
+            service:
+              name: main
+              port: http
         tls:
-          - hosts:
-              - *host
+        - hosts:
+          - *host
