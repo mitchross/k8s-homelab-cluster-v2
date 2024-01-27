@@ -78,7 +78,7 @@ spec:
             subPath: repositories
       outputs:
         enabled: true
-        storageClass: openebs-hostpath
+        storageClass: longhorn
         accessMode: ReadWriteMany
         size: 16Gi
         retain: true
