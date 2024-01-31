@@ -31,14 +31,8 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/auricom/libreddit
-              tag: 0.30.1@sha256:c89c2b98ab0eb08f4677d24a3a7577661ed4325c797b042023ce959195534c4f
-            env:
-            - name: LIBREDDIT_DEFAULT_SHOW_NSFW
-              value: "on"
-            - name: LIBREDDIT_DEFAULT_WIDE
-              value: "on"
-
+              repository: quay.io/redlib/redlib
+              tag: 0.31.0
 
     service:
       main:
