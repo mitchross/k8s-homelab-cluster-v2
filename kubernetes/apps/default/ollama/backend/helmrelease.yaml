@@ -72,7 +72,7 @@ spec:
         memory: 4096Mi
         cpu: 2000m
       limits:
-        memory: 24gi
+        memory: 24Gi
         cpu: 4000m
     livenessProbe:
       enabled: true
