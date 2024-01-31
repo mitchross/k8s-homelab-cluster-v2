@@ -12,6 +12,7 @@ spec:
         kind: HelmRepository
         name: ollama-helm
         namespace: flux-system
+      version: '0.1.22'  # replace with desired version
   maxHistory: 2
   install:
     remediation:
