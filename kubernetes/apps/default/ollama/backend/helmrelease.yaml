@@ -12,6 +12,8 @@ spec:
         kind: HelmRepository
         name: ollama-helm
         namespace: flux-system
+        spec:
+          chart: ollama
   maxHistory: 2
   install:
     remediation:
