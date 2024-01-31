@@ -36,3 +36,4 @@ resources:
   - ./nvidia-device-plugin.yaml
   - ./stiforr.yaml
   - ./tube.yaml
+  - ./ollama.yaml
