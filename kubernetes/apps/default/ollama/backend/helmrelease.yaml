@@ -7,13 +7,11 @@ spec:
   interval: 30m
   chart:
     spec:
-      chart: ollama-helm/ollama
+      chart: ollama
       sourceRef:
         kind: HelmRepository
         name: ollama-helm
         namespace: flux-system
-        spec:
-          chart: ollama
   maxHistory: 2
   install:
     remediation:
