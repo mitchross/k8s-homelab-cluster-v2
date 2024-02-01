@@ -20,10 +20,10 @@ spec:
       shared_buffers: 512MB
   superuserSecret:
     name: cloudnative-pg-secret
-    # Note: Bootstrap is needed when recovering from an existing cnpg cluster
-  bootstrap:
-    recovery:
-      source: &previousCluster postgres16-v3
+  #   # Note: Bootstrap is needed when recovering from an existing cnpg cluster
+  # bootstrap:
+  #   recovery:
+  #     source: &previousCluster postgres16-v3
   resources:
     requests:
       cpu: 500m
@@ -56,18 +56,18 @@ spec:
           name: cloudnative-pg-secret
           key: aws-secret-access-key
   # Note: externalClusters is needed when recovering from an existing cnpg cluster
-  externalClusters:
-  - name: *previousCluster
-    barmanObjectStore:
-      wal:
-        compression: bzip2
-        maxParallel: 8
-      destinationPath: s3://cloudnative-pg/postgres16-v3
-      endpointURL: https://truenas.vanillax.me:9000/
-      s3Credentials:
-        accessKeyId:
-          name: cloudnative-pg-secret
-          key: aws-access-key-id
-        secretAccessKey:
-          name: cloudnative-pg-secret
-          key: aws-secret-access-key
+  # externalClusters:
+  # - name: *previousCluster
+  #   barmanObjectStore:
+  #     wal:
+  #       compression: bzip2
+  #       maxParallel: 8
+  #     destinationPath: s3://cloudnative-pg/postgres16-v3
+  #     endpointURL: https://truenas.vanillax.me:9000/
+  #     s3Credentials:
+  #       accessKeyId:
+  #         name: cloudnative-pg-secret
+  #         key: aws-access-key-id
+  #       secretAccessKey:
+  #         name: cloudnative-pg-secret
+  #         key: aws-secret-access-key
