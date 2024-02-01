@@ -21,9 +21,9 @@ spec:
   superuserSecret:
     name: cloudnative-pg-secret
     # Note: Bootstrap is needed when recovering from an existing cnpg cluster
-  # bootstrap:
-  #   recovery:
-  #     source: &previousCluster postgres16-v2
+  bootstrap:
+    recovery:
+      source: &previousCluster postgres16-v2
   resources:
     requests:
       cpu: 500m
