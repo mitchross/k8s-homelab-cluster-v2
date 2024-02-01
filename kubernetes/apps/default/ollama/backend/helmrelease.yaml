@@ -28,7 +28,7 @@ spec:
     replicaCount: 1
     image:
       repository: ollama/ollama
-      tag: ""  # Leave it empty to use the chart's default version
+      tag: "0.12.0"  # Leave it empty to use the chart's default version
     ollama:
       gpu:
           # Enable GPU integration
