@@ -71,9 +71,11 @@ spec:
       requests:
         memory: 4096Mi
         cpu: 2000m
+        nvidia.com/gpu: 1
       limits:
         memory: 24Gi
         cpu: 4000m
+        nvidia.com/gpu: 1
     livenessProbe:
       enabled: true
       path: /
