@@ -36,3 +36,4 @@ resources:
 - ./stiforr.yaml
 - ./tube.yaml
 - ./ollama.yaml
+- ./localai.yaml
