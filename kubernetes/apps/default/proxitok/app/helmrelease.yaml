@@ -113,7 +113,22 @@ spec:
         tls:
           - hosts:
               - *host
-
+      int:
+        enabled: true
+        className: internal
+        annotations:
+          nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        hosts:
+          - host: *host
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  name: main
+                  port: 8080
+        tls:
+          - hosts:
+              - *host
 
     persistence:
       redis:
