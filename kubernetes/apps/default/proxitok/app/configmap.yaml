@@ -12,4 +12,4 @@ data:
   API_SIGNER: remote
   API_SIGNER_URL: http://localhost:8081/signature
   API_FORCE_LEGACY: "1"
-  APP_URL: https://proxitok.skylab.fi
+  APP_URL: https://proxitok.vanillax.me
