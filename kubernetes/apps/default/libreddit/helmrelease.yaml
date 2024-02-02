@@ -32,7 +32,7 @@ spec:
           main:
             image:
               repository: quay.io/redlib/redlib
-              tag: latest@sha256:8490a430c892b128c29f84871dc267cb3fb2dc310ad114ff84e97cf68de5ba5e
+              tag: latest@sha256:9832fb8620c8e3bc942467cfeffb5acb3e344dc837d4fbcedbd60f618bf5ecc4
     service:
       main:
         type: LoadBalancer
