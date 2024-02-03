@@ -51,8 +51,10 @@ spec:
 
 
     service:
-      type: ClusterIP
-      port: 11434
+      main:
+        ports:
+          http:
+            port: 11434
     ingress:
       main:
         enabled: true
