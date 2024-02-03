@@ -1,0 +1,37 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+    name: ollama-nfs
+spec:
+    storageClassName: ollama-nfs
+    capacity:
+        storage: 1Mi
+    accessModes:
+        - ReadWriteMany
+    persistentVolumeReclaimPolicy: Retain
+    nfs:
+        server: 192.168.1.133
+        path: /mnt/generaltank/k8s/ollama
+    mountOptions:
+        - nfsvers=4
+        - tcp
+        - intr
+        - hard
+        - noatime
+        - nodiratime
+        - nolock
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+    name: ollama-nfs
+    namespace: default
+spec:
+    accessModes:
+        - ReadWriteMany
+    storageClassName: ollama-nfs
+    resources:
+        requests:
+            storage: 1Mi
