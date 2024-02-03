@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.3.0
+      version: 2.5.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -42,6 +42,8 @@ spec:
               TZ: America/Detroit
               NVIDIA_VISIBLE_DEVICES: all
               NVIDIA_DRIVER_CAPABILITIES: all
+              OLLAMA_HOST: 0.0.0.0
+              OLLAMA_ORIGINS: "*"
                 # Force nvidia runtime instead of default
             resources:
               requests:
