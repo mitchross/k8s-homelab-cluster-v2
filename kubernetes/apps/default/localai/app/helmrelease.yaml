@@ -80,7 +80,7 @@ spec:
         pvc:
           annotations: {}
           enabled: true
-          storageClass: longhorn
+          storageClass: openebs-hostpath
           size: 100Gi
 
 
