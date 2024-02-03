@@ -7,7 +7,6 @@ metadata:
 spec:
   dependsOn:
   - name: longhorn
-  targetNamespace: longhorn-system
   path: ./kubernetes/apps/default/chatbot-ui/app
   prune: true
   sourceRef:
