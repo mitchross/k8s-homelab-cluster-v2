@@ -46,7 +46,6 @@ spec:
               NVIDIA_DRIVER_CAPABILITIES: all
               OLLAMA_HOST: 0.0.0.0
               OLLAMA_ORIGINS: "*"
-                # Force nvidia runtime instead of default
             resources:
               requests:
                 cpu: 2000m
