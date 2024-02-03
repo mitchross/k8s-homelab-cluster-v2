@@ -62,11 +62,7 @@ spec:
         enabled: true
         className: internal
         annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/appName: "Chatbot"
-          hajimari.io/icon: mdi:robot
-          hajimari.io/group: "AI"
-          hajimari.io/instance: "admin"
+
         hosts:
         - host: &host "chatbot.${SECRET_DOMAIN}"
           paths:
