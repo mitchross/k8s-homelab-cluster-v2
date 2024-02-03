@@ -59,7 +59,7 @@ spec:
         enabled: true
         className: internal
         hosts:
-          - host: &host https://ollamachat.vanillax.me
+          - host: &host ollamachat.vanillax.me
             paths:
               - path: /
                 service:
