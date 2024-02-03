@@ -13,7 +13,7 @@ resources:
 - ./jellyfin/ks.yaml
 #- ./plex/ks.yaml
 - ./uptimekuma/ks.yaml
-#- ./tubearchivist/ks.yaml
+- ./tubearchivist/ks.yaml
 - ./proxitok/ks.yaml
 
 # AI can only use 1 gpu at a time right now
