@@ -45,6 +45,10 @@ spec:
                 memory: 2Gi
               startup:
                 enabled: false
+        pod:
+          nodeSelector:
+            kubernetes.io/arch: amd64
+            kubernetes.io/hostname: "k3s-gpu-worker-pve3-1"
     service:
       main:
         ports:
