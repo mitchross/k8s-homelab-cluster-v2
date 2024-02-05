@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   #turn off for now
- # - ./longhorn/ks.yaml
+  - ./longhorn/ks.yaml
