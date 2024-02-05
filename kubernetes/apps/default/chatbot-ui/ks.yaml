@@ -6,8 +6,6 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: default
-  dependsOn:
-  - name: longhorn
   path: ./kubernetes/apps/default/chatbot-ui/app
   prune: true
   sourceRef:
