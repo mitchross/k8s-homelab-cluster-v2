@@ -15,7 +15,7 @@ kubectl label node k3s-worker-dell-1 node-role.kubernetes.io/worker=true
 kubectl label --overwrite node k3s-worker-dell-1 node.longhorn.io/create-default-disk="true"
 kubectl label --overwrite node k3s-master-dell-1 node.longhorn.io/create-default-disk="true"
 kubectl label --overwrite node k3s-master-pve3-1  node.longhorn.io/create-default-disk="true"
-
+kubectl label --overwrite node k3s-worker-dell-2 node.longhorn.io/create-default-disk="true"
 
 
 k3s-gpu-worker-pve3-1   Ready    <none>                      29m   v1.29.0+k3s1   192.168.1.205
