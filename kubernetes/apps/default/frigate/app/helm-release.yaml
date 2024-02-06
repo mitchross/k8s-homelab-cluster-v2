@@ -98,7 +98,7 @@ spec:
         accessMode: ReadWriteOnce
         size: 10Gi
         globalMounts:
-          - path: /config
+          - path: /data
       config-file:
         type: configMap
         name: frigate-configmap
