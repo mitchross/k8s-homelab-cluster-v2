@@ -5,7 +5,7 @@ metadata:
   name: frigate
   namespace: default
 spec:
-  interval: 30m
+  interval: 30mtask
   chart:
     spec:
       chart: app-template
@@ -94,7 +94,7 @@ spec:
     persistence:
       config:
         enabled: true
-        storageClass: frigate-db-storage
+        existingClaim: frigate-db-storage
         accessMode: ReadWriteOnce
         size: 10Gi
         globalMounts:
