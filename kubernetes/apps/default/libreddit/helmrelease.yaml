@@ -48,9 +48,7 @@ spec:
               REDLIB_DEFAULT_WIDE: on
               REDLIB_DEFAULT_USE_HLS: on
               REDLIB_DEFAULT_HIDE_HLS_NOTIFICATION: on
-            envFrom:
-            - secretRef:
-                name: *app
+   
             resources:
               requests:
                 cpu: 5m
