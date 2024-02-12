@@ -48,7 +48,7 @@ spec:
               REDLIB_DEFAULT_WIDE: on
               REDLIB_DEFAULT_USE_HLS: on
               REDLIB_DEFAULT_HIDE_HLS_NOTIFICATION: on
-   
+
             resources:
               requests:
                 cpu: 5m
@@ -92,7 +92,6 @@ spec:
               name: main
               port: http
         tls:
-        - secretName: *host
           hosts:
           - *host
 
