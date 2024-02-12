@@ -1,8 +1,8 @@
-# # yaml-language-server: $schema=https://raw.githubusercontent.com/JJGadgets/flux2-schemas/main/helmrelease-helm-v2beta1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.kokoro.wtf/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: redlib
+  name: &app redlib
   namespace: default
 spec:
   interval: 30m
@@ -14,40 +14,70 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+  maxHistory: 2
   install:
-    createNamespace: true
     remediation:
-      retries: 5
+      retries: 3
   upgrade:
+    cleanupOnFail: true
     remediation:
-      retries: 10
-
+      retries: 3
+  uninstall:
+    keepHistory: false
   values:
-
+    defaultPodOptions:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: *app
     controllers:
       main:
-        type: deployment
-        strategyType: Recreate # Adjusted the strategy field
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: 'true'
         containers:
           main:
             image:
               repository: quay.io/redlib/redlib
-              tag: latest@sha256:b3701b3e430ebbbdd157c1f4e8bc2c055fcaa8ce361aa90c55eb8597ff0bdac0
+              tag: latest
+            env:
+              REDLIB_DEFAULT_SHOW_NSFW: on
+              REDLIB_DEFAULT_WIDE: on
+              REDLIB_DEFAULT_USE_HLS: on
+              REDLIB_DEFAULT_HIDE_HLS_NOTIFICATION: on
+            envFrom:
+            - secretRef:
+                name: *app
             resources:
               requests:
-                memory: 1000Mi
-                cpu: 1500m
-
+                cpu: 5m
+                memory: 50Mi
               limits:
-                memory: 2000Mi
+                memory: 850Mi
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /settings
+                    port: &port 8080
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
 
     service:
       main:
-        type: LoadBalancer
         ports:
           http:
-            port: 8080
-
+            port: *port
     ingress:
       main:
         enabled: true
@@ -56,7 +86,7 @@ spec:
           external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
           external-dns.home.arpa/enabled: "true"
         hosts:
-        - host: &host libreddit.vanillax.me
+        - host: &host 'libreddit.vanillax.me'
           paths:
           - path: /
             pathType: Prefix
@@ -64,5 +94,11 @@ spec:
               name: main
               port: http
         tls:
-        - hosts:
+        - secretName: *host
+          hosts:
           - *host
+
+    fullNameOverride: *app
+    podAnnotations:
+      reloader.stakater.com/auto: 'true'
+      setGateway: 'true'
