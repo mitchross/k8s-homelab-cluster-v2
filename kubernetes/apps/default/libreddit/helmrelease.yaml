@@ -84,16 +84,16 @@ spec:
           external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
           external-dns.home.arpa/enabled: "true"
         hosts:
-        - host: &host 'libreddit.vanillax.me'
-          paths:
-          - path: /
-            pathType: Prefix
-            service:
-              name: main
-              port: http
+          - host: &host 'libreddit.vanillax.me'
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
-          hosts:
-          - *host
+          - hosts:
+              - *host
 
     fullNameOverride: *app
     podAnnotations:
