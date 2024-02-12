@@ -20,4 +20,4 @@ resources:
 #- ./stable-diffusion/ks.yaml
 # - ./localai/ks.yaml
 # - ./chatbot-ui/ks.yaml
-#- ./ollama/ks.yaml
+- ./ollama/ks.yaml
