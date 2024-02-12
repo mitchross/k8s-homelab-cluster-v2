@@ -9,7 +9,7 @@ resources:
 - ./libreddit
 - ./speedtest
 - ./immich/ks.yaml
-- ./scrypted/ks.yaml
+#- ./scrypted/ks.yaml
 - ./jellyfin/ks.yaml
 #- ./plex/ks.yaml
 - ./uptimekuma/ks.yaml
