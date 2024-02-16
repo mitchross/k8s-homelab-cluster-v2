@@ -6,7 +6,7 @@ resources:
 - ./wyze-bridge/ks.yaml
 - ./mosquitto/ks.yaml
 - ./frigate/ks.yaml
-- ./libreddit
+#- ./libreddit
 - ./speedtest
 - ./immich/ks.yaml
 #- ./scrypted/ks.yaml
