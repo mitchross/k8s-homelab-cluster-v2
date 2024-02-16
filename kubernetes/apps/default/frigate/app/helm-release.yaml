@@ -62,14 +62,14 @@ spec:
               requests:
                 memory: 1000Mi
                 cpu: 1500m
-                gpu.intel.com/i915: 1
+               # gpu.intel.com/i915: 1
               limits:
                 memory: 2000Mi
-                gpu.intel.com/i915: 1
+               # gpu.intel.com/i915: 1
         pod:
           nodeSelector:
             google.feature.node.kubernetes.io/coral: "true"
-            intel.feature.node.kubernetes.io/gpu: "true"
+            #intel.feature.node.kubernetes.io/gpu: "true"
     service:
       main:
         ports:
