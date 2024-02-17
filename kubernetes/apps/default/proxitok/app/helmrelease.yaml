@@ -45,7 +45,7 @@ spec:
             image:
               repository: ghcr.io/pablouser1/proxitok
               pullPolicy: IfNotPresent
-              tag: latest@sha256:8ebb201f091edacddf41ac32091f8f91ed4122c3f08e6d3ac1e07570c31f7671
+              tag: latest@sha256:ef1679d97b03cf7be346dfa5989f2d6b59566ddf5d8bab72d47733cb064967ee
             envFrom:
               - configMapRef:
                   name: "proxitok-configmap"
