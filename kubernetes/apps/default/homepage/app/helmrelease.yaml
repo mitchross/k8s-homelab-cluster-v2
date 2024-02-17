@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.5.0
+      version: 2.6.0
       interval: 30m
       sourceRef:
         kind: HelmRepository
@@ -33,7 +33,7 @@ spec:
           main:
             image:
               repository: ghcr.io/gethomepage/homepage
-              tag: v0.8.7
+              tag: v0.8.8
             env:
               TZ: "${TIMEZONE}"
             envFrom:
