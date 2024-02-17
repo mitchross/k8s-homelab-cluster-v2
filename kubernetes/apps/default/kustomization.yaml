@@ -5,8 +5,8 @@ resources:
 - ./homepage/ks.yaml
 - ./wyze-bridge/ks.yaml
 - ./mosquitto/ks.yaml
-- ./frigate/ks.yaml
-#- ./libreddit
+#- ./frigate/ks.yaml
+- ./libreddit
 - ./speedtest
 - ./immich/ks.yaml
 #- ./scrypted/ks.yaml
