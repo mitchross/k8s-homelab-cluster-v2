@@ -1,0 +1,21 @@
+---
+- name: Disable IPv6 on Target Servers
+  hosts: kubernetes
+  become: yes  # Use sudo privileges
+
+  tasks:
+    - name: Modify sysctl.conf for IPv6 changes
+      lineinfile:
+        path: /etc/sysctl.conf
+        regexp: '^(net.ipv6.conf.all.disable_ipv6|net.ipv6.conf.default.disable_ipv6|net.ipv6.conf.lo.disable_ipv6)\s+='
+        line: "{{ item }} = 1"
+        state: present
+      with_items:
+        - net.ipv6.conf.all.disable_ipv6
+        - net.ipv6.conf.default.disable_ipv6
+        - net.ipv6.conf.lo.disable_ipv6
+
+    - name: Restart systemd-networkd
+      service:
+        name: systemd-networkd
+        state: restarted

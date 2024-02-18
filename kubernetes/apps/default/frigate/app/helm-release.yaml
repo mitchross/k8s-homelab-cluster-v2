@@ -66,9 +66,9 @@ spec:
               limits:
                 memory: 2000Mi
                # gpu.intel.com/i915: 1
-        # pod:
-        #   nodeSelector:
-        #     kubernetes.io/hostname: "k3s-worker-dell-2"
+        pod:
+          nodeSelector:
+            kubernetes.io/hostname: "k3s-worker-dell-2"
             #google.feature.node.kubernetes.io/coral: "true"
             #intel.feature.node.kubernetes.io/gpu: "true"
     service:
