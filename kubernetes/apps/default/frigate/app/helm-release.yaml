@@ -68,7 +68,8 @@ spec:
                # gpu.intel.com/i915: 1
         pod:
           nodeSelector:
-            google.feature.node.kubernetes.io/coral: "true"
+            kubernetes.io/hostname: "k3s-worker-dell-2"
+            #google.feature.node.kubernetes.io/coral: "true"
             #intel.feature.node.kubernetes.io/gpu: "true"
     service:
       main:
