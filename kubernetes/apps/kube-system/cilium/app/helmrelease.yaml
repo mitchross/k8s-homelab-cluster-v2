@@ -25,7 +25,7 @@ spec:
   values:
     autoDirectNodeRoutes: true
     bpf:
-      masquerade: true
+      masquerade: false
     bgp:
       enabled: false
     cluster:
