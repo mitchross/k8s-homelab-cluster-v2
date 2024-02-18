@@ -26,3 +26,8 @@ k3s-worker-dell-1       Ready    <none>                      29m   v1.29.0+k3s1 
 k3s-worker-nuc-1        Ready    <none>                      29m   v1.29.0+k3s1   192.168.1.202
 
  kubectl label --overwrite node k3s-worker-dell-2 google.feature.node.kubernetes.io/coral: "true"
+  hr-restart:
+    desc: Restart all failed Helm Releases
+    cmds:
+      - kubectl get hr --all-namespaces | grep False | awk '{print $2, $1}' | xargs -L1 bash -c 'flux suspend hr $0 -n $1'
+      - kubectl get hr --all-namespaces | grep False | awk '{print $2, $1}' | xargs -L1 bash -c 'flux resume hr $0 -n $1'
