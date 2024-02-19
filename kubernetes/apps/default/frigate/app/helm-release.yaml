@@ -33,6 +33,7 @@ spec:
         pod:
           nodeSelector:
             google.feature.node.kubernetes.io/coral: "true"
+            
 
         containers:
           main:
