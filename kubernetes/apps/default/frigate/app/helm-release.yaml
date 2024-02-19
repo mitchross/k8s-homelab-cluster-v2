@@ -30,6 +30,10 @@ spec:
       main:
         annotations:
           reloader.stakater.com/auto: "true"
+        pod:
+          nodeSelector:
+            google.feature.node.kubernetes.io/coral: "true"
+
         containers:
           main:
             image:
@@ -37,7 +41,6 @@ spec:
               tag: 0.13.2
             env:
               TZ: America/New_York
-              # LIBVA_DRIVER_NAME: i965
             envFrom:
               - secretRef:
                   name: frigate-secret
@@ -62,15 +65,11 @@ spec:
               requests:
                 memory: 1000Mi
                 cpu: 150m
-               # gpu.intel.com/i915: 1
+
               limits:
                 memory: 2000Mi
-               # gpu.intel.com/i915: 1
-        pod:
-          nodeSelector:
-            kubernetes.io/hostname: "k3s-worker-dell-2"
-            #google.feature.node.kubernetes.io/coral: "true"
-            #intel.feature.node.kubernetes.io/gpu: "true"
+
+
     service:
       main:
         ports:
