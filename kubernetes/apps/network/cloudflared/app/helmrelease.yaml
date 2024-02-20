@@ -35,9 +35,10 @@ spec:
               repository: docker.io/cloudflare/cloudflared
               tag: 2024.2.0
             env:
-              NO_AUTOUPDATE: "true"
+              NO_AUTOUPDATE: true
               TUNNEL_CRED_FILE: /etc/cloudflared/creds/credentials.json
               TUNNEL_METRICS: 0.0.0.0:8080
+              TUNNEL_ORIGIN_ENABLE_HTTP2: true
               TUNNEL_TRANSPORT_PROTOCOL: quic
               TUNNEL_POST_QUANTUM: true
               TUNNEL_ID:
@@ -66,16 +67,22 @@ spec:
               readiness: *probes
               startup:
                 enabled: false
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+              seccompProfile:
+                type: RuntimeDefault
             resources:
               requests:
-                cpu: 5m
-                memory: 128M
+                cpu: 10m
               limits:
-                memory: 256M
+                memory: 256Mi
         pod:
           securityContext:
-            runAsUser: 568
-            runAsGroup: 568
+            runAsUser: 65534
+            runAsGroup: 65534
+            runAsNonRoot: true
     service:
       main:
         ports:

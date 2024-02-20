@@ -5,7 +5,7 @@ k3s_control_node: true
 k3s_server:
   node-ip: "{{ ansible_host }}"
   tls-san:
-    - "192.168.1.30"
+    - ""
   docker: false
   flannel-backend: "none" # quote
   disable: ["flannel", "local-storage", "metrics-server", "servicelb", "traefik"]
@@ -15,8 +15,8 @@ k3s_server:
   write-kubeconfig-mode: "644"
   pause-image: registry.k8s.io/pause:3.9
   secrets-encryption: true
-  cluster-cidr: "10.42.0.0/16"
-  service-cidr: "10.43.0.0/16"
+  cluster-cidr: ""
+  service-cidr: ""
   etcd-expose-metrics: true # Required to monitor etcd with kube-prometheus-stack
   kube-controller-manager-arg:
     - "bind-address=0.0.0.0" # Required to monitor kube-controller-manager with kube-prometheus-stack

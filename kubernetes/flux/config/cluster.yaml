@@ -6,9 +6,9 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m
+  url: "https://github.com/mitchross/k8s-homelab-cluster-v2"
   ref:
     branch: "main"
-  url: "https://github.com/mitchross/k8s-homelab-cluster-v2.git"
   ignore: |
     # exclude all
     /*

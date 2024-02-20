@@ -1,6 +1,6 @@
 ---
 - name: Cluster kube-vip
-  hosts: master
+  hosts: controllers
   serial: 1
   become: true
   gather_facts: true
@@ -16,8 +16,9 @@
         public: true
       vars:
         k3s_state: started
+
     - name: Upgrade kube-vip
       ansible.builtin.template:
-        src: templates/kube-vip-ds.yaml.j2
+        src: templates/kube-vip-ds.yaml
         dest: "{{ k3s_server_manifests_dir }}/kube-vip-ds.yaml"
         mode: preserve

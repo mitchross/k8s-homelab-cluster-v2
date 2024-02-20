@@ -1,7 +1,7 @@
 ---
 kubernetes:
   children:
-    master:
+    controllers:
       hosts:
         "k3s-master-dell-1":
           ansible_user: "vanillax"
@@ -12,13 +12,13 @@ kubernetes:
         "k3s-master-pve3-1":
           ansible_user: "vanillax"
           ansible_host: "192.168.1.201"
-    worker:
+    workers:
       hosts:
         "k3s-worker-nuc-1":
           ansible_user: "vanillax"
           ansible_host: "192.168.1.202"
         "k3s-worker-dell-2":
-          ansible_user: "vanillax"
+          ansible_user: ""
           ansible_host: "192.168.1.203"
         "k3s-gpu-worker-pve3-1":
           ansible_user: "vanillax"

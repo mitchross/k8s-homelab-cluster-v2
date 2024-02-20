@@ -92,10 +92,10 @@
 
     - name: Remove local storage path
       ansible.builtin.file:
-        path: "/var/openebs/local"
+        path: /var/openebs/local
         state: absent
 
     - name: Reboot
       ansible.builtin.reboot:
-        msg: Rebooting nodes
+        msg: Rebooting hosts
         reboot_timeout: 3600
