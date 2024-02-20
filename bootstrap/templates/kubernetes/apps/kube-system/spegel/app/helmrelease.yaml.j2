@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: spegel
-      version: v0.0.17
+      version: v0.0.18
       sourceRef:
         kind: HelmRepository
         name: xenitab
@@ -24,13 +24,8 @@ spec:
     keepHistory: false
   values:
     spegel:
-      #% if bootstrap_distribution in ['k0s'] %#
-      containerdSock: /run/k0s/containerd.sock
-      containerdRegistryConfigPath: /var/lib/k0s/containerd/certs.d
-      #% elif bootstrap_distribution in ['talos'] %#
       containerdSock: /run/containerd/containerd.sock
       containerdRegistryConfigPath: /etc/cri/conf.d/hosts
-      #% endif %#
     service:
       registry:
         hostPort: 29999

@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 name: "devcontainer"
 
 on:
@@ -49,7 +50,7 @@ jobs:
           BUILDX_NO_DEFAULT_ATTESTATIONS: true
         with:
           imageName: ghcr.io/${{ github.repository }}/devcontainer
-          cacheFrom: ghcr.io/${{ github.repository }}/devcontainer
+          # cacheFrom: ghcr.io/${{ github.repository }}/devcontainer
           imageTag: base,latest
           platform: linux/amd64,linux/arm64
           configFile: .devcontainer/ci/devcontainer.json

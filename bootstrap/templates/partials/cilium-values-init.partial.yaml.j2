@@ -1,56 +1,53 @@
 autoDirectNodeRoutes: true
+bgpControlPlane:
+  enabled: true
 bpf:
-  masquerade: true
-bgp:
-  enabled: false
+  masquerade: false
+cgroup:
+  automount:
+    enabled: false
+  hostRoot: /sys/fs/cgroup
 cluster:
-  name: home-kubernetes
   id: 1
+  name: home-kubernetes
 containerRuntime:
   integration: containerd
-  #% if bootstrap_distribution in ['k3s'] %#
+  #% if bootstrap_distribution in ["k3s"] %#
   socketPath: /var/run/k3s/containerd/containerd.sock
-  #% elif bootstrap_distribution in ['k0s'] %#
-  socketPath: /var/run/k0s/containerd.sock
   #% endif %#
+# NOTE: This might need to be set if you have more than one active NIC on your hosts
+# devices:
+#   - eno0
 endpointRoutes:
   enabled: true
 hubble:
   enabled: false
 ipam:
   mode: kubernetes
-ipv4NativeRoutingCIDR: "#{ bootstrap_cluster_cidr }#"
-#% if bootstrap_advanced_flags.dual_stack_ipv4_first|default(false) %#
-ipv6NativeRoutingCIDR: "#{ bootstrap_cluster_cidr_v6 }#"
+ipv4NativeRoutingCIDR: "#{ bootstrap_pod_network }#"
+#% if bootstrap_feature_gates.dual_stack_ipv4_first %#
+ipv6NativeRoutingCIDR: "#{ bootstrap_pod_network_v6 }#"
 ipv6:
   enabled: true
 #% endif %#
-#% if bootstrap_distribution in ['k3s'] %#
+#% if bootstrap_distribution in ["k3s"] %#
 k8sServiceHost: 127.0.0.1
 k8sServicePort: 6444
-#% elif bootstrap_distribution in ['k0s'] %#
-k8sServiceHost: localhost
-k8sServicePort: 7443
-#% elif bootstrap_distribution in ['talos'] %#
-k8sServiceHost: localhost
+#% elif bootstrap_distribution in ["talos"] %#
+k8sServiceHost: 127.0.0.1
 k8sServicePort: 7445
 #% endif %#
 kubeProxyReplacement: true
 kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
 l2announcements:
-  #% if bootstrap_advanced_flags.dual_stack_ipv4_first|default(false) %#
-  # https://github.com/cilium/cilium/issues/28985
-  enabled: false
+  #% if ((bootstrap_bgp.enabled) or (bootstrap_feature_gates.dual_stack_ipv4_first)) %#
+  enabled: false # https://github.com/cilium/cilium/issues/28985
   #% else %#
   enabled: true
-  # https://github.com/cilium/cilium/issues/26586
-  leaseDuration: 120s
-  leaseRenewDeadline: 60s
-  leaseRetryPeriod: 1s
   #% endif %#
 loadBalancer:
   algorithm: maglev
-  mode: "#{ bootstrap_advanced_flags.cilium_loadbalancer_mode|default('dsr', true) }#"
+  mode: dsr
 localRedirectPolicy: true
 operator:
   replicas: 1
@@ -58,4 +55,20 @@ operator:
 rollOutCiliumPods: true
 routingMode: native
 securityContext:
-  privileged: true
+  capabilities:
+    ciliumAgent:
+      - CHOWN
+      - KILL
+      - NET_ADMIN
+      - NET_RAW
+      - IPC_LOCK
+      - SYS_ADMIN
+      - SYS_RESOURCE
+      - DAC_OVERRIDE
+      - FOWNER
+      - SETGID
+      - SETUID
+    cleanCiliumState:
+      - NET_ADMIN
+      - SYS_ADMIN
+      - SYS_RESOURCE

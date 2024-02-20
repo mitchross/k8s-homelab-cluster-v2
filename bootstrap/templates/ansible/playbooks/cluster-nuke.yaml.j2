@@ -1,4 +1,3 @@
-#% if bootstrap_distribution in ['k3s'] %#
 ---
 - name: Cluster Nuke
   hosts: kubernetes
@@ -93,11 +92,10 @@
 
     - name: Remove local storage path
       ansible.builtin.file:
-        path: "#{ bootstrap_advanced_flags.local_storage_path|default('/var/openebs/local', true) }#"
+        path: /var/openebs/local
         state: absent
 
     - name: Reboot
       ansible.builtin.reboot:
-        msg: Rebooting nodes
+        msg: Rebooting hosts
         reboot_timeout: 3600
-#% endif %#

@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.5.0
+      version: 2.6.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -25,22 +25,24 @@ spec:
   values:
     controllers:
       main:
-        replicas: 2
         strategy: RollingUpdate
         containers:
           main:
             image:
-              repository: docker.io/jmalloc/echo-server
-              tag: 0.3.6
+              repository: ghcr.io/mendhak/http-https-echo
+              tag: 31
             env:
-              PORT: &port 8080
+              HTTP_PORT: &port 8080
+              LOG_WITHOUT_NEWLINE: true
+              LOG_IGNORE_PATH: /healthz
+              PROMETHEUS_ENABLED: true
             probes:
               liveness: &probes
                 enabled: true
                 custom: true
                 spec:
                   httpGet:
-                    path: /health
+                    path: /healthz
                     port: *port
                   initialDelaySeconds: 0
                   periodSeconds: 10
@@ -49,35 +51,51 @@ spec:
               readiness: *probes
               startup:
                 enabled: false
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+              seccompProfile:
+                type: RuntimeDefault
             resources:
               requests:
-                cpu: 5m
-                memory: 10M
+                cpu: 10m
               limits:
-                memory: 64M
+                memory: 64Mi
         pod:
           securityContext:
-            runAsUser: 568
-            runAsGroup: 568
+            runAsUser: 65534
+            runAsGroup: 65534
+            runAsNonRoot: true
     service:
       main:
         ports:
           http:
             port: *port
+    serviceMonitor:
+      main:
+        enabled: true
     ingress:
       main:
         enabled: true
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
-          #% if addon_homepage.enabled %#
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Network
-          gethomepage.dev/name: Echo Server
-          gethomepage.dev/icon: mdi-video-input-antenna
-          #% endif %#
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: &host "{{ .Release.Name }}-external.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: http
+        tls:
+          - hosts:
+              - *host
+      internal:
+        enabled: true
+        className: internal
+        hosts:
+          - host: &host "{{ .Release.Name }}-internal.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:

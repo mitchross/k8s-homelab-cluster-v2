@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 name: "Kubeconform"
 
 on:
@@ -25,4 +26,4 @@ jobs:
 
       - name: Run kubeconform
         shell: bash
-        run: ./.github/scripts/kubeconform.sh ${{ env.KUBERNETES_DIR }}
+        run: bash ./scripts/kubeconform.sh ${{ env.KUBERNETES_DIR }}
