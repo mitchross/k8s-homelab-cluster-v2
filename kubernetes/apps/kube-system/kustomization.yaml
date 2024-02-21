@@ -7,3 +7,4 @@ resources:
 - ./intel-device-plugin/ks.yaml
 - ./node-feature-discovery/ks.yaml
 - ./nvidia-gpu-operator/ks.yaml
+- ./reloader/ks.yaml
