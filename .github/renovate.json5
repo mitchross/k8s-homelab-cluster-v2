@@ -15,35 +15,35 @@
   "schedule": ["on saturday"],
   "flux": {
     "fileMatch": [
-      "(^|/)ansible/.+\\.ya?ml(\\.j2)?$",
-      "(^|/)kubernetes/.+\\.ya?ml(\\.j2)?$"
+      "(^|/)ansible/.+\\.ya?ml?$",
+      "(^|/)kubernetes/.+\\.ya?ml?$"
     ]
   },
   "helm-values": {
     "fileMatch": [
-      "(^|/)ansible/.+\\.ya?ml(\\.j2)?$",
-      "(^|/)kubernetes/.+\\.ya?ml(\\.j2)?$"
+      "(^|/)ansible/.+\\.ya?ml?$",
+      "(^|/)kubernetes/.+\\.ya?ml?$"
     ]
   },
   "kubernetes": {
     "fileMatch": [
-      "(^|/)ansible/.+\\.ya?ml(\\.j2)?$",
-      "(^|/)kubernetes/.+\\.ya?ml(\\.j2)?$"
+      "(^|/)ansible/.+\\.ya?ml?$",
+      "(^|/)kubernetes/.+\\.ya?ml?$"
     ]
   },
   "kustomize": {
     "fileMatch": [
-      "(^|/)kustomization\\.ya?ml(\\.j2)?$"
+      "(^|/)kustomization\\.ya?ml?$"
     ]
   },
   "pip_requirements": {
     "fileMatch": [
-      "(^|/)[\\w-]*requirements(-\\w+)?\\.(txt|pip)(\\.j2)?$"
+      "(^|/)[\\w-]*requirements(-\\w+)?\\.(txt|pip)?$"
     ]
   },
   "ansible-galaxy": {
     "fileMatch": [
-      "(^|/)(galaxy|requirements)(\\.ansible)?\\.ya?ml(\\.j2)?$"
+      "(^|/)(galaxy|requirements)(\\.ansible)?\\.ya?ml?$"
     ]
   },
   // commit message topics
@@ -222,8 +222,8 @@
       "description": ["Process custom dependencies"],
       "fileMatch": [
         "(^|/).taskfiles/.+\\.ya?ml$",
-        "(^|/)ansible/.+\\.ya?ml(\\.j2)?$",
-        "(^|/)kubernetes/.+\\.ya?ml(\\.j2)?$"
+        "(^|/)ansible/.+\\.ya?ml?$",
+        "(^|/)kubernetes/.+\\.ya?ml?$"
       ],
       "matchStrings": [
         // # renovate: datasource=github-releases depName=k3s-io/k3s
