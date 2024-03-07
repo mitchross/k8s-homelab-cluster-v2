@@ -1,37 +1,36 @@
----
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-    name: tube-nfs
+  name: tube-nfs
 spec:
-    storageClassName: tube-nfs
-    capacity:
-        storage: 1Mi
-    accessModes:
-        - ReadWriteMany
-    persistentVolumeReclaimPolicy: Retain
-    nfs:
-        server: 192.168.1.133
-        path: /mnt/generaltank/k8s/youtube
-    mountOptions:
-        - nfsvers=4
-        - tcp
-        - intr
-        - hard
-        - noatime
-        - nodiratime
-        - nolock
+  storageClassName: tube-nfs
+  capacity:
+    storage: 1Mi
+  accessModes:
+  - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: 192.168.10.133
+    path: /mnt/generaltank/k8s/youtube
+  mountOptions:
+  - nfsvers=4
+  - tcp
+  - intr
+  - hard
+  - noatime
+  - nodiratime
+  - nolock
 
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-    name: tube-nfs
-    namespace: default
+  name: tube-nfs
+  namespace: default
 spec:
-    accessModes:
-        - ReadWriteMany
-    storageClassName: tube-nfs
-    resources:
-        requests:
-            storage: 1Mi
+  accessModes:
+  - ReadWriteMany
+  storageClassName: tube-nfs
+  resources:
+    requests:
+      storage: 1Mi

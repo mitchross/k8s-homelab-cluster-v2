@@ -26,29 +26,29 @@ spec:
     controllers:
       main:
         type: deployment
-        strategyType: Recreate  # Adjusted the strategy field
+        strategyType: Recreate # Adjusted the strategy field
         containers:
           main:
             image:
               repository: mrlt8/wyze-bridge
               tag: 2.7.0
             env:
-              - name: RECORD_ALL
-                value: "True"
-              - name: RECORD_LENGTH
-                value: "500"
-              - name: ROTATE_DOOR
-                value: "True"
-              - name: FRESH_DATA
-                value: "True"
-              - name: TZ
-                value: America/Detroit
-              - name: WB_IP
-                value: "192.168.1.16"
-              - name: ON_DEMAND
-                value: "False"
-              - name: IGNORE_OFFLINE
-                value: "true"
+            - name: RECORD_ALL
+              value: "True"
+            - name: RECORD_LENGTH
+              value: "500"
+            - name: ROTATE_DOOR
+              value: "True"
+            - name: FRESH_DATA
+              value: "True"
+            - name: TZ
+              value: America/Detroit
+            - name: WB_IP
+              value: "192.168.10.16"
+            - name: ON_DEMAND
+              value: "False"
+            - name: IGNORE_OFFLINE
+              value: "true"
               # - name: FPS_FIX
               #   value: "true"
               # - name: ENABLE_BOA
@@ -62,8 +62,8 @@ spec:
               # - name: "LIBVA_DRIVER_NAME"
               #   value: "i965"
             envFrom:
-              - secretRef:
-                  name: wyze-secrets
+            - secretRef:
+                name: wyze-secrets
             securityContext:
               privileged: true
             resources:
@@ -77,7 +77,7 @@ spec:
       main:
         type: LoadBalancer
         annotations:
-          io.cilium/lb-ipam-ips: "192.168.1.16"
+          io.cilium/lb-ipam-ips: "192.168.10.16"
         ports:
           http:
             port: 5000
@@ -99,22 +99,22 @@ spec:
         annotations:
 
         hosts:
-          - host: &host wyze.vanillax.me
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  name: main
-                  port: http
+        - host: &host wyze.vanillax.me
+          paths:
+          - path: /
+            pathType: Prefix
+            service:
+              name: main
+              port: http
         tls:
-          - hosts:
-              - *host
+        - hosts:
+          - *host
 
     persistence:
       media:
         existingClaim: wyze-nfs
         globalMounts:
-          - path: /record
+        - path: /record
 
     nodeSelector:
       node-role.kubernetes.io/worker: "true"
