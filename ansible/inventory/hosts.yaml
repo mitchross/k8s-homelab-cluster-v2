@@ -5,24 +5,24 @@ kubernetes:
       hosts:
         "k3s-master-dell-1":
           ansible_user: "vanillax"
-          ansible_host: "192.168.1.199"
+          ansible_host: "192.168.10.199"
         "k3s-master-pve-1":
           ansible_user: "vanillax"
-          ansible_host: "192.168.1.200"
+          ansible_host: "192.168.10.200"
         "k3s-master-pve3-1":
           ansible_user: "vanillax"
-          ansible_host: "192.168.1.201"
+          ansible_host: "192.168.10.201"
     workers:
       hosts:
         "k3s-worker-nuc-1":
           ansible_user: "vanillax"
-          ansible_host: "192.168.1.202"
+          ansible_host: "192.168.10.202"
         "k3s-worker-dell-2":
           ansible_user: ""
-          ansible_host: "192.168.1.203"
+          ansible_host: "192.168.10.203"
         "k3s-gpu-worker-pve3-1":
           ansible_user: "vanillax"
-          ansible_host: "192.168.1.205"
+          ansible_host: "192.168.10.205"
         "k3s-worker-dell-1":
           ansible_user: "vanillax"
-          ansible_host: "192.168.1.198"
+          ansible_host: "192.168.10.198"
