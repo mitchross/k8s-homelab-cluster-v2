@@ -106,10 +106,10 @@ spec:
               - *host
               - *s3Host
     persistence:
-      config:
+      data:
         enabled: true
-        type: hostPath
-        hostPath: /mnt/backup/minio/
-        hostPathType: Directory
+        type: nfs
+        server: 192.168.10.133
+        path: /mnt/generaltank/k8s/minio
         globalMounts:
           - path: /data
