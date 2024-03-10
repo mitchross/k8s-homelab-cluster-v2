@@ -1,53 +1,125 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ishioni/CRDs-catalog/main/postgresql.cnpg.io/cluster_v1.json
+# # yaml-language-server: $schema=https://raw.githubusercontent.com/ishioni/CRDs-catalog/main/postgresql.cnpg.io/cluster_v1.json
+# apiVersion: postgresql.cnpg.io/v1
+# kind: Cluster
+# metadata:
+#   name: postgres16
+#   namespace: database
+# spec:
+#   instances: 5
+#   imageName: ghcr.io/bo0tzz/cnpgvecto.rs:16-v0.1.11
+#   enableSuperuserAccess: true
+#   primaryUpdateStrategy: unsupervised
+#   storage:
+#     size: 30Gi
+#     storageClass: openebs-hostpath
+#   postgresql:
+#     shared_preload_libraries: ["vectors.so"]
+#     parameters:
+#       max_connections: "600"
+#       max_slot_wal_keep_size: 10GB
+#       shared_buffers: 512MB
+#   superuserSecret:
+#     name: cloudnative-pg-secret
+#   #   # Note: Bootstrap is needed when recovering from an existing cnpg cluster
+#   # bootstrap:
+#   #   recovery:
+#   #     source: &previousCluster postgres16-v3
+#   resources:
+#     requests:
+#       cpu: 500m
+#     limits:
+#       memory: 6Gi
+#   monitoring:
+#     enablePodMonitor: true
+#     # podMonitorMetricRelabelings:
+#     #   - sourceLabels: ["cluster"]
+#     #     targetLabel: cnpg_cluster
+#     #     action: replace
+#     #   - regex: cluster
+#     #     action: labeldrop
+#   backup:
+#     retentionPolicy: 30d
+#     barmanObjectStore:
+#       data:
+#         compression: bzip2
+#       wal:
+#         compression: bzip2
+#         maxParallel: 8
+#       destinationPath: s3://cloudnative-pg/
+#       endpointURL: https://truenas.vanillax.me:9000/
+#       serverName: &currentCluster postgres16-v4
+#       s3Credentials:
+#         accessKeyId:
+#           name: cloudnative-pg-secret
+#           key: aws-access-key-id
+#         secretAccessKey:
+#           name: cloudnative-pg-secret
+#           key: aws-secret-access-key
+#   # Note: externalClusters is needed when recovering from an existing cnpg cluster
+#   # externalClusters:
+#   # - name: *previousCluster
+#   #   barmanObjectStore:
+#   #     wal:
+#   #       compression: bzip2
+#   #       maxParallel: 8
+#   #     destinationPath: s3://cloudnative-pg/postgres16-v3
+#   #     endpointURL: https://truenas.vanillax.me:9000/
+#   #     s3Credentials:
+#   #       accessKeyId:
+#   #         name: cloudnative-pg-secret
+#   #         key: aws-access-key-id
+#   #       secretAccessKey:
+#   #         name: cloudnative-pg-secret
+#   #         key: aws-secret-access-key
+
+
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/postgresql.cnpg.io/cluster_v1.json
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
   name: postgres16
-  namespace: database
 spec:
-  instances: 5
-  imageName: ghcr.io/bo0tzz/cnpgvecto.rs:16-v0.1.11
-  enableSuperuserAccess: true
+  instances: 3
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.2-6
   primaryUpdateStrategy: unsupervised
   storage:
-    size: 50Gi
+    size: 20Gi
     storageClass: openebs-hostpath
-  postgresql:
-    shared_preload_libraries: ["vectors.so"]
-    parameters:
-      max_connections: "600"
-      max_slot_wal_keep_size: 10GB
-      shared_buffers: 512MB
   superuserSecret:
     name: cloudnative-pg-secret
-  #   # Note: Bootstrap is needed when recovering from an existing cnpg cluster
-  # bootstrap:
-  #   recovery:
-  #     source: &previousCluster postgres16-v3
+  enableSuperuserAccess: true
+  postgresql:
+    parameters:
+      max_connections: "400"
+      shared_buffers: 256MB
+  nodeMaintenanceWindow:
+    inProgress: false
+    reusePVC: true
   resources:
     requests:
       cpu: 500m
     limits:
-      memory: 6Gi
+      memory: 4Gi
   monitoring:
     enablePodMonitor: true
-    # podMonitorMetricRelabelings:
-    #   - sourceLabels: ["cluster"]
-    #     targetLabel: cnpg_cluster
-    #     action: replace
-    #   - regex: cluster
-    #     action: labeldrop
+    # Ref: https://github.com/cloudnative-pg/cloudnative-pg/issues/2501
+    podMonitorMetricRelabelings:
+      - { sourceLabels: ["cluster"], targetLabel: cnpg_cluster, action: replace }
+      - { regex: cluster, action: labeldrop }
   backup:
     retentionPolicy: 30d
-    barmanObjectStore:
+    barmanObjectStore: &barmanObjectStore
       data:
         compression: bzip2
       wal:
         compression: bzip2
         maxParallel: 8
       destinationPath: s3://cloudnative-pg/
-      endpointURL: https://truenas.vanillax.me:9000/
-      serverName: &currentCluster postgres16-v4
+      endpointURL: https://s3.vanillax.me
+      # Note: serverName version needs to be inclemented
+      # when recovering from an existing cnpg cluster
+      serverName: &currentCluster postgres16-v1
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-secret
@@ -55,19 +127,14 @@ spec:
         secretAccessKey:
           name: cloudnative-pg-secret
           key: aws-secret-access-key
-  # Note: externalClusters is needed when recovering from an existing cnpg cluster
+  # # Note: previousCluster needs to be set to the name of the previous
+  # # cluster when recovering from an existing cnpg cluster
+  # bootstrap:
+  #   recovery:
+  #     source: &previousCluster postgres16-v1
+  # # Note: externalClusters is needed when recovering from an existing cnpg cluster
   # externalClusters:
-  # - name: *previousCluster
-  #   barmanObjectStore:
-  #     wal:
-  #       compression: bzip2
-  #       maxParallel: 8
-  #     destinationPath: s3://cloudnative-pg/postgres16-v3
-  #     endpointURL: https://truenas.vanillax.me:9000/
-  #     s3Credentials:
-  #       accessKeyId:
-  #         name: cloudnative-pg-secret
-  #         key: aws-access-key-id
-  #       secretAccessKey:
-  #         name: cloudnative-pg-secret
-  #         key: aws-secret-access-key
+  #   - name: *previousCluster
+  #     barmanObjectStore:
+  #       <<: *barmanObjectStore
+  #       serverName: *previousCluster
