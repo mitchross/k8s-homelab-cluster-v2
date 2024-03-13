@@ -15,8 +15,8 @@ spec:
   superuserSecret:
     name: cloudnative-pg-secret
   enableSuperuserAccess: true
-  postgresql:
-    shared_preload_libraries: ["vectors.so"]
+  # postgresql:
+  #   shared_preload_libraries: ["vectors.so"]
     parameters:
       max_connections: "400"
       shared_buffers: 256MB
