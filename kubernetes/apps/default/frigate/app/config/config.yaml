@@ -19,8 +19,8 @@ detectors:
     type: edgetpu
     device: usb
 
-ffmpeg:
-  hwaccel_args: preset-intel-qsv-h264
+# ffmpeg:
+#   hwaccel_args: preset-intel-qsv-h264
 
 go2rtc:
   streams:
