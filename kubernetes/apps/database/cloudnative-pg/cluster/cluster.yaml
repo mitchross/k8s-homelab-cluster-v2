@@ -7,7 +7,7 @@ metadata:
   name: postgres16
 spec:
   instances: 3
-  imageName: registry.hub.docker.com/tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:90724186f0a3517cf6914295b5ab410db9ce23190a2d9d0b9dd6463e3fa298f0
+  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.2-v0.2.0
   primaryUpdateStrategy: unsupervised
   storage:
     size: 20Gi
@@ -16,10 +16,11 @@ spec:
     name: cloudnative-pg-secret
   enableSuperuserAccess: true
   postgresql:
-    # shared_preload_libraries: ["vectors.so"]
     parameters:
-      max_connections: "400"
-      shared_buffers: 256MB
+      max_connections: "300"
+      shared_buffers: 512MB
+    shared_preload_libraries:
+      - "vectors.so"
   nodeMaintenanceWindow:
     inProgress: false
     reusePVC: true
