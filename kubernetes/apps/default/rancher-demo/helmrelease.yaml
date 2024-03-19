@@ -42,7 +42,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        className: nginx
         annotations:
         hosts:
         - host: &host "rancher-demo.${SECRET_DOMAIN}"
