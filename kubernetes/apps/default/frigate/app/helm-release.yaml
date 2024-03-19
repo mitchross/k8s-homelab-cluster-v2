@@ -31,8 +31,6 @@ spec:
         pod:
           nodeSelector:
             google.feature.node.kubernetes.io/coral: "true"
-
-
         containers:
           main:
             image:
@@ -64,19 +62,16 @@ spec:
               requests:
                 memory: 1000Mi
                 cpu: 150m
-
               limits:
                 memory: 2000Mi
-
-
     service:
       main:
+        controller: main 
         ports:
           http:
             port: *port
           rtsp:
             port: 8554
-
     ingress:
       main:
         enabled: true
@@ -87,15 +82,13 @@ spec:
           - path: /
             service:
               name: main
-              port: http
+              port: 5000
         tls:
         - hosts:
           - *host
-
     persistence:
       config:
         enabled: true
-        existingClaim: frigate-db-storage
         accessMode: ReadWriteOnce
         size: 10Gi
         globalMounts:
