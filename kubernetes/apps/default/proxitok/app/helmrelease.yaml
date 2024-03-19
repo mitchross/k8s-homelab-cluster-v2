@@ -1,4 +1,4 @@
----
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.1/charts/library/common/values.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.0.4
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -47,8 +47,8 @@ spec:
               pullPolicy: IfNotPresent
               tag: latest@sha256:ef1679d97b03cf7be346dfa5989f2d6b59566ddf5d8bab72d47733cb064967ee
             envFrom:
-              - configMapRef:
-                  name: "proxitok-configmap"
+            - configMapRef:
+                name: "proxitok-configmap"
             resources:
               requests:
                 cpu: 100m
@@ -63,7 +63,7 @@ spec:
               tag: 7.2.4
               env:
                 REDIS_REPLICATION_MODE: master
-              command: [ "redis-server", "--save", "50 1", "--loglevel", "notice" ]
+              command: ["redis-server", "--save", "50 1", "--loglevel", "notice"]
           signer:
             order: 3
             image:
@@ -103,16 +103,16 @@ spec:
           external-dns.home.arpa/enabled: "true"
           nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
         hosts:
-          - host: &host "proxitok.vanillax.me"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  name: main
-                  port: 8080
+        - host: &host "proxitok.vanillax.me"
+          paths:
+          - path: /
+            pathType: Prefix
+            service:
+              name: main
+              port: 8080
         tls:
-          - hosts:
-              - *host
+        - hosts:
+          - *host
 
 
     persistence:
@@ -125,7 +125,7 @@ spec:
         advancedMounts:
           main:
             redis:
-              - path: /data
+            - path: /data
 
       cache:
         enabled: true
@@ -136,6 +136,6 @@ spec:
         advancedMounts:
           main:
             main:
-              - path: /cache
+            - path: /cache
       config:
         enabled: false

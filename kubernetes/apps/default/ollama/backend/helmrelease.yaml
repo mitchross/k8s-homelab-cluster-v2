@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.1/charts/library/common/values.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
@@ -28,13 +29,13 @@ spec:
     replicaCount: 1
     image:
       repository: docker.io/ollama/ollama
-      tag: "0.1.27"  # Leave it empty to use the chart's default version
+      tag: "0.1.27" # Leave it empty to use the chart's default version
     ollama:
       gpu:
-          # Enable GPU integration
-          enabled: true
-          # Specify the number of GPU
-          number: 1
+        # Enable GPU integration
+        enabled: true
+        # Specify the number of GPU
+        number: 1
         # Default model to serve, if not set, no model will be served at container startup
       defaultModel: "codellama"
 
@@ -60,15 +61,15 @@ spec:
         enabled: true
         className: internal
         hosts:
-          - host: &host ollama.vanillax.me
-            paths:
-              - path: /
-                service:
-                  name: main
-                  port: http
+        - host: &host ollama.vanillax.me
+          paths:
+          - path: /
+            service:
+              name: main
+              port: http
         tls:
-          - hosts:
-              - *host
+        - hosts:
+          - *host
     resources:
       requests:
         memory: 4096Mi
@@ -99,4 +100,4 @@ spec:
       size: 40Gi
       storageClass: openebs-hostpath
       accessModes:
-        - ReadWriteOnce
+      - ReadWriteOnce
