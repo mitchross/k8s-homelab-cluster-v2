@@ -51,6 +51,7 @@ spec:
             kubernetes.io/hostname: "k3s-gpu-worker-pve3-1"
     service:
       main:
+        controller: main
         ports:
           http:
             port: 8080

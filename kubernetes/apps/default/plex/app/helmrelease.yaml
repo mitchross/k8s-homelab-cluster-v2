@@ -63,6 +63,7 @@ spec:
             - path: /config
     service:
       main:
+        controller: main
         type: LoadBalancer
         externalTrafficPolicy: Cluster
         ports:

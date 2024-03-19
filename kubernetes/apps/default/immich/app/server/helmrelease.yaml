@@ -85,6 +85,7 @@ spec:
                 enabled: false
     service:
       main:
+        controller: main
         type: LoadBalancer
         annotations:
           io.cilium/lb-ipam-ips: "192.168.10.18"

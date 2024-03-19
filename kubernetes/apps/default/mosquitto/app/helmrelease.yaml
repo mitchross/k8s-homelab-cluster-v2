@@ -55,6 +55,7 @@ spec:
             fsGroupChangePolicy: OnRootMismatch
     service:
       main:
+        controller: main
         type: LoadBalancer
         annotations:
           io.cilium/lb-ipam-ips: "192.168.10.17"
