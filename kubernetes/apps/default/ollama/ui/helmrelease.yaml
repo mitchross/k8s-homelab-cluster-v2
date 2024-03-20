@@ -25,6 +25,10 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    defaultPodOptions: # Add top-level default for pod options
+      nodeSelector:
+        kubernetes.io/arch: amd64
+        kubernetes.io/hostname: "k3s-gpu-worker-pve3-1"
     controllers:
       main:
         type: deployment
@@ -36,21 +40,19 @@ spec:
               repository: ghcr.io/ollama-webui/ollama-webui
               tag: main
             env:
-              OLLAMA_API_BASE_URL: http://ollama.default.svc.cluster.local:11434/api
+            - name: OLLAMA_API_BASE_URL
+              value: http://ollama.default.svc.cluster.local:11434/api
             resources:
               requests:
                 cpu: 200m
               limits:
                 memory: 2Gi
-              startup:
-                enabled: false
-        pod:
-          nodeSelector:
-            kubernetes.io/arch: amd64
-            kubernetes.io/hostname: "k3s-gpu-worker-pve3-1"
+            startupProbe: # Probe is often preferred over startup:enabled: false
+              httpGet:
+                path: /
+                port: 8080
     service:
       main:
-        controller: main
         ports:
           http:
             port: 8080
