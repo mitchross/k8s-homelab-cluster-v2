@@ -95,7 +95,7 @@ spec:
 
     ingress:
       enabled: true
-      className: internal
+      ingressClassName: internal
       annotations:
       hosts:
       - host: &host localai.vanillax.me

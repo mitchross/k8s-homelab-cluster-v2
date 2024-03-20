@@ -94,7 +94,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: internal
+        ingressClassName: internal
         annotations:
         hosts:
         - host: &host "photos.vanillax.me"
@@ -103,7 +103,7 @@ spec:
             pathType: Prefix
             service:
               name: main
-              port: 3001
+              port: 3001 
         tls:
         - hosts:
           - *host
