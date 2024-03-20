@@ -35,6 +35,7 @@ spec:
         annotations:
           secret.reloader.stakater.com/reload: &secret immich-secret
           configmap.reloader.stakater.com/reload: &configmap immich-configmap
+
         pod:
           enableServiceLinks: false
           securityContext:
@@ -91,11 +92,14 @@ spec:
         ports:
           http:
             port: 3001
+
     ingress:
       main:
         enabled: true
         ingressClassName: internal
         annotations:
+
+
         hosts:
         - host: &host "photos.vanillax.me"
           paths:
@@ -103,7 +107,7 @@ spec:
             pathType: Prefix
             service:
               name: main
-              port: 3001 
+              port: http
         tls:
         - hosts:
           - *host
