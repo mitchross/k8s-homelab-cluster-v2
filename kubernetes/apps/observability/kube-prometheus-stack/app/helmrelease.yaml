@@ -125,13 +125,6 @@ spec:
           registry: quay.io
           repository: prometheus/prometheus
           tag: v2.51.0-rc.0-dedupelabels
-        thanos:
-          image: quay.io/thanos/thanos:${THANOS_VERSION}
-          version: "${THANOS_VERSION#v}"
-          objectStorageConfig:
-            existingSecret:
-              name: thanos-objstore-secret
-              key: objstore.yml
         retention: 2d
         retentionSize: 15GB
         externalLabels:
