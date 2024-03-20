@@ -1,4 +1,3 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta2.json
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.1/charts/library/common/values.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
@@ -26,6 +25,10 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    defaultPodOptions: # Add top-level default for pod options
+      nodeSelector:
+        kubernetes.io/arch: amd64
+        kubernetes.io/hostname: "k3s-gpu-worker-pve3-1"
     controllers:
       main:
         type: deployment
@@ -37,21 +40,19 @@ spec:
               repository: ghcr.io/ollama-webui/ollama-webui
               tag: main
             env:
-              OLLAMA_API_BASE_URL: http://ollama.default.svc.cluster.local:11434/api
+            - name: OLLAMA_API_BASE_URL
+              value: http://ollama.default.svc.cluster.local:11434/api
             resources:
               requests:
                 cpu: 200m
               limits:
                 memory: 2Gi
-              startup:
-                enabled: false
-        pod:
-          nodeSelector:
-            kubernetes.io/arch: amd64
-            kubernetes.io/hostname: "k3s-gpu-worker-pve3-1"
+            startupProbe: # Probe is often preferred over startup:enabled: false
+              httpGet:
+                path: /
+                port: 8080
     service:
       main:
-        controller: main
         ports:
           http:
             port: 8080
