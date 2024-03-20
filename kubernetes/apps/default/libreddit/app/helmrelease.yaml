@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.1/charts/library/common/values.schema.json
+# yaml-language-server: $schema=https://kubernetes-schemas.kokoro.wtf/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.0.4
+      version: 2.6.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -83,16 +83,16 @@ spec:
           external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
           external-dns.home.arpa/enabled: "true"
         hosts:
-        - host: &host 'libreddit.vanillax.me'
-          paths:
-          - path: /
-            pathType: Prefix
-            service:
-              name: main
-              port: http
+          - host: &host 'libreddit.vanillax.me'
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
-        - hosts:
-          - *host
+          - hosts:
+              - *host
 
     fullNameOverride: *app
     podAnnotations:

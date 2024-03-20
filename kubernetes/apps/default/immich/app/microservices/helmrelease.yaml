@@ -1,4 +1,5 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.1/charts/library/common/values.schema.json
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ishioni/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
@@ -9,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.0.4
+      version: 2.6.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -26,7 +27,7 @@ spec:
   uninstall:
     keepHistory: false
   dependsOn:
-  - name: immich-server
+    - name: immich-server
   values:
     controllers:
       main:
@@ -42,14 +43,14 @@ spec:
             fsGroup: 568
             fsGroupChangePolicy: "OnRootMismatch"
           topologySpreadConstraints:
-          - maxSkew: 1
-            topologyKey: kubernetes.io/hostname
-            whenUnsatisfiable: DoNotSchedule
-            labelSelector:
-              matchLabels:
-                app.kubernetes.io/name: *app
-                # nodeSelector:
-                #   intel.feature.node.kubernetes.io/gpu: "true"
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: *app
+          # nodeSelector:
+          #   intel.feature.node.kubernetes.io/gpu: "true"
         containers:
           main:
             image:
@@ -57,10 +58,10 @@ spec:
               tag: v1.98.2
             args: ["start-microservices.sh"]
             envFrom:
-            - secretRef:
-                name: *secret
-            - configMapRef:
-                name: *configmap
+              - secretRef:
+                  name: *secret
+              - configMapRef:
+                  name: *configmap
             resources:
               requests:
                 cpu: 100m
@@ -75,14 +76,14 @@ spec:
         enabled: true
         existingClaim: immich-nfs
         globalMounts:
-        - path: /usr/src/app/upload
+          - path: /usr/src/app/upload
       geocoding-dump:
         enabled: true
         type: emptyDir
         globalMounts:
-        - path: /usr/src/app/.reverse-geocoding-dump
+          - path: /usr/src/app/.reverse-geocoding-dump
       geoname-dump:
         enabled: true
         type: emptyDir
         globalMounts:
-        - path: /usr/src/app/node_modules/local-reverse-geocoder/geonames_dump
+          - path: /usr/src/app/node_modules/local-reverse-geocoder/geonames_dump
