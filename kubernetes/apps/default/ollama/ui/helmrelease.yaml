@@ -42,8 +42,6 @@ spec:
                 cpu: 200m
               limits:
                 memory: 2Gi
-              startup:
-                enabled: false
         pod:
           nodeSelector:
             kubernetes.io/arch: amd64
@@ -64,7 +62,7 @@ spec:
           - path: /
             service:
               name: main
-              port: http
+              port: 8080 
         tls:
         - hosts:
           - *host
