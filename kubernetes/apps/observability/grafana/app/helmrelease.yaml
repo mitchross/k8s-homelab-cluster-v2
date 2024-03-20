@@ -24,7 +24,7 @@ spec:
     keepHistory: false
   dependsOn:
     - name: openebs
-      namespace: storage
+      namespace: openebs-system
   values:
     deploymentStrategy:
       type: Recreate
