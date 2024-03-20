@@ -40,7 +40,6 @@ spec:
               TZ: "${TZ}"
     service:
       main:
-        controller: main
         ports:
           http:
             port: &port 3001

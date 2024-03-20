@@ -86,7 +86,6 @@ spec:
         - path: /app/outputs
     service:
       main:
-        controller: main
         ports:
           http:
             port: 7860

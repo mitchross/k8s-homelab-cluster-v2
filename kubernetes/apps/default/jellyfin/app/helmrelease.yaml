@@ -69,7 +69,6 @@ spec:
             - path: /config
     service:
       main:
-        controller: main
         type: LoadBalancer
         annotations:
           io.cilium/lb-ipam-ips: *loadBalancerIP
