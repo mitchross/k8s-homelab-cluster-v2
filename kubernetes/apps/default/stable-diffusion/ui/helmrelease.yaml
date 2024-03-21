@@ -79,9 +79,9 @@ spec:
 
       outputs:
         enabled: true
-        storageClass: openebs-hostpath
-        accessMode: ReadWriteMany
-        size: 16Gi
+        type: nfs
+        server: 192.168.10.133
+        path: /mnt/generaltank/k8s/stablediffusion
         retain: true
         globalMounts:
         - path: /app/outputs
