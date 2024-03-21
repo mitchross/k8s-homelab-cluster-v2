@@ -76,15 +76,16 @@ spec:
         - path: /data
         - path: /app/repositories
           subPath: repositories
-
-      outputs:
-        enabled: true
-        type: nfs
-        server: 192.168.10.133
-        path: /mnt/generaltank/k8s/stablediffusion
-        retain: true
-        globalMounts:
         - path: /app/outputs
+
+      # outputs:
+      #   enabled: true
+      #   type: nfs
+      #   server: 192.168.10.133
+      #   path: /mnt/generaltank/k8s/stablediffusion
+      #   retain: true
+      #   globalMounts:
+      #   - path: /app/outputs
 
     service:
       main:
