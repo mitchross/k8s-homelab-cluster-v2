@@ -17,7 +17,7 @@ resources:
 - ./proxitok/ks.yaml
 
 # AI can only use 1 gpu at a time right now
-#- ./stable-diffusion/ks.yaml
+- ./stable-diffusion/ks.yaml
 # - ./localai/ks.yaml
 # - ./chatbot-ui/ks.yaml
-- ./ollama/ks.yaml
+#- ./ollama/ks.yaml
