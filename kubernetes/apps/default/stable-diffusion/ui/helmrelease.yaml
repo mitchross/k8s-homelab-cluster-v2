@@ -90,7 +90,6 @@ spec:
                   identifier: stable-diffusion-webui
                   port: http
         tls:
-          - secretName: ${certificate_name}
-            hosts:
+          - hosts:
               - *host
 
