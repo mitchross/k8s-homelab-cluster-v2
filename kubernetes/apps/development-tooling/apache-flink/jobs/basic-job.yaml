@@ -22,7 +22,7 @@ metadata:
   name: basic-example
   namespace: development-tooling
 spec:
-  image: flink:1.18
+  image: flink:1.19
   flinkVersion: v1_17
   flinkConfiguration:
     taskmanager.numberOfTaskSlots: "2"
