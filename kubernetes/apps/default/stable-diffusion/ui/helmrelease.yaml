@@ -92,5 +92,5 @@ spec:
         tls:
           - secretName: ${certificate_name}
             hosts:
-              - ${app_url}
+              - *host
 
