@@ -67,7 +67,7 @@ spec:
             order: 3
             image:
               repository: ghcr.io/pablouser1/signtok
-              tag: master
+              tag: latest
             env:
               PORT: 8081
             resources:
