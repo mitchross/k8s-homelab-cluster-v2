@@ -55,7 +55,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: cloudnative-pg-cluster
+    - name: cloudnative-pg
   path: ./kubernetes/apps/database/cloudnative-pg/backup
   prune: true
   sourceRef:
