@@ -29,6 +29,7 @@ spec:
       create: true
       createSecret: true
       username: admin
+      password: $2a$12$VjAK.bRES4bSoKlsPBemtOdxUeoqvaHW1Z7jS0kFkG8wX.18YlDi.
     ingress:
       enabled: true
       className: internal
