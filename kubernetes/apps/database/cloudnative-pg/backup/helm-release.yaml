@@ -62,7 +62,7 @@ spec:
                     key: POSTGRES_PASS
 
               - name: POSTGRES_HOST
-                value: postgres-ro.database.svc.cluster.local
+                value: postgres16-ro.database.svc.cluster.local
               - name: POSTGRES_DB
                 value: "immich"
               - name: BACKUP_KEEP_DAYS
