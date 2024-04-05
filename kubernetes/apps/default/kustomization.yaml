@@ -19,5 +19,5 @@ resources:
 # AI can only use 1 gpu at a time right now
 #- ./stable-diffusion/ks.yaml
 # - ./localai/ks.yaml
-# - ./chatbot-ui/ks.yaml
-#- ./ollama/ks.yaml
+- ./chatbot-ui/ks.yaml
+- ./ollama/ks.yaml
