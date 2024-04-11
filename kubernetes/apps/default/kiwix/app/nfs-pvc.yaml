@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: kiwix-nfs
+spec:
+  storageClassName: kiwix-nfs
+  capacity:
+    storage: 1Mi
+  accessModes:
+  - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: 192.168.10.133
+    path: /mnt/generaltank/k8s/kiwix
+  mountOptions:
+  - nfsvers=4
+  - tcp
+  - intr
+  - hard
+  - noatime
+  - nodiratime
+  - nolock
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: kiwix-nfs
+  namespace: default
+spec:
+  accessModes:
+  - ReadWriteMany
+  storageClassName: kiwix-nfs
+  resources:
+    requests:
+      storage: 1Mi
