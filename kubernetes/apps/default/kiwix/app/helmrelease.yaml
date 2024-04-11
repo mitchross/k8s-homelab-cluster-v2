@@ -42,11 +42,11 @@ spec:
               repository:  ghcr.io/kiwix/kiwix-serve
               tag: latest
             command:
-              - kiwix-serve "*.zim"
-           
-
+              - kiwix-serve
+              - "*.zim"
             env:
-
+            args:
+              - "*.zim"
 
             resources:
               requests:
