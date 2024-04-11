@@ -15,7 +15,7 @@ resources:
 - ./uptimekuma/ks.yaml
 - ./tubearchivist/ks.yaml
 - ./proxitok/ks.yaml
-#- ./kiwix/ks.yaml
+- ./kiwix/ks.yaml
 
 # AI can only use 1 gpu at a time right now
 #- ./stable-diffusion/ks.yaml
