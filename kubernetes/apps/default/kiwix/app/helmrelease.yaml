@@ -44,7 +44,7 @@ spec:
               tag: latest
             env:
               DOWNLOAD: http://download.kiwix.org/zim/wikipedia_en_chemistry_nopic.zim
-              PORT: *port
+              PORT: 8080
             args:
               - "*.zim"
 
