@@ -38,11 +38,12 @@ spec:
           reloader.stakater.com/auto: 'true'
         containers:
           main:
+            imagePullPolicy: IfNotPresent
             image:
               repository:  ghcr.io/kiwix/kiwix-serve
               tag: latest
             command:
-            
+
               - "*.zim"
             env:
             args:
