@@ -43,6 +43,8 @@ spec:
               repository:  ghcr.io/kiwix/kiwix-serve
               tag: latest
             env:
+              - name: DOWNLOAD
+                value: https://download.kiwix.org/zim/wikipedia/wikipedia_en_all_maxi_2024-01.zim
 
             resources:
               requests:
