@@ -25,14 +25,10 @@ detectors:
 go2rtc:
   streams:
     garage: rtsp://192.168.10.16:8554/garage
-    deck: rtsp://192.168.10.16:8554/deck
     shed: rtsp://192.168.10.16:8554/shed
-    frontdoor: rtsp://192.168.10.16:8554/porch
     driveway: rtsp://192.168.10.16:8554/driveway
-    garage-driveway: rtsp://192.168.10.16:8554/garage-driveway
-    kitchen: rtsp://192.168.10.16:8554/kitchen
     dogcam: rtsp://192.168.10.16:8554/dog-cam-2
-    livingroom: rtsp://192.168.10.16:8554/living-room
+
 
 cameras:
   garage:
@@ -64,7 +60,7 @@ cameras:
       - car
       - dog
       - cat
-  deck:
+
     ffmpeg:
       inputs:
       - path: rtsp://192.168.10.16:8554/deck
@@ -122,7 +118,7 @@ cameras:
       - dog
       - cat
 
-  frontdoor:
+
     ffmpeg:
       inputs:
       - path: rtsp://192.168.10.16:8554/porch
@@ -178,36 +174,7 @@ cameras:
       - car
       - dog
       - cat
-  garage-driveway:
-    ffmpeg:
-      inputs:
-      - path: rtsp://192.168.10.16:8554/garage-driveway
-        roles:
-        - detect
-        - record
-    snapshots:
-      bounding_box: true
-    detect:
-      width: 1280
-      height: 720
-      fps: 5
-    record:
-      enabled: true
-      retain:
-        days: 15
-        mode: motion
-      events:
-        retain:
-          default: 15
-          mode: active_objects
-    objects:
-      track:
-      - person
-      - car
-      - dog
-      - cat
 
-  kitchen:
     ffmpeg:
       inputs:
       - path: rtsp://192.168.10.16:8554/kitchen
@@ -263,7 +230,7 @@ cameras:
       - car
       - dog
       - cat
-  livingroom:
+
     ffmpeg:
       inputs:
       - path: rtsp://192.168.10.16:8554/living-room
