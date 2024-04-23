@@ -10,6 +10,6 @@ resources:
   - ./intel-device-plugin/ks.yaml
   - ./node-feature-discovery/ks.yaml
   - ./nvidia-gpu-operator/ks.yaml
-  - /capacitor/ks.yaml
+  - ./capacitor/ks.yaml
 
 
