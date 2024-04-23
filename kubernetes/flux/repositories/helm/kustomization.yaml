@@ -37,3 +37,4 @@ resources:
 - ./tube.yaml
 - ./ollama.yaml
 - ./localai.yaml
+- ./onechart.yaml
