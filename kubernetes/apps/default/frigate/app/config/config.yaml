@@ -61,34 +61,9 @@ cameras:
       - dog
       - cat
 
-    ffmpeg:
-      inputs:
-      - path: rtsp://192.168.10.16:8554/deck
-        roles:
-        - detect
-        - record
 
-    snapshots:
-      bounding_box: true
-    detect:
-      width: 1280
-      height: 720
-      fps: 15
-    record:
-      enabled: true
-      retain:
-        days: 15
-        mode: motion
-      events:
-        retain:
-          default: 15
-          mode: active_objects
-    objects:
-      track:
-      - person
-      - car
-      - dog
-      - cat
+
+
   shed:
     ffmpeg:
       inputs:
@@ -119,33 +94,7 @@ cameras:
       - cat
 
 
-    ffmpeg:
-      inputs:
-      - path: rtsp://192.168.10.16:8554/porch
-        roles:
-        - detect
-        - record
-    snapshots:
-      bounding_box: true
-    detect:
-      width: 1296
-      height: 1728
-      fps: 5
-    record:
-      enabled: true
-      retain:
-        days: 15
-        mode: motion
-      events:
-        retain:
-          default: 15
-          mode: active_objects
-    objects:
-      track:
-      - person
-      - car
-      - dog
-      - cat
+
   driveway:
     ffmpeg:
       inputs:
@@ -175,33 +124,7 @@ cameras:
       - dog
       - cat
 
-    ffmpeg:
-      inputs:
-      - path: rtsp://192.168.10.16:8554/kitchen
-        roles:
-        - detect
-        - record
-    snapshots:
-      bounding_box: true
-    detect:
-      width: 1280
-      height: 720
-      fps: 5
-    record:
-      enabled: true
-      retain:
-        days: 15
-        mode: motion
-      events:
-        retain:
-          default: 15
-          mode: active_objects
-    objects:
-      track:
-      - person
-      - car
-      - dog
-      - cat
+
   dogcam:
     ffmpeg:
       inputs:
