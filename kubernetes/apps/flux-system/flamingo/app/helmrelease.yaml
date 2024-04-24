@@ -32,7 +32,7 @@ spec:
         tag: v2.10.2-fl.23-main-d2c9a8cb
     configs:
       params:
-        server.insecure: false
+        server.insecure: true
     server:
       ingress:
         enabled: true
