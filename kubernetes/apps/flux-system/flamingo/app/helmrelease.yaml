@@ -29,10 +29,10 @@ spec:
       domain: &host flamingo.vanillax.me
       image:
         repository: ghcr.io/flux-subsystem-argo/fsa/argocd
-        tag: v2.8.11-fl.21-main-894df19a
+        tag: v2.10.2-fl.23-main-d2c9a8cb
     configs:
       params:
-        server.insecure: true
+        server.insecure: false
     server:
       ingress:
         main:
