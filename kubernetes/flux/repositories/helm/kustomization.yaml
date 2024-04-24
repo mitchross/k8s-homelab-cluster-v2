@@ -38,3 +38,4 @@ resources:
 - ./ollama.yaml
 - ./localai.yaml
 - ./onechart.yaml
+- ./flamingo.yaml
