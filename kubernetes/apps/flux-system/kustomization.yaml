@@ -6,4 +6,4 @@ resources:
   - ./webhooks/ks.yaml
   - ./weave-gitops/ks.yaml
   - ./capacitor/ks.yaml
-  - ./flamingo.yaml
+  - ./flamingo/ks.yaml
