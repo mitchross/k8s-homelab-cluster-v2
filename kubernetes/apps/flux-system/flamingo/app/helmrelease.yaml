@@ -4,10 +4,11 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: &app flamingo
+  namespace: flux-system
 spec:
   interval: 10m
-  releaseName: flamingo
-  targetNamespace: argo-cd
+  targetNamespace: argocd
+  releaseName: argocd
   chart:
     spec:
       chart: argo-cd
