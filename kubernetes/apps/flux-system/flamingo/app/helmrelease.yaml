@@ -44,4 +44,4 @@ spec:
         extraTls:
           - hosts:
               - *host
-
+            secretName: flamingo-tls-secret
