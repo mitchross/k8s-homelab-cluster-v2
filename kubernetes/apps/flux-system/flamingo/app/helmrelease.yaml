@@ -30,16 +30,24 @@ spec:
       image:
         repository: ghcr.io/flux-subsystem-argo/fsa/argocd
         tag: v2.10.2-fl.23-main-d2c9a8cb
-    configs:
-      params:
-        server.insecure: false
     server:
+      service:
+        main:
+          ports:
+            http:
+              port: 8080
+
       ingress:
         main:
           enabled: true
           className: internal
           hosts:
           - host: &host "flamingo.vanillax.me"
+            paths:
+            - path: /
+              service:
+                name: main
+                port: http
           tls:
           - hosts:
             - *host
