@@ -6,7 +6,7 @@ metadata:
   name: &app flamingo
   namespace: flux-system
 spec:
-  targetNamespace: flux-system
+  targetNamespace: argo-cd
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
