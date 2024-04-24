@@ -6,7 +6,6 @@ metadata:
   name: &app flamingo
 spec:
   interval: 10m
-  targetNamespace: flux-system
   releaseName: flamingo
   chart:
     spec:
