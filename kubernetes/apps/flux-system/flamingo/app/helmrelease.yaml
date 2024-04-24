@@ -15,7 +15,7 @@ spec:
       version: "*"
       sourceRef:
         kind: HelmRepository
-        name: argo
+        name: flamingo
         namespace: flux-system
       interval: 10m
   install:
