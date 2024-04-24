@@ -31,23 +31,14 @@ spec:
         repository: ghcr.io/flux-subsystem-argo/fsa/argocd
         tag: v2.10.2-fl.23-main-d2c9a8cb
     server:
-      service:
-        main:
-          ports:
-            http:
-              port: 8080
-
       ingress:
-        main:
-          enabled: true
-          className: internal
-          hosts:
-          - host: &host "flamingo.vanillax.me"
-            paths:
-            - path: /
-              service:
-                name: main
-                port: http
-          tls:
+        enabled: true
+        ingressClassName: internal
+        annotations:
+          nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+          nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+          nginx.ingress.kubernetes.io/whitelist-source-range: 10.0.0.0/8
+        extraTls:
           - hosts:
-            - *host
+              - *host
+
