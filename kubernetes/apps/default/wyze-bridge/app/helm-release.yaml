@@ -31,7 +31,7 @@ spec:
           main:
             image:
               repository: mrlt8/wyze-bridge
-              tag: 2.8.1
+              tag: 2.8.3
             env:
             - name: RECORD_ALL
               value: "True"
