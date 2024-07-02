@@ -30,7 +30,7 @@ k3s_server:
   #% else %#
   node-ip: "{{ ansible_host }}"
   #% endif %#
-  pause-image: registry.k8s.io/pause:3.9
+  pause-image: registry.k8s.io/pause:3.10
   secrets-encryption: true
   tls-san:
     - "#{ bootstrap_controllers_vip }#"
