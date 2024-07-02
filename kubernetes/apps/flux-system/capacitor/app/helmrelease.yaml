@@ -1,6 +1,6 @@
 
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: capacitor
@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: onechart
-      version: 0.66.0
+      version: 0.69.0
       interval: 30m
       sourceRef:
         kind: HelmRepository
