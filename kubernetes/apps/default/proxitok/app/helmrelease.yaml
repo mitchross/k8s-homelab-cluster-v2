@@ -45,7 +45,7 @@ spec:
             order: 2
             image:
               repository: ghcr.io/pablouser1/proxitok
-              tag: latest@sha256:ef1679d97b03cf7be346dfa5989f2d6b59566ddf5d8bab72d47733cb064967ee
+              tag: latest@sha256:9300a54e10314e1fb8b3c2056705d6a931ce979d92793fd972c37ded446ece60
             envFrom:
               - configMapRef:
                   name: "proxitok-configmap"
