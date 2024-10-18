@@ -13,7 +13,7 @@ k3s_server:
   disable-cloud-controller: true
   disable-kube-proxy: true
   write-kubeconfig-mode: "644"
-  pause-image: registry.k8s.io/pause:3.9
+  pause-image: registry.k8s.io/pause:3.10
   secrets-encryption: true
   cluster-cidr: ""
   service-cidr: ""

@@ -21,7 +21,7 @@ k3s_server:
     - "image-gc-high-threshold=55"
     - "image-gc-low-threshold=50"
   node-ip: "{{ ansible_host }}"
-  pause-image: registry.k8s.io/pause:3.9
+  pause-image: registry.k8s.io/pause:3.10
   secrets-encryption: true
   tls-san:
     - "192.168.10.30"
