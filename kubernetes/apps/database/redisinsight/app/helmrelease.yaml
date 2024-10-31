@@ -36,7 +36,7 @@ spec:
           main:
             image:
               repository: redislabs/redisinsight
-              tag: 1.14.0
+              tag: 2.60.0
             env:
               RITRUSTEDORIGINS: "https://redisinsight.${SECRET_DOMAIN}"
     service:
