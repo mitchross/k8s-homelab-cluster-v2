@@ -1,5 +1,5 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: homepage
@@ -33,7 +33,7 @@ spec:
           main:
             image:
               repository: ghcr.io/gethomepage/homepage
-              tag: v0.8.13
+              tag: v0.9.11
             env:
               TZ: "${TIMEZONE}"
             envFrom:

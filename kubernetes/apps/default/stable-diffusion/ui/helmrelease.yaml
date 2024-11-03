@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: stable-diffusion-webui
@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.1.0
+      version: 3.5.1
       reconcileStrategy: ChartVersion
       sourceRef:
         kind: HelmRepository
@@ -25,7 +25,7 @@ spec:
           app:
             image:
               repository: ghcr.io/gabe565/stable-diffusion/webui
-              tag: 1.9.3@sha256:9b1c652e71787a35b646860a81aa267e3a5774b8133ba18535cf102960100ac4
+              tag: 1.10.0@sha256:6e6c89a98dd3267956a8262fe586bfb03ce084c5490044a3caea7f520e1fc13a
               pullPolicy: IfNotPresent
             args:
               - --medvram-sdxl
