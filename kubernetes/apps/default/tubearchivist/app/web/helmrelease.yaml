@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: tubearchivist-web
@@ -47,7 +47,7 @@ spec:
           main:
             image:
               repository: docker.io/bbilly1/tubearchivist
-              tag: v0.4.7
+              tag: v0.4.10
             env:
             - name: TZ
               value: America/New_York

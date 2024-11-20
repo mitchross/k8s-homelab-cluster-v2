@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ishioni/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &app immich-machine-learning
@@ -51,7 +51,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
-              tag: v1.103.1
+              tag: v1.119.1
             env:
               IMMICH_MEDIA_LOCATION: &mediaLocation /usr/src/app/upload
               MACHINE_LEARNING_HOST: 0.0.0.0
